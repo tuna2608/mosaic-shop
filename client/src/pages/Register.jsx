@@ -1,7 +1,7 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { mobile } from "../utilities/responsive";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { mobile } from '../utilities/responsive';
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -12,7 +12,7 @@ const Container = styled.div`
 const AnimationContainer = styled.div`
   flex: 3;
   ${mobile({
-    display: "none",
+    display: 'none',
   })}
 `;
 
@@ -21,11 +21,11 @@ const RegisterContainer = styled.div`
   display: flex;
   align-items: center;
   ${mobile({
-    width: "100%",
-    display: "flex",
-    flexFlow: "column",
-    alignItems: "center",
-    padding: "30px",
+    width: '100%',
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'center',
+    padding: '30px',
   })}
 `;
 
@@ -36,13 +36,13 @@ const RegisterForm = styled.form`
   max-width: 416px;
   display: flex;
   flex-flow: column;
-  gap: 10px;
+  gap: 1px;
   ${mobile({
-    margin: "0",
-    padding: "30px",
+    margin: '0',
+    padding: '30px',
     // alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
+    justifyContent: 'center',
+    height: '100%',
   })}
 `;
 
@@ -62,8 +62,8 @@ const Button = styled.button`
   font-weight: 600;
   font-size: 16px;
   background-color: ${(props) =>
-    props.tone === "dark" ? "#000" : "transparent"};
-  color: ${(props) => (props.tone === "dark" ? "#fff" : "#000")};
+    props.tone === 'dark' ? '#000' : 'transparent'};
+  color: ${(props) => (props.tone === 'dark' ? '#fff' : '#000')};
   &:hover {
     cursor: pointer;
   }
@@ -104,10 +104,10 @@ const Register = () => {
           loop
           muted
           style={{
-            height: "100%",
-            width: "100%",
-            objectFit: "cover",
-            overflowClipMargin: "content-box",
+            height: '100%',
+            width: '100%',
+            objectFit: 'cover',
+            overflowClipMargin: 'content-box',
           }}
         ></video>
       </AnimationContainer>
@@ -119,7 +119,9 @@ const Register = () => {
             Sign up with Google
           </Button>
           <Text>or</Text>
-          <Label>Username or Email</Label>
+          <Label>Username</Label>
+          <Input />
+          <Label> Email</Label>
           <Input />
           <Label>Password</Label>
           <Input />
@@ -128,7 +130,7 @@ const Register = () => {
           <Button tone="dark">Sign up</Button>
           <Text>
             Already have an account?
-            <NavLink to={"/login"} style={{ color: "#000" }}>
+            <NavLink to={'/login'} style={{ color: '#000' }}>
               Sign in
             </NavLink>
           </Text>
