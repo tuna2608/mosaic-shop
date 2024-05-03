@@ -1,7 +1,22 @@
 const express = require('express');
 const app = express();
-const port = 5000;
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const userRoute = require('./routes/user');
 
-app.listen(port, () => {
-  console.log('Server is running on port ' + port);
+dotenv.config();
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log('DB Connected successfully!');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+app.use(express.json());
+app.use('/api/users', userRoute);
+
+app.listen(process.env.PORT_NUMBER || 5000, () => {
+  console.log('Server is running');
 });
