@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ProductCard from './ProductCard';
 import { mobile } from '../utilities/responsive';
-import axios from 'axios';
 import SoldOut from './SoldOut';
 import { publicRequest } from '../utilities/requestMethod';
 

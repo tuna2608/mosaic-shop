@@ -5,6 +5,8 @@ import { FavoriteBorderOutlined, Search } from '@mui/icons-material';
 import { formatCurrency } from '../utilities/formatCurrency';
 import { Link } from 'react-router-dom';
 import { mobile } from '../utilities/responsive';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../redux/cartSlice';
 
 const Info = styled.div`
   opacity: 0;
@@ -70,13 +72,17 @@ const ItemPrice = styled.p`
 `;
 
 const ProductCard = ({ product }) => {
-  console.log(product);
+  // Redux
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    dispatch(addProduct({ ...product, quantity: 1 }));
+  };
   return (
     <Container>
       <ImageContainer>
         <Image src={product.img} width={300} />
         <Info>
-          <Icon>
+          <Icon onClick={handleAddToCart}>
             <ShoppingCartOutlinedIcon />
           </Icon>
           <Link to={`/product/${product._id}`}>

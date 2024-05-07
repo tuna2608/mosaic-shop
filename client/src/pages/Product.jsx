@@ -10,6 +10,8 @@ import { Add, Remove } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
 import { mobile } from '../utilities/responsive';
 import { publicRequest } from '../utilities/requestMethod';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../redux/cartSlice';
 
 const Container = styled.div``;
 const ItemContainer = styled.div`
@@ -135,7 +137,7 @@ const Product = () => {
   };
 
   // Add to cart
-  const handleAddToCart = () => {};
+  // const handleAddToCart = () => {};
 
   useEffect(() => {
     const getProduct = async () => {
@@ -144,6 +146,12 @@ const Product = () => {
     };
     getProduct();
   }, [productID]);
+
+  // Redux
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    dispatch(addProduct({ ...product, quantity }));
+  };
   return (
     <Container>
       <Navbar />

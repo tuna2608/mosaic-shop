@@ -7,6 +7,8 @@ import { Add, Remove } from '@mui/icons-material';
 import Newsletter from '../components/Newsletter';
 import { useNavigate } from 'react-router-dom';
 import { mobile } from '../utilities/responsive';
+import { useSelector } from 'react-redux';
+import { formatCurrency } from '../utilities/formatCurrency';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -156,7 +158,8 @@ const BottomBtn = styled.button`
 
 const Cart = () => {
   const navigate = useNavigate();
-
+  const cart = useSelector((state) => state.cart);
+  console.log(cart.quantity);
   return (
     <Container>
       <Navbar />
@@ -173,84 +176,61 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="images/products/product1.jpg" />
-                <Details>
-                  <ProductID>
-                    <b>ID: </b>1
-                  </ProductID>
-                  <ProductName>
-                    <b>Product: </b>
-                    Flower Gift Name
-                  </ProductName>
-                  <ProductDesc>
-                    <b>Desc: </b>Flower Gift Description
-                  </ProductDesc>
-                  <ProductMaterials>
-                    <b>This set included: </b>
-                    Chocolate, Roses, Bear ...
-                  </ProductMaterials>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <AmountContainer>
-                  <Remove />
-                  <Amount>1</Amount>
-                  <Add />
-                </AmountContainer>
-                <Price>130.000</Price>
-              </PriceDetail>
-            </Product>
-            <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="images/products/product1.jpg" />
-                <Details>
-                  <ProductID>
-                    <b>ID: </b>1
-                  </ProductID>
-                  <ProductName>
-                    <b>Product: </b>
-                    Flower Gift Name
-                  </ProductName>
-                  <ProductDesc>
-                    <b>Desc: </b>Flower Gift Description
-                  </ProductDesc>
-                  <ProductMaterials>
-                    <b>This set included: </b>
-                    Chocolate, Roses, Bear ...
-                  </ProductMaterials>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <AmountContainer>
-                  <Remove />
-                  <Amount>1</Amount>
-                  <Add />
-                </AmountContainer>
-                <Price>130.000</Price>
-              </PriceDetail>
-            </Product>
-            <Hr />
+            {cart.products.map((product) => (
+              <>
+                <Product key={product._id}>
+                  <ProductDetail>
+                    <Image src={product.img} />
+                    <Details>
+                      <ProductID>
+                        <b>ID: </b>
+                        {product._id}
+                      </ProductID>
+                      <ProductName>
+                        <b>Product: </b>
+                        {product.title}
+                      </ProductName>
+                      <ProductDesc>
+                        <b>Desc: </b>Flower Gift Description
+                      </ProductDesc>
+                      <ProductMaterials>
+                        <b>This set included: </b>
+                        {product.materials.toString()}
+                      </ProductMaterials>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <AmountContainer>
+                      <Remove />
+                      <Amount>{product.quantity}</Amount>
+                      <Add />
+                    </AmountContainer>
+                    <Price>
+                      {formatCurrency(product.price * product.quantity)}
+                    </Price>
+                  </PriceDetail>
+                </Product>
+                <Hr />
+              </>
+            ))}
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryDetails>
               <SummaryText>Subtotal</SummaryText>
-              <SummaryPrice>130.000</SummaryPrice>
+              <SummaryPrice>{formatCurrency(cart.totalPrice)}</SummaryPrice>
             </SummaryDetails>
             <SummaryDetails>
               <SummaryText>Estimated Shipping</SummaryText>
-              <SummaryPrice>20.000</SummaryPrice>
+              <SummaryPrice>{formatCurrency(20000)}</SummaryPrice>
             </SummaryDetails>
             <SummaryDetails>
               <SummaryText>Shipping Discount</SummaryText>
-              <SummaryPrice>10.000</SummaryPrice>
+              <SummaryPrice>{formatCurrency(20000)}</SummaryPrice>
             </SummaryDetails>
             <SummaryDetails style={{ fontWeight: '600' }}>
               <SummaryText>Total</SummaryText>
-              <SummaryPrice>140.000</SummaryPrice>
+              <SummaryPrice>{formatCurrency(cart.totalPrice)}</SummaryPrice>
             </SummaryDetails>
             <BottomBtn>CHECKOUT NOW</BottomBtn>
           </Summary>

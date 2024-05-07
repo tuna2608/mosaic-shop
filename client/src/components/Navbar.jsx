@@ -1,15 +1,16 @@
-import { Search } from "@mui/icons-material";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import { Badge } from "@mui/material";
-import React from "react";
-import styled from "styled-components";
-import { NavLink, useNavigate } from "react-router-dom";
-import { mobile } from "../utilities/responsive";
+import { Search } from '@mui/icons-material';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import { Badge } from '@mui/material';
+import React from 'react';
+import styled from 'styled-components';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { mobile } from '../utilities/responsive';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   height: 60px;
-  ${mobile({ height: "50px" })}
+  ${mobile({ height: '50px' })}
 `;
 
 const Wrapper = styled.div`
@@ -33,7 +34,7 @@ const Language = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${mobile({ display: "none" })}
+  ${mobile({ display: 'none' })}
 `;
 const SearchContainer = styled.div`
   border: 0.5px solid lightgray;
@@ -46,7 +47,7 @@ const SearchContainer = styled.div`
 
 const Input = styled.input`
   border: none;
-  ${mobile({ width: "50px" })}
+  ${mobile({ width: '50px' })}
 `;
 
 // Left side components
@@ -62,7 +63,7 @@ const Center = styled.div`
 const Logo = styled.h1`
   font-weight: bold;
   font-size: 50px;
-  ${mobile({ fontSize: "24px" })}
+  ${mobile({ fontSize: '24px' })}
 `;
 
 // Center side components
@@ -75,20 +76,24 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  ${mobile({ flex: "2", justifyContent: "flex-start" })}
+  ${mobile({ flex: '2', justifyContent: 'flex-start' })}
 `;
 
 const MenuItem = styled.div`
   font-size: 18px;
   cursor: pointer;
   margin-left: 25px;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  ${mobile({ fontSize: '12px', marginLeft: '10px' })}
 `;
 
 // Right side components
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  // Get redux state
+  const quantity = useSelector((state) => state.cart.quantity);
+  // const dispatch = useDispatch();
   return (
     <Container>
       <Wrapper>
@@ -99,26 +104,26 @@ const Navbar = () => {
           <SearchContainer>
             <Input
               placeholder="Search"
-              style={{ padding: "6px 0", outline: "none" }}
+              style={{ padding: '6px 0', outline: 'none' }}
             />
-            <Search style={{ color: "gray", fontSize: "20px" }} />
+            <Search style={{ color: 'gray', fontSize: '20px' }} />
           </SearchContainer>
         </Left>
         <Center>
           <Logo>
             <NavLink
-              to={"/home"}
-              style={{ textDecoration: "none", color: "#000" }}
+              to={'/home'}
+              style={{ textDecoration: 'none', color: '#000' }}
             >
               A'More.
             </NavLink>
           </Logo>
         </Center>
         <Right>
-          <MenuItem onClick={() => navigate("/register")}>REGISTER</MenuItem>
-          <MenuItem onClick={() => navigate("/login")}>SIGN IN</MenuItem>
-          <MenuItem onClick={() => navigate("/cart")}>
-            <Badge badgeContent={4} color="primary">
+          <MenuItem onClick={() => navigate('/register')}>REGISTER</MenuItem>
+          <MenuItem onClick={() => navigate('/login')}>SIGN IN</MenuItem>
+          <MenuItem onClick={() => navigate('/cart')}>
+            <Badge badgeContent={quantity} color="primary">
               <ShoppingCartOutlinedIcon />
             </Badge>
           </MenuItem>
