@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { FavoriteBorderOutlined, Search } from "@mui/icons-material";
-import { formatCurrency } from "../utilities/formatCurrency";
-import { useNavigate } from "react-router-dom";
-import { mobile } from "../utilities/responsive";
+import React from 'react';
+import styled from 'styled-components';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { FavoriteBorderOutlined, Search } from '@mui/icons-material';
+import { formatCurrency } from '../utilities/formatCurrency';
+import { Link } from 'react-router-dom';
+import { mobile } from '../utilities/responsive';
 
 const Info = styled.div`
   opacity: 0;
@@ -21,7 +21,7 @@ const Info = styled.div`
   cursor: pointer;
 `;
 const Container = styled.div`
-  ${mobile({ display: "flex", flexFlow: "column", alignItems: "center" })}
+  ${mobile({ display: 'flex', flexFlow: 'column', alignItems: 'center' })}
 `;
 
 const ImageContainer = styled.div`
@@ -70,29 +70,27 @@ const ItemPrice = styled.p`
 `;
 
 const ProductCard = ({ product }) => {
-  const navigate = useNavigate();
-
-  const handleNavigate = () => {
-    navigate("/detail", { state: product });
-  };
+  console.log(product);
   return (
-    <Container onClick={handleNavigate}>
+    <Container>
       <ImageContainer>
         <Image src={product.img} width={300} />
         <Info>
           <Icon>
             <ShoppingCartOutlinedIcon />
           </Icon>
-          <Icon onClick={handleNavigate}>
-            <Search />
-          </Icon>
+          <Link to={`/product/${product._id}`}>
+            <Icon>
+              <Search style={{ color: '#111' }} />
+            </Icon>
+          </Link>
           <Icon>
             <FavoriteBorderOutlined />
           </Icon>
         </Info>
       </ImageContainer>
       <ItemInfo>
-        <ItemName>{product.name}</ItemName>
+        <ItemName>{product.title}</ItemName>
         <ItemPrice>{formatCurrency(product.price)}</ItemPrice>
       </ItemInfo>
     </Container>

@@ -1,7 +1,7 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { mobile } from "../utilities/responsive";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { mobile } from '../utilities/responsive';
 
 const Container = styled.div`
   flex: 1;
@@ -19,7 +19,7 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  ${mobile({ height: "20vh" })}
+  ${mobile({ height: '20vh' })}
 `;
 const Info = styled.div`
   position: absolute;
@@ -36,7 +36,7 @@ const Info = styled.div`
 const Title = styled.h1`
   color: #fff;
   margin-bottom: 20px;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 700;
 `;
 const Button = styled.button`
@@ -51,18 +51,20 @@ const Button = styled.button`
 const CategoryCard = ({ item }) => {
   return (
     <Container>
-      <Image src={item.img} />
-      <Info>
-        <Title>{item.title}</Title>
-        <Button>
-          <NavLink
-            to={"/shop"}
-            style={{ textDecoration: "none", color: "#000" }}
-          >
-            SHOP NOW
-          </NavLink>
-        </Button>
-      </Info>
+      <Link to={`/shop/${item.title.toLowerCase()}`}>
+        <Image src={item.img} />
+        <Info>
+          <Title>{item.title}</Title>
+          <Button>
+            <Link
+              to={`/shop/${item.title.toLowerCase()}`}
+              style={{ textDecoration: 'none', color: '#000' }}
+            >
+              SHOP NOW
+            </Link>
+          </Button>
+        </Info>
+      </Link>
     </Container>
   );
 };

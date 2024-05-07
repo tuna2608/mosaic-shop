@@ -1,21 +1,22 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-import Navbar from "../components/Navbar";
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
-import { formatCurrency } from "../utilities/formatCurrency";
-import Newsletter from "../components/Newsletter";
-import { Add, Remove } from "@mui/icons-material";
-import { useLocation } from "react-router-dom";
-import { mobile } from "../utilities/responsive";
+import Navbar from '../components/Navbar';
+import Announcement from '../components/Announcement';
+import Footer from '../components/Footer';
+import { formatCurrency } from '../utilities/formatCurrency';
+import Newsletter from '../components/Newsletter';
+import { Add, Remove } from '@mui/icons-material';
+import { useLocation } from 'react-router-dom';
+import { mobile } from '../utilities/responsive';
+import { publicRequest } from '../utilities/requestMethod';
 
 const Container = styled.div``;
 const ItemContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 50px;
-  ${mobile({ flexFlow: "column", justifyContent: "center" })}
+  ${mobile({ flexFlow: 'column', justifyContent: 'center' })}
 `;
 
 const ImageContainer = styled.div`
@@ -23,13 +24,13 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${mobile({ flexFlow: "column" })}
+  ${mobile({ flexFlow: 'column' })}
 `;
 const Image = styled.img`
   height: 90vh;
   width: 100%;
   object-fit: cover;
-  ${mobile({ height: "30vh" })}
+  ${mobile({ height: '30vh' })}
 `;
 
 const InfoContainer = styled.div`
@@ -38,17 +39,17 @@ const InfoContainer = styled.div`
   flex-flow: column;
   gap: 30px;
   padding: 0 50px;
-  ${mobile({ flexFlow: "column" })}
+  ${mobile({ flexFlow: 'column' })}
 `;
 const ItemName = styled.p`
   font-size: 40px;
   font-weight: 600;
-  ${mobile({ alignItems: "center", fontSize: "30px" })}
+  ${mobile({ alignItems: 'center', fontSize: '30px' })}
 `;
 const ItemDesc = styled.p`
   font-size: 24px;
   font-weight: 300;
-  ${mobile({ fontSize: "12px" })}
+  ${mobile({ fontSize: '12px' })}
 `;
 const ItemPrice = styled.p`
   font-size: 40px;
@@ -59,7 +60,8 @@ const TitleMaterial = styled.p`
   font-weight: 500;
 `;
 const ListMaterials = styled.ul`
-  ${mobile({ paddingLeft: "20px" })}
+  padding-left: 20px;
+  ${mobile({ paddingLeft: '20px' })}
 `;
 const ItemMaterial = styled.li`
   font-weight: 300;
@@ -99,7 +101,7 @@ const AddToCartButton = styled.button`
   border: none;
   font-size: 16px;
   font-weight: 500;
-  ${mobile({ padding: "4px 10px", fontSize: "10px" })}
+  ${mobile({ padding: '4px 10px', fontSize: '10px' })}
 
   &:hover {
     cursor: pointer;
@@ -108,8 +110,40 @@ const AddToCartButton = styled.button`
 `;
 
 const Product = () => {
-  window.scrollTo(0, 0);
-  const product = useLocation().state;
+  const [shouldScrollToTop, setShouldScrollToTop] = useState(true);
+
+  useEffect(() => {
+    if (shouldScrollToTop) {
+      window.scrollTo(0, 0);
+      setShouldScrollToTop(false);
+    }
+  }, [shouldScrollToTop]);
+
+  const [product, setProduct] = useState({});
+  const location = useLocation();
+  const productID = location.pathname.split('/')[2];
+
+  // Handle Quantity
+  const [quantity, setQuantity] = useState(1);
+  const handleQuantity = (type) => {
+    if (type === 'desc') {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+    setShouldScrollToTop(false);
+  };
+
+  // Add to cart
+  const handleAddToCart = () => {};
+
+  useEffect(() => {
+    const getProduct = async () => {
+      const response = await publicRequest.get(`/products/find/${productID}`);
+      setProduct(response.data);
+    };
+    getProduct();
+  }, [productID]);
   return (
     <Container>
       <Navbar />
@@ -119,13 +153,13 @@ const Product = () => {
           <Image src={product.img}></Image>
         </ImageContainer>
         <InfoContainer>
-          <ItemName>{product.name}</ItemName>
+          <ItemName>{product.title}</ItemName>
           <ItemDesc>{product.desc}</ItemDesc>
           <ItemPrice>{formatCurrency(product.price)}</ItemPrice>
           <TitleMaterial>This set includes:</TitleMaterial>
           <ListMaterials>
-            {product.materials.map((m) => (
-              <ItemMaterial>{m}</ItemMaterial>
+            {product?.materials?.map((m) => (
+              <ItemMaterial key={m}>{m}</ItemMaterial>
             ))}
           </ListMaterials>
           <TextNote>
@@ -138,11 +172,19 @@ const Product = () => {
           </TextNote>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleQuantity('desc')}
+              />
+              <Amount>{quantity}</Amount>
+              <Add
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleQuantity('asc')}
+              />
             </AmountContainer>
-            <AddToCartButton>ADD TO CART</AddToCartButton>
+            <AddToCartButton onClick={handleAddToCart}>
+              ADD TO CART
+            </AddToCartButton>
           </AddContainer>
         </InfoContainer>
       </ItemContainer>

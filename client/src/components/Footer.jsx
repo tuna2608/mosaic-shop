@@ -1,18 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import HomeIcon from "@mui/icons-material/Home";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
-import { mobile } from "../utilities/responsive";
+import React from 'react';
+import styled from 'styled-components';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import PinterestIcon from '@mui/icons-material/Pinterest';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import HomeIcon from '@mui/icons-material/Home';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+import { mobile } from '../utilities/responsive';
 const Container = styled.div`
   height: 30vh;
   display: flex;
   padding: 20px;
-  ${mobile({ flexFlow: "column", alignItems: "center" })}
+  ${mobile({ flexFlow: 'column', alignItems: 'center' })}
 `;
 // Left
 const Left = styled.div`
@@ -21,7 +21,7 @@ const Left = styled.div`
   flex-flow: column;
   justify-content: center;
   padding-left: 30px;
-  ${mobile({ alignItems: "center", marginBottom: "10px" })}
+  ${mobile({ alignItems: 'center', marginBottom: '10px' })}
 `;
 const Logo = styled.h1`
   font-size: 50px;
@@ -31,7 +31,7 @@ const Desc = styled.p`
   line-height: 1.2;
   margin: 20px 0;
   font-size: 18px;
-  ${mobile({ width: "100%" })}
+  ${mobile({ width: '100%' })}
 `;
 const Socials = styled.div`
   display: flex;
@@ -52,11 +52,11 @@ const Icon = styled.div`
 const Center = styled.div`
   flex: 1;
   padding-left: 30px;
-  ${mobile({ display: "none" })}
+  ${mobile({ display: 'none' })}
 `;
 const Title = styled.h3`
   margin-bottom: 30px;
-  ${mobile({ display: "none" })}
+  ${mobile({ display: 'none' })}
 `;
 
 const List = styled.ul`
@@ -154,10 +154,10 @@ const Footer = () => {
           trandinhhieugenz@gmail.com
         </ContactItem>
         <ContactItem>
-          <Image src="images/payments/mastercard.png" />
-          <Image src="images/payments/visa.png" />
-          <Image src="images/payments/paypal.png" />
-          <Image src="images/payments/american.png" />
+          <Image src="/images/payments/mastercard.png" />
+          <Image src="/images/payments/visa.png" />
+          <Image src="/images/payments/paypal.png" />
+          <Image src="/images/payments/american.png" />
         </ContactItem>
       </Right>
     </Container>

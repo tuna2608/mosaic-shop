@@ -58,7 +58,7 @@ router.get('/find/:id', async (req, res) => {
 });
 
 // Get all Products
-router.get('/findAll', async (req, res) => {
+router.get('/', async (req, res) => {
   const qCategory = req.query.category;
   try {
     let products;
