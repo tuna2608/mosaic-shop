@@ -11,6 +11,7 @@ import {
 import Register from './pages/Register';
 import Cart from './pages/Cart';
 import Error from './pages/Error';
+import Success from './components/Success';
 
 function App() {
   // Testing
@@ -30,6 +31,9 @@ function App() {
 
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<Error />} />
+        <Route path="/success" element={<Success />} />
+
+        
       </Routes>
     </Router>
   );
