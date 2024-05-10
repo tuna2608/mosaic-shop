@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../utilities/responsive";
+import { login } from "../redux/apiCalls";
+import {useDispatch, useSelector} from "react-redux"
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -67,6 +69,10 @@ const Button = styled.button`
   &:hover {
     cursor: pointer;
   }
+  &:disabled{
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 `;
 
 const Input = styled.input`
@@ -92,8 +98,24 @@ const GoogleImage = styled.img`
   width: 30px;
   height: 30px;
 `;
+const Error = styled.p`
+text-align: center;
+  color: red;
+  font-weight: 600;
+`
+
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { isFetching, error } = useSelector(state => state.user);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login(dispatch, {email, password})
+  }
+
   return (
     <Container>
       <AnimationContainer>
@@ -119,8 +141,8 @@ const Login = () => {
             Sign in with Google
           </Button>
           <Text>or Sign in with email</Text>
-          <Label>Username or Email</Label>
-          <Input />
+          <Label>Email</Label>
+          <Input onChange={(e)=>{setEmail(e.target.value)}}/>
           <Label>
             Password
             <NavLink
@@ -129,8 +151,9 @@ const Login = () => {
               Forgot?
             </NavLink>
           </Label>
-          <Input />
-          <Button tone="dark">Sign in</Button>
+          <Input type="password" onChange={(e) => { setPassword(e.target.value) }} />
+          {error && <Error>Something went wrong!</Error>}
+          <Button tone="dark" onClick={handleLogin} disabled={isFetching}>Sign in</Button>
           <Text>
             Don't have an account?
             <NavLink to={"/register"} style={{ color: "#000" }}>

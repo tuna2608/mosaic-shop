@@ -6,7 +6,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { mobile } from '../utilities/responsive';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutDispatch } from '../redux/apiCalls';
 
 const Container = styled.div`
   height: 60px;
@@ -40,6 +41,8 @@ const SearchContainer = styled.div`
   border: 0.5px solid lightgray;
   display: flex;
   align-items: center;
+  padding:0 4px;
+
   margin-left: 25px;
   /* padding: 10px; */
   /* border-radius: 20px; */
@@ -94,6 +97,9 @@ const Navbar = () => {
   // Get redux state
   const quantity = useSelector((state) => state.cart.quantity);
   // const dispatch = useDispatch();
+
+  const user = useSelector(state=> state.user.currentUser);
+  const dispatch = useDispatch()
   return (
     <Container>
       <Wrapper>
@@ -120,8 +126,10 @@ const Navbar = () => {
           </Logo>
         </Center>
         <Right>
-          <MenuItem onClick={() => navigate('/register')}>REGISTER</MenuItem>
-          <MenuItem onClick={() => navigate('/login')}>SIGN IN</MenuItem>
+         {!user ? <><MenuItem onClick={() => navigate('/register')}>REGISTER</MenuItem>
+            <MenuItem onClick={() => navigate('/login')}>SIGN IN</MenuItem></>
+          :  <MenuItem onClick={() => logoutDispatch(dispatch)}>SIGN OUT</MenuItem>
+        }
           <MenuItem onClick={() => navigate('/cart')}>
             <Badge badgeContent={quantity} color="primary">
               <ShoppingCartOutlinedIcon />
