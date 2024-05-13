@@ -5,6 +5,9 @@ const jwt = require('jsonwebtoken');
 
 // REGISTER
 router.post('/register', async (req, res) => {
+  if (req.body.password !== req.body.confirmPassword) {
+    return res.status(500).json("Passwords are not matched!")
+  }
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -14,8 +17,13 @@ router.post('/register', async (req, res) => {
     ).toString(),
   });
   try {
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      const savedUser = await newUser.save();
+      res.status(201).json(savedUser);
+    } else {
+      return res.status(401).json('User is registered!');
+    }
   } catch (err) {
     res.status(500).json(err);
   }

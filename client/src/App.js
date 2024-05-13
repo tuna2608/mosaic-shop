@@ -13,18 +13,20 @@ import Cart from './pages/Cart';
 import Error from './pages/Error';
 import Success from './components/Success';
 import { useSelector } from 'react-redux';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   // Testing
   const user = useSelector(state=> state.user.currentUser);
   return (
-    <Router>
+    <>
+      <Router>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route
           path="/register"
-          element={user ? <Navigate to="/" /> : <Register />}
+          element={user ? <Navigate to="/login" /> : <Register />}
         />
         <Route path="/home" element={<Home />} />
         <Route path="/product/:id" element={<Product />} />
@@ -36,7 +38,10 @@ function App() {
 
         
       </Routes>
-    </Router>
+      </Router>
+      <ToastContainer />
+    </>
+    
   );
 }
 

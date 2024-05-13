@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../utilities/responsive";
 import { login } from "../redux/apiCalls";
-import {useDispatch, useSelector} from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { Bounce, toast } from 'react-toastify';
+
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -110,12 +112,63 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isFetching, error } = useSelector(state => state.user);
+  const location = useLocation()
 
+  // Toast
+  const succeed = () => toast.success('Registered Successfully!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+    });
+    ;
+  // End toast
+  
+  // Validation
+  const isValidEmail = (value) => {
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
+  const isValidPassword = (value) => {
+    // Password validation: at least 6 characters
+    return value.length >= 6;
+  };
+  // End Validation
+
+  // Handle Login
   const handleLogin = (e) => {
     e.preventDefault();
-    login(dispatch, {email, password})
-  }
+    // Validation checks
+    if (!isValidEmail(email)) {
+      toast.error("Please enter a valid email address.", {
+      });
+      return;
+    }
 
+    if (!isValidPassword(password)) {
+      toast.error("Password must be at least 6 characters long.", {
+      });
+      return;
+    }
+    // If all validations pass, proceed with login
+    login(dispatch, { email, password });
+  };
+  useEffect(() => {
+    if (location.state === "registered") {
+      if (!error) {
+        succeed()
+      }
+      }
+  }, [location.state, error])
+  
+  // End handle Login
   return (
     <Container>
       <AnimationContainer>
@@ -142,7 +195,7 @@ const Login = () => {
           </Button>
           <Text>or Sign in with email</Text>
           <Label>Email</Label>
-          <Input onChange={(e)=>{setEmail(e.target.value)}}/>
+          <Input required = "true" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
           <Label>
             Password
             <NavLink
@@ -151,9 +204,9 @@ const Login = () => {
               Forgot?
             </NavLink>
           </Label>
-          <Input type="password" onChange={(e) => { setPassword(e.target.value) }} />
+          <Input required = "true" value={password} type="password" onChange={(e) => { setPassword(e.target.value) }} />
           {error && <Error>Something went wrong!</Error>}
-          <Button tone="dark" onClick={handleLogin} disabled={isFetching}>Sign in</Button>
+          <Button tone="dark" onClick={handleLogin}>Sign in</Button>
           <Text>
             Don't have an account?
             <NavLink to={"/register"} style={{ color: "#000" }}>

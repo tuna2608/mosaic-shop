@@ -1,9 +1,14 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { mobile } from '../utilities/responsive';
+import { useDispatch, useSelector } from 'react-redux';
+import { signup } from '../redux/apiCalls';
+import { toast } from 'react-toastify';
+
+
 const Container = styled.div`
-  display: flex;
+  display: flex; 
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -67,6 +72,10 @@ const Button = styled.button`
   &:hover {
     cursor: pointer;
   }
+  &:disabled{
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 `;
 
 const Input = styled.input`
@@ -92,8 +101,60 @@ const GoogleImage = styled.img`
   width: 30px;
   height: 30px;
 `;
+const Error = styled.p`
+text-align: center;
+  color: red;
+  font-weight: 600;
+`
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { isFetching, error } = useSelector(state => state.user);
+  const navigate = useNavigate();
+
+
+  // Validation
+  const isValidEmail = (value) => {
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
+  const isValidPassword = (value) => {
+    // Password validation: at least 6 characters
+    return value.length >= 6;
+  };
+  // End Validation
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // Validation checks
+    if (!isValidEmail(email)) {
+      toast.error("Please enter a valid email address.", {
+      });
+      return;
+    }
+
+    if (!isValidPassword(password)) {
+      toast.error("Password must be at least 6 characters long.", {
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Password are not matched.", {
+      });
+      return;
+    }
+
+    signup(dispatch, { username, email, password, confirmPassword })
+    navigate("/login", { state: "registered" })
+  };
+
   return (
     <Container>
       <AnimationContainer>
@@ -120,14 +181,15 @@ const Register = () => {
           </Button>
           <Text>or</Text>
           <Label>Username</Label>
-          <Input />
+          <Input required value={username} onChange={(e)=> setUserName(e.target.value)}/>
           <Label> Email</Label>
-          <Input />
+          <Input required  value = {email} type='email' onChange={(e)=> setEmail(e.target.value)}/>
           <Label>Password</Label>
-          <Input />
+          <Input required value={password} type='password' onChange={(e)=> setPassword(e.target.value)}/>
           <Label>Confirm Password</Label>
-          <Input />
-          <Button tone="dark">Sign up</Button>
+          <Input required value={confirmPassword} type='password' onChange={(e) => setConfirmPassword(e.target.value)} />
+          {error && <Error>Something went wrong!</Error>}
+          <Button tone="dark" onClick={handleRegister}>Sign up</Button>
           <Text>
             Already have an account?
             <NavLink to={'/login'} style={{ color: '#000' }}>
