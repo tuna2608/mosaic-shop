@@ -17,8 +17,8 @@ const Container = styled.div`
 const AnimationContainer = styled.div`
   flex: 3;
   ${mobile({
-    display: 'none',
-  })}
+  display: 'none',
+})}
 `;
 
 const RegisterContainer = styled.div`
@@ -26,12 +26,12 @@ const RegisterContainer = styled.div`
   display: flex;
   align-items: center;
   ${mobile({
-    width: '100%',
-    display: 'flex',
-    flexFlow: 'column',
-    alignItems: 'center',
-    padding: '30px',
-  })}
+  width: '100%',
+  display: 'flex',
+  flexFlow: 'column',
+  alignItems: 'center',
+  padding: '30px',
+})}
 `;
 
 const RegisterForm = styled.form`
@@ -43,12 +43,12 @@ const RegisterForm = styled.form`
   flex-flow: column;
   gap: 1px;
   ${mobile({
-    margin: '0',
-    padding: '30px',
-    // alignItems: "center",
-    justifyContent: 'center',
-    height: '100%',
-  })}
+  margin: '0',
+  padding: '30px',
+  // alignItems: "center",
+  justifyContent: 'center',
+  height: '100%',
+})}
 `;
 
 const Title = styled.h2`
@@ -181,11 +181,11 @@ const Register = () => {
           </Button>
           <Text>or</Text>
           <Label>Username</Label>
-          <Input required value={username} onChange={(e)=> setUserName(e.target.value)}/>
+          <Input required value={username} onChange={(e) => setUserName(e.target.value)} />
           <Label> Email</Label>
-          <Input required  value = {email} type='email' onChange={(e)=> setEmail(e.target.value)}/>
+          <Input required value={email} type='email' onChange={(e) => setEmail(e.target.value)} />
           <Label>Password</Label>
-          <Input required value={password} type='password' onChange={(e)=> setPassword(e.target.value)}/>
+          <Input required value={password} type='password' onChange={(e) => setPassword(e.target.value)} />
           <Label>Confirm Password</Label>
           <Input required value={confirmPassword} type='password' onChange={(e) => setConfirmPassword(e.target.value)} />
           {error && <Error>Something went wrong!</Error>}

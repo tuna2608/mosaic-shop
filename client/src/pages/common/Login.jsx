@@ -16,8 +16,8 @@ const Container = styled.div`
 const AnimationContainer = styled.div`
   flex: 3;
   ${mobile({
-    display: "none",
-  })}
+  display: "none",
+})}
 `;
 
 const LoginContainer = styled.div`
@@ -25,12 +25,12 @@ const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   ${mobile({
-    width: "100%",
-    display: "flex",
-    flexFlow: "column",
-    alignItems: "center",
-    padding: "30px",
-  })}
+  width: "100%",
+  display: "flex",
+  flexFlow: "column",
+  alignItems: "center",
+  padding: "30px",
+})}
 `;
 
 const LoginForm = styled.form`
@@ -42,12 +42,12 @@ const LoginForm = styled.form`
   flex-flow: column;
   gap: 10px;
   ${mobile({
-    margin: "0",
-    padding: "30px",
-    // alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-  })}
+  margin: "0",
+  padding: "30px",
+  // alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
+})}
 `;
 
 const Title = styled.h2`
@@ -125,10 +125,10 @@ const Login = () => {
     progress: undefined,
     theme: "light",
     transition: Bounce,
-    });
-    ;
+  });
+  ;
   // End toast
-  
+
   // Validation
   const isValidEmail = (value) => {
     // Regular expression for email validation
@@ -165,15 +165,15 @@ const Login = () => {
       if (!error) {
         succeed()
       }
-      }
+    }
   }, [location.state, error])
-  
+
   // End handle Login
   return (
     <Container>
       <AnimationContainer>
         <video
-          src="./videos/animation.mp4"
+          src="/videos/animation.mp4"
           playsInline
           autoPlay
           loop
@@ -190,21 +190,21 @@ const Login = () => {
         <LoginForm>
           <Title>Sign in to A'More</Title>
           <Button>
-            <GoogleImage src="./images/google.jpg" />
+            <GoogleImage src="/images/google.jpg" />
             Sign in with Google
           </Button>
           <Text>or Sign in with email</Text>
           <Label>Email</Label>
-          <Input required = "true" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
+          <Input required="true" value={email} onChange={(e) => { setEmail(e.target.value) }} />
           <Label>
             Password
-            <NavLink
-              style={{ color: "#000", fontWeight: "500", fontSize: "14px" }}
+            <div
+              style={{ color: "#000", fontWeight: "500", fontSize: "14px", textDecoration: "underline" }}
             >
               Forgot?
-            </NavLink>
+            </div>
           </Label>
-          <Input required = "true" value={password} type="password" onChange={(e) => { setPassword(e.target.value) }} />
+          <Input required="true" value={password} type="password" onChange={(e) => { setPassword(e.target.value) }} />
           {error && <Error>Something went wrong!</Error>}
           <Button tone="dark" onClick={handleLogin} disabled={isFetching}>Sign in</Button>
           <Text>

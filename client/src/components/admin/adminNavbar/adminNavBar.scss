@@ -14,8 +14,8 @@
       align-items: center;
       gap: 20px;
   
-      span {
-        color: #0758c1;
+      .logo {
+        color: darkblue;
         font-weight: 700;
         font-size: 22px;
       }
@@ -42,28 +42,54 @@
       align-items: center;
       gap: 20px;
       background-color: #fff;
-        
+      position: relative;
       .info{
-        width: 80px;
+        width: 100px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 24px 8px;
+        cursor: pointer;
+        img {
+          width: 32px;
+          height: 28px;
+          border-radius: 50%;
+          margin-right: -10px;
+          object-fit: cover;
+        }
+        span {
+          font-weight: 500;
+        }
 
       }
-      .info:hover{
-        cursor: pointer;
-        background-color: #f0e4e4  ;
-      }
-      img {
-        width: 32px;
-        height: 28px;
-        border-radius: 50%;
-        margin-right: -10px;
-        object-fit: cover;
-      }
-      span {
-        font-weight: 500;
+      .popupBox {
+        position: absolute;
+        bottom: -150px;
+        right:0px;
+        background-color: rgb(236, 241, 244);
+        box-shadow: rgba(112, 112, 120, 0.2) 0px 7px 29px 0px;    
+        width: 140px;
+        height: 140px;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        gap: 2px;
+        border-radius: 10px;
+        .logout-btn, .edit-btn, .pass-btn{
+          border: none;
+          width: 100%;
+          padding: 10px 10px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 10px;
+          background-color: transparent;
+          font-size: 10px;
+          border-radius: 10px;
+          &:hover{
+            cursor: pointer;
+            background-color: #ccc;
+          }
+        }
       }
     }
   }

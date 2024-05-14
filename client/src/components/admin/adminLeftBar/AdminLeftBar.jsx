@@ -9,6 +9,7 @@ import FlagCircleOutlinedIcon from '@mui/icons-material/FlagCircleOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
+import { NavLink } from "react-router-dom";
 const AdminLeftBar = () => {
   return (
     <div className="leftBar">
@@ -17,10 +18,12 @@ const AdminLeftBar = () => {
           <div className="user">
             <span style={{ fontWeight: "700", color: "#ccc", fontSize: "18px" }}>Menu</span>
           </div>
-          <div className="item">
-            <HomeOutlinedIcon />
-            <span>Home</span>
-          </div>
+          <NavLink className="links-style" to="/home">
+            <div className="item">
+              <HomeOutlinedIcon />
+              <span>Home</span>
+            </div>
+          </NavLink>
           <div className="item">
             <AutoGraphOutlinedIcon />
             <span>Analytics</span>
@@ -35,14 +38,18 @@ const AdminLeftBar = () => {
           <div className="user">
             <span style={{ fontWeight: "700", color: "#ccc", fontSize: "18px" }}>Management</span>
           </div>
-          <div className="item">
-            <PeopleAltOutlinedIcon />
-            <span>Users</span>
-          </div>
-          <div className="item">
-            <Inventory2OutlinedIcon />
-            <span>Products</span>
-          </div>
+          <NavLink className="links-style" to="/userlist">
+            <div className="item">
+              <PeopleAltOutlinedIcon />
+              <span>Users</span>
+            </div>
+          </NavLink>
+          <NavLink className="links-style" to="/productlist">
+            <div className="item">
+              <Inventory2OutlinedIcon />
+              <span>Products</span>
+            </div>
+          </NavLink>
           <div className="item">
             <ReceiptLongOutlinedIcon />
             <span>Transaction</span>
@@ -71,7 +78,7 @@ const AdminLeftBar = () => {
         </div>
         <hr />
       </div>
-    </div>
+    </div >
   )
 }
 
