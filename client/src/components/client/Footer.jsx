@@ -7,7 +7,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import { mobile } from '../utilities/responsive';
+import { mobile } from '../../utilities/responsive';
 const Container = styled.div`
   height: 30vh;
   display: flex;
@@ -30,7 +30,7 @@ const Desc = styled.p`
   width: 80%;
   line-height: 1.2;
   margin: 20px 0;
-  font-size: 18px;
+  font-size: 12px;
   ${mobile({ width: '100%' })}
 `;
 const Socials = styled.div`

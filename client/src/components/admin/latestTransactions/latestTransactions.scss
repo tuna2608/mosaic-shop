@@ -1,0 +1,43 @@
+.latest-transactions-container{
+    flex: 7;
+    padding: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;    
+    table{
+        margin-top: 10px;
+        // border-collapse: collapse;
+        border-spacing: 20px;
+        width: 100%;
+        th {
+            text-align: left;
+        }
+       .first-td{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        img{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+       }
+       .status{
+        padding: 6px 8px;
+        border-radius: 10px;
+        border: none;
+       }
+       .status.Approved{
+        background-color: #e5faf2;
+        color:#3bb077;
+        }
+        .status.Declined{
+            background-color: #fff0f1;
+            color:#d95087;
+
+        }
+        .status.Pending{
+            background-color: #ebf1fe;
+            color:blueviolet;
+            }
+    }
+}

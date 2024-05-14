@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Announcement from '../components/Announcement';
-import Navbar from '../components/Navbar';
-import { mobile } from '../utilities/responsive';
+import Announcement from '../../components/client/Announcement';
+import Navbar from '../../components/client/Navbar';
+import { mobile } from '../../utilities/responsive';
 
 const Container = styled.div``;
 

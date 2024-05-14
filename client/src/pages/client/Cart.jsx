@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Navbar from '../components/Navbar';
-import Announcement from '../components/Announcement';
-import Footer from '../components/Footer';
+import Navbar from '../../components/client/Navbar';
+import Announcement from '../../components/client/Announcement';
+import Footer from '../../components/client/Footer';
 import { Add, Remove } from '@mui/icons-material';
-import Newsletter from '../components/Newsletter';
+import Newsletter from '../../components/client/Newsletter';
 import { useNavigate } from 'react-router-dom';
-import { mobile } from '../utilities/responsive';
+import { mobile } from '../../utilities/responsive';
 import { useSelector } from 'react-redux';
-import { formatCurrency } from '../utilities/formatCurrency';
+import { formatCurrency } from '../../utilities/formatCurrency';
 import StripeCheckout from 'react-stripe-checkout';
-import { userRequest } from '../utilities/requestMethod';
+import { userRequest } from '../../utilities/requestMethod';
 
 const KEY = process.env.REACT_APP_STRIPE;
 

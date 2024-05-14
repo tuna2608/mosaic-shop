@@ -5,9 +5,9 @@ import { Badge } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { mobile } from '../utilities/responsive';
+import { mobile } from '../../utilities/responsive';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutDispatch } from '../redux/apiCalls';
+import { logoutDispatch } from '../../redux/apiCalls';
 
 const Container = styled.div`
   height: 60px;

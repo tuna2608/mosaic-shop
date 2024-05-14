@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Navbar from '../components/Navbar';
-import Products from '../components/Products';
-import Newsletter from '../components/Newsletter';
-import Footer from '../components/Footer';
-import { formatCurrency } from '../utilities/formatCurrency';
-import Menu from '../components/Menu';
-import { mobile } from '../utilities/responsive';
+import Navbar from '../../components/client/Navbar';
+import Products from '../../components/client/Products';
+import Newsletter from '../../components/client/Newsletter';
+import Footer from '../../components/client/Footer';
+import { formatCurrency } from '../../utilities/formatCurrency';
+import Menu from '../../components/client/Menu';
+import { mobile } from '../../utilities/responsive';
 import { useLocation } from 'react-router-dom';
 
 const Container = styled.div``;

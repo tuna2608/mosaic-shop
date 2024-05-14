@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Navbar from '../components/Navbar';
-import Announcement from '../components/Announcement';
-import Footer from '../components/Footer';
-import { formatCurrency } from '../utilities/formatCurrency';
-import Newsletter from '../components/Newsletter';
+import Navbar from '../../components/client/Navbar';
+import Announcement from '../../components/client/Announcement';
+import Footer from '../../components/client/Footer';
+import { formatCurrency } from '../../utilities/formatCurrency';
+import Newsletter from '../../components/client/Newsletter';
 import { Add, Remove } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
-import { mobile } from '../utilities/responsive';
-import { publicRequest } from '../utilities/requestMethod';
+import { mobile } from '../../utilities/responsive';
+import { publicRequest } from '../../utilities/requestMethod';
 import { useDispatch } from 'react-redux';
-import { addProduct } from '../redux/cartSlice';
+import { addProduct } from '../../redux/cartSlice';
 
 const Container = styled.div``;
 const ItemContainer = styled.div`

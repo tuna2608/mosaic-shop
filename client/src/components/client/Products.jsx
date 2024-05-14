@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ProductCard from './ProductCard';
-import { mobile } from '../utilities/responsive';
+import { mobile } from '../../utilities/responsive';
 import SoldOut from './SoldOut';
-import { publicRequest } from '../utilities/requestMethod';
+import { publicRequest } from '../../utilities/requestMethod';
 
 const Container = styled.div`
   display: flex;

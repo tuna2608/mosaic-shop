@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import { mobile } from "../utilities/responsive";
-import { login } from "../redux/apiCalls";
-import { useDispatch, useSelector } from "react-redux"
-import { Bounce, toast } from 'react-toastify';
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { mobile } from '../../utilities/responsive';
+import { useDispatch, useSelector } from 'react-redux';
+import { signup } from '../../redux/apiCalls';
+import { toast } from 'react-toastify';
+
 
 const Container = styled.div`
-  display: flex;
+  display: flex; 
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -16,37 +17,37 @@ const Container = styled.div`
 const AnimationContainer = styled.div`
   flex: 3;
   ${mobile({
-    display: "none",
+    display: 'none',
   })}
 `;
 
-const LoginContainer = styled.div`
+const RegisterContainer = styled.div`
   flex: 7;
   display: flex;
   align-items: center;
   ${mobile({
-    width: "100%",
-    display: "flex",
-    flexFlow: "column",
-    alignItems: "center",
-    padding: "30px",
+    width: '100%',
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'center',
+    padding: '30px',
   })}
 `;
 
-const LoginForm = styled.form`
+const RegisterForm = styled.form`
   margin-left: 100px;
   padding: 0 60px 30px 60px;
   width: 100%;
   max-width: 416px;
   display: flex;
   flex-flow: column;
-  gap: 10px;
+  gap: 1px;
   ${mobile({
-    margin: "0",
-    padding: "30px",
+    margin: '0',
+    padding: '30px',
     // alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
+    justifyContent: 'center',
+    height: '100%',
   })}
 `;
 
@@ -66,8 +67,8 @@ const Button = styled.button`
   font-weight: 600;
   font-size: 16px;
   background-color: ${(props) =>
-    props.tone === "dark" ? "#000" : "transparent"};
-  color: ${(props) => (props.tone === "dark" ? "#fff" : "#000")};
+    props.tone === 'dark' ? '#000' : 'transparent'};
+  color: ${(props) => (props.tone === 'dark' ? '#fff' : '#000')};
   &:hover {
     cursor: pointer;
   }
@@ -106,29 +107,16 @@ text-align: center;
   font-weight: 600;
 `
 
-
-const Login = () => {
+const Register = () => {
   const dispatch = useDispatch();
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { isFetching, error } = useSelector(state => state.user);
-  const location = useLocation()
+  const navigate = useNavigate();
 
-  // Toast
-  const succeed = () => toast.success('Registered Successfully!', {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-    transition: Bounce,
-    });
-    ;
-  // End toast
-  
+
   // Validation
   const isValidEmail = (value) => {
     // Regular expression for email validation
@@ -142,8 +130,7 @@ const Login = () => {
   };
   // End Validation
 
-  // Handle Login
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
     // Validation checks
     if (!isValidEmail(email)) {
@@ -157,18 +144,17 @@ const Login = () => {
       });
       return;
     }
-    // If all validations pass, proceed with login
-    login(dispatch, { email, password });
+
+    if (password !== confirmPassword) {
+      toast.error("Password are not matched.", {
+      });
+      return;
+    }
+
+    signup(dispatch, { username, email, password, confirmPassword })
+    navigate("/login", { state: "registered" })
   };
-  useEffect(() => {
-    if (location.state === "registered") {
-      if (!error) {
-        succeed()
-      }
-      }
-  }, [location.state, error])
-  
-  // End handle Login
+
   return (
     <Container>
       <AnimationContainer>
@@ -179,44 +165,41 @@ const Login = () => {
           loop
           muted
           style={{
-            height: "100%",
-            width: "100%",
-            objectFit: "cover",
-            overflowClipMargin: "content-box",
+            height: '100%',
+            width: '100%',
+            objectFit: 'cover',
+            overflowClipMargin: 'content-box',
           }}
         ></video>
       </AnimationContainer>
-      <LoginContainer>
-        <LoginForm>
-          <Title>Sign in to A'More</Title>
+      <RegisterContainer>
+        <RegisterForm>
+          <Title>Sign up to A'More</Title>
           <Button>
             <GoogleImage src="./images/google.jpg" />
-            Sign in with Google
+            Sign up with Google
           </Button>
-          <Text>or Sign in with email</Text>
-          <Label>Email</Label>
-          <Input required = "true" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
-          <Label>
-            Password
-            <NavLink
-              style={{ color: "#000", fontWeight: "500", fontSize: "14px" }}
-            >
-              Forgot?
-            </NavLink>
-          </Label>
-          <Input required = "true" value={password} type="password" onChange={(e) => { setPassword(e.target.value) }} />
+          <Text>or</Text>
+          <Label>Username</Label>
+          <Input required value={username} onChange={(e)=> setUserName(e.target.value)}/>
+          <Label> Email</Label>
+          <Input required  value = {email} type='email' onChange={(e)=> setEmail(e.target.value)}/>
+          <Label>Password</Label>
+          <Input required value={password} type='password' onChange={(e)=> setPassword(e.target.value)}/>
+          <Label>Confirm Password</Label>
+          <Input required value={confirmPassword} type='password' onChange={(e) => setConfirmPassword(e.target.value)} />
           {error && <Error>Something went wrong!</Error>}
-          <Button tone="dark" onClick={handleLogin}>Sign in</Button>
+          <Button tone="dark" onClick={handleRegister} disabled={isFetching}>Sign up</Button>
           <Text>
-            Don't have an account?
-            <NavLink to={"/register"} style={{ color: "#000" }}>
-              Sign up
+            Already have an account?
+            <NavLink to={'/login'} style={{ color: '#000' }}>
+              Sign in
             </NavLink>
           </Text>
-        </LoginForm>
-      </LoginContainer>
+        </RegisterForm>
+      </RegisterContainer>
     </Container>
   );
 };
 
-export default Login;
+export default Register;

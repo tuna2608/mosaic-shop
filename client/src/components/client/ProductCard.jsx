@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { FavoriteBorderOutlined, Search } from '@mui/icons-material';
-import { formatCurrency } from '../utilities/formatCurrency';
+import { formatCurrency } from '../../utilities/formatCurrency';
 import { Link } from 'react-router-dom';
-import { mobile } from '../utilities/responsive';
+import { mobile } from '../../utilities/responsive';
 import { useDispatch } from 'react-redux';
-import { addProduct } from '../redux/cartSlice';
+import { addProduct } from '../../redux/cartSlice';
 
 const Info = styled.div`
   opacity: 0;

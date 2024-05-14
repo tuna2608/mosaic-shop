@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { categories } from "../data/categories";
+import { categories } from "../../data/categories";
 import CategoryCard from "./CategoryCard";
-import { mobile } from "../utilities/responsive";
+import { mobile } from "../../utilities/responsive";
 
 const Container = styled.div`
   display: flex;

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
-import { sliderItems } from "../data/sliderItems";
+import { sliderItems } from "../../data/sliderItems";
 import { useNavigate } from "react-router-dom";
-import { mobile } from "../utilities/responsive";
+import { mobile } from "../../utilities/responsive";
 // General
 const Container = styled.div`
   margin-top: 30px;
