@@ -1,4 +1,4 @@
-export const rows = [
+export const userRows = [
     {
         id: 1,
         username: 'Willson Tran',

@@ -1,25 +1,20 @@
 import React, { useState } from 'react'
-import "./userlist.scss"
+import "./adminProductList.scss"
 import AdminNavBar from '../../../components/admin/adminNavbar/AdminNavBar'
 import AdminLeftBar from '../../../components/admin/adminLeftBar/AdminLeftBar'
 import { DataGrid } from '@mui/x-data-grid';
-import { userRows } from "../../../data/fakeUserList"
+import { productRows } from "../../../data/fakeProductList"
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { NavLink } from 'react-router-dom';
 
-function UserList() {
 
-    const [data, setData] = useState(userRows)
 
-    const handDelete = (id) => {
-        setData(data.filter(item => item.id !== id
-        ))
-    }
+function AdminProductList() {
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         {
-            field: 'user', headerName: 'Username', width: 200, renderCell: (params) => {
+            field: 'product', headerName: 'Product', width: 200, renderCell: (params) => {
                 return <div
                     style={{
                         display: "flex",
@@ -33,26 +28,20 @@ function UserList() {
                             borderRadius: "50%",
                             objectFit: "cover"
                         }}
-                        src={params.row.avatar}
+                        src={params.row.img}
                         alt="" />
-                    <p>{params.row.username}</p>
+                    <p>{params.row.title}</p>
                 </div>
             }
         },
         {
-            field: 'email',
-            headerName: 'Email',
-            type: 'string',
+            field: 'stock',
+            headerName: 'Stock',
             width: 200,
         },
         {
-            field: 'status',
-            headerName: 'Status',
-            width: 160,
-        },
-        {
-            field: 'transaction',
-            headerName: 'Transaction',
+            field: 'price',
+            headerName: 'Price',
             width: 160,
         },
         {
@@ -68,7 +57,7 @@ function UserList() {
                             alignItems: "center",
                             gap: "10px"
                         }}>
-                        <NavLink to={"/user/" + params.row.id}>
+                        <NavLink to={"/adminProduct/" + params.row.id}>
                             <button
                                 style={{
                                     border: "none",
@@ -90,13 +79,20 @@ function UserList() {
         },
     ];
 
+    const [data, setData] = useState(productRows)
+
+    const handDelete = (id) => {
+        setData(data.filter(item => item.id !== id
+        ))
+    }
+
     return (
-        <div className='user-list-container'>
+        <div className='product-list-container'>
             <AdminNavBar />
-            <div className='user-list-bottom'>
+            <div className='product-list-bottom'>
                 <AdminLeftBar />
                 <div className='bottom-right'>
-                    <h1>User Management</h1>
+                    <h1>Product Management</h1>
                     <div style={{ height: '70vh', width: '100%' }}>
                         <DataGrid
                             disableRowSelectionOnClick
@@ -117,4 +113,4 @@ function UserList() {
     )
 }
 
-export default UserList
+export default AdminProductList

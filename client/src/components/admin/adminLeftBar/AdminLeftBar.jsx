@@ -38,13 +38,13 @@ const AdminLeftBar = () => {
           <div className="user">
             <span style={{ fontWeight: "700", color: "#ccc", fontSize: "18px" }}>Management</span>
           </div>
-          <NavLink className="links-style" to="/userlist">
+          <NavLink className="links-style" to="/userList">
             <div className="item">
               <PeopleAltOutlinedIcon />
               <span>Users</span>
             </div>
           </NavLink>
-          <NavLink className="links-style" to="/productlist">
+          <NavLink className="links-style" to="/adminProductList">
             <div className="item">
               <Inventory2OutlinedIcon />
               <span>Products</span>

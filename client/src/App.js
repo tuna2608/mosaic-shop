@@ -19,6 +19,9 @@ import {AdminHome} from './pages/admin/adminhome/AdminHome';
 import UserList from './pages/admin/userlist/UserList';
 import DetailUser from './pages/admin/detailuser/DetailUser';
 import NewUser from './pages/admin/newuser/NewUser';
+import AdminProductList from './pages/admin/adminproductlist/AdminProductList';
+import AdminProductDetail from './pages/admin/adminproductdetail/AdminProductDetail';
+import NewProduct from './pages/admin/newproduct/NewProduct';
 function App() {
   // Testing
   const user = useSelector(state => state.user.currentUser);
@@ -41,11 +44,13 @@ function App() {
           
           {/* Admin Routes */}
           
-        <Route path="/home" element={isAdmin ? <AdminHome /> : <Login />} />
-        <Route path="/userlist" element={isAdmin ? <UserList /> : <Login />} />
-        <Route path="/newUser" element={isAdmin ? <NewUser /> : <Login />} />
-
+        <Route path="/home" element={isAdmin ? <AdminHome /> : <Home />} />
+          <Route path="/userList" element={isAdmin ? <UserList /> : <Login />} />          
         <Route path="/user/:userId" element={isAdmin ? <DetailUser /> : <Login />} />
+        <Route path="/newUser" element={isAdmin ? <NewUser /> : <Login />} />
+        <Route path="/adminProductList" element={isAdmin ? <AdminProductList /> : <Login />} />
+        <Route path="/adminProduct/:productId" element={isAdmin ? <AdminProductDetail /> : <Login />} />
+        <Route path="/newProduct" element={isAdmin ? <NewProduct /> : <Login />} />
           
           {/* End Admin Routes */}
           
