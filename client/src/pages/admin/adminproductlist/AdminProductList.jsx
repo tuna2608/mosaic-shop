@@ -1,18 +1,91 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./adminProductList.scss"
 import AdminNavBar from '../../../components/admin/adminNavbar/AdminNavBar'
 import AdminLeftBar from '../../../components/admin/adminLeftBar/AdminLeftBar'
 import { DataGrid } from '@mui/x-data-grid';
-import { productRows } from "../../../data/fakeProductList"
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { NavLink } from 'react-router-dom';
-
+import { NavLink, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteProduct, getProducts } from '../../../redux/apiCalls';
+import { Bounce, toast } from 'react-toastify';
 
 
 function AdminProductList() {
 
+    const location = useLocation();
+    const [notification, setNotification] = useState(location.state)
+
+    const dispatch = useDispatch()
+
+    // Toast
+    const createdSuccessfully = () => toast.success(`Created Product Successfully!`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+    });
+
+    const updatedSuccessfully = () => toast.success(`Updated Product Successfully!`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+    });
+
+    const deletedSuccessfully = () => toast.success(`Deleted Product Successfully!`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+    });
+    // End toast
+
+    useEffect(() => {
+        if (notification === "Created") {
+            createdSuccessfully()
+            setNotification("")
+        }
+        if (notification === "Updated") {
+            updatedSuccessfully()
+            setNotification("")
+        }
+        if (notification === "Deleted") {
+            deletedSuccessfully()
+            setNotification("")
+        }
+    }, [notification])
+
+    const handleDelete = (id) => {
+        deleteProduct(id, dispatch)
+        setNotification("Deleted")
+    }
+
+    useEffect(() => {
+        getProducts(dispatch);
+    }, [dispatch])
+
+    const products = useSelector(state => state.product.products) || []
+
+    const validProducts = products.filter(product => product && product._id);
+
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { field: '_id', headerName: 'ID', width: 210 },
         {
             field: 'product', headerName: 'Product', width: 200, renderCell: (params) => {
                 return <div
@@ -35,8 +108,8 @@ function AdminProductList() {
             }
         },
         {
-            field: 'stock',
-            headerName: 'Stock',
+            field: 'inStock',
+            headerName: 'InStock',
             width: 200,
         },
         {
@@ -57,7 +130,7 @@ function AdminProductList() {
                             alignItems: "center",
                             gap: "10px"
                         }}>
-                        <NavLink to={"/adminProduct/" + params.row.id}>
+                        <NavLink to={"/adminProduct/" + params.row._id}>
                             <button
                                 style={{
                                     border: "none",
@@ -72,19 +145,12 @@ function AdminProductList() {
                         </NavLink>
                         <DeleteOutlineIcon
                             style={{ cursor: "pointer", color: "red" }}
-                            onClick={() => handDelete(params.row.id)} />
+                            onClick={() => handleDelete(params.row._id)} />
                     </div>
                 )
             }
         },
     ];
-
-    const [data, setData] = useState(productRows)
-
-    const handDelete = (id) => {
-        setData(data.filter(item => item.id !== id
-        ))
-    }
 
     return (
         <div className='product-list-container'>
@@ -92,12 +158,27 @@ function AdminProductList() {
             <div className='product-list-bottom'>
                 <AdminLeftBar />
                 <div className='bottom-right'>
-                    <h1>Product Management</h1>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} className="user-title-container">
+                        <h1>Product Management</h1>
+                        <NavLink to="/newProduct">
+                            <button style={{
+                                width: "80px",
+                                color: "#fff",
+                                borderRadius: "5px",
+                                backgroundColor: "teal",
+                                cursor: "pointer",
+                                padding: "10px",
+                                fontSize: "16px",
+                                border: "none"
+                            }} className="user-add-btn">Create</button>
+                        </NavLink>
+                    </div>
                     <div style={{ height: '70vh', width: '100%' }}>
                         <DataGrid
                             disableRowSelectionOnClick
-                            rows={data}
+                            rows={validProducts}
                             columns={columns}
+                            getRowId={row => row._id}
                             initialState={{
                                 pagination: {
                                     paginationModel: { page: 0, pageSize: 5 },

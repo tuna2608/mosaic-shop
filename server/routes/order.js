@@ -58,7 +58,7 @@ router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
 });
 
 // Get all Orders || Only admin can view all Orders
-router.get('/findAll', verifyTokenAndAdmin, async (req, res) => {
+router.get('/', verifyTokenAndAdmin, async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);

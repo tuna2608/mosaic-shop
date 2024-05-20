@@ -42,7 +42,8 @@
     }
 }
 .product-bottom{
-    margin: 20px;
+    margin: 0 20px;
+    margin-bottom: 80px;
     padding: 10px;
     flex:1;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;  
@@ -62,6 +63,7 @@
             margin-bottom: 10px;
             border: none;
             padding: 5px;
+            outline: none;
             border-bottom: 1px solid gray;
         }
         .product-form-left>select{

@@ -22,9 +22,8 @@ const Products = ({ cate, filter = 'default', sort }) => {
         const response = await publicRequest.get(
           cate ? `/products?category=${cate}` : '/products'
         );
-        console.log(response.data);
         setProducts(response.data);
-      } catch (error) {}
+      } catch (error) { }
     };
     getProducts();
   }, [cate]);
