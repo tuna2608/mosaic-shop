@@ -8,7 +8,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import LogoutIcon from '@mui/icons-material/Logout';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import KeyIcon from '@mui/icons-material/Key';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { logoutDispatch } from "../../../redux/apiCalls";
@@ -18,6 +18,13 @@ const AdminNavBar = () => {
   const dispatch = useDispatch()
   const popup = () => {
     setIsPopuped(!isPopuped);
+  }
+  const navigate = useNavigate();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logoutDispatch(dispatch)
+    navigate("/login");
   }
 
   return (
@@ -43,7 +50,7 @@ const AdminNavBar = () => {
         {isPopuped && <div className="popupBox">
           <button className="edit-btn"> <ModeEditOutlineIcon /> Edit Profile</button>
           <button className="pass-btn"> <KeyIcon /> Change Password</button>
-          <button style={{ paddingRight: "10px" }} className="logout-btn" onClick={() => logoutDispatch(dispatch)}>
+          <button style={{ paddingRight: "10px" }} className="logout-btn" onClick={handleLogout}>
             <LogoutIcon /> Log Out
           </button>
         </div>}

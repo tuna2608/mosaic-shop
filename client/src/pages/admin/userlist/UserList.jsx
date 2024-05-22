@@ -1,23 +1,91 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./userlist.scss"
 import AdminNavBar from '../../../components/admin/adminNavbar/AdminNavBar'
 import AdminLeftBar from '../../../components/admin/adminLeftBar/AdminLeftBar'
 import { DataGrid } from '@mui/x-data-grid';
-import { userRows } from "../../../data/fakeUserList"
+// import { userRows } from "../../../data/fakeUserList"
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser, getUsers } from '../../../redux/apiCalls';
+import { Bounce, toast } from 'react-toastify';
 
 function UserList() {
 
-    const [data, setData] = useState(userRows)
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const [notification, setNotification] = useState(location.state)
 
+    useEffect(() => {
+        getUsers(dispatch);
+    }, [dispatch])
+
+    const users = useSelector(state => state.users.users) || []
+
+
+    // Delete user
     const handDelete = (id) => {
-        setData(data.filter(item => item.id !== id
-        ))
+        deleteUser(id, dispatch)
+        setNotification("Deleted");
     }
 
+    // Toast
+    const createdSuccessfully = () => toast.success(`Created Product Successfully!`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+    });
+
+    const updatedSuccessfully = () => toast.success(`Updated Product Successfully!`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+    });
+
+    const deletedSuccessfully = () => toast.success(`Deleted Product Successfully!`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+    });
+    // End toast
+
+    useEffect(() => {
+        if (notification === "Created") {
+            createdSuccessfully()
+            setNotification("")
+        }
+        if (notification === "Updated") {
+            updatedSuccessfully()
+            setNotification("")
+        }
+        if (notification === "Deleted") {
+            deletedSuccessfully()
+            setNotification("")
+        }
+    }, [notification])
+
+
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { field: '_id', headerName: 'ID', width: 200 },
         {
             field: 'user', headerName: 'Username', width: 200, renderCell: (params) => {
                 return <div
@@ -33,7 +101,7 @@ function UserList() {
                             borderRadius: "50%",
                             objectFit: "cover"
                         }}
-                        src={params.row.avatar}
+                        src={params.row.img || "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"}
                         alt="" />
                     <p>{params.row.username}</p>
                 </div>
@@ -46,19 +114,9 @@ function UserList() {
             width: 200,
         },
         {
-            field: 'status',
-            headerName: 'Status',
-            width: 160,
-        },
-        {
-            field: 'transaction',
-            headerName: 'Transaction',
-            width: 160,
-        },
-        {
             field: 'actions',
             headerName: 'Actions',
-            width: 160,
+            width: 200,
             renderCell: (params) => {
                 return (
                     <div
@@ -68,7 +126,7 @@ function UserList() {
                             alignItems: "center",
                             gap: "10px"
                         }}>
-                        <NavLink to={"/user/" + params.row.id}>
+                        <NavLink to={"/user/" + params.row._id}>
                             <button
                                 style={{
                                     border: "none",
@@ -83,7 +141,7 @@ function UserList() {
                         </NavLink>
                         <DeleteOutlineIcon
                             style={{ cursor: "pointer", color: "red" }}
-                            onClick={() => handDelete(params.row.id)} />
+                            onClick={() => handDelete(params.row._id)} />
                     </div>
                 )
             }
@@ -96,12 +154,27 @@ function UserList() {
             <div className='user-list-bottom'>
                 <AdminLeftBar />
                 <div className='bottom-right'>
-                    <h1>User Management</h1>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} className="user-title-container">
+                        <h1>User Management</h1>
+                        <NavLink to="/newUser">
+                            <button style={{
+                                width: "80px",
+                                color: "#fff",
+                                borderRadius: "5px",
+                                backgroundColor: "teal",
+                                cursor: "pointer",
+                                padding: "10px",
+                                fontSize: "16px",
+                                border: "none"
+                            }} className="user-add-btn">Create</button>
+                        </NavLink>
+                    </div>
                     <div style={{ height: '70vh', width: '100%' }}>
                         <DataGrid
                             disableRowSelectionOnClick
-                            rows={data}
+                            rows={users}
                             columns={columns}
+                            getRowId={(row) => row._id}
                             initialState={{
                                 pagination: {
                                     paginationModel: { page: 0, pageSize: 5 },
@@ -116,5 +189,6 @@ function UserList() {
         </div>
     )
 }
+
 
 export default UserList
