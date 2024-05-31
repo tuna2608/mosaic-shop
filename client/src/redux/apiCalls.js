@@ -2,6 +2,7 @@ import { logout, loginFailure, loginStart, loginSuccess, signupStart, signupSucc
 import { publicRequest, userRequest } from "../utilities/requestMethod"
 import { addProductFailure, addProductStart, addProductSuccess, deleteProductFailure, deleteProductStart, deleteProductSuccess, getProductFailure, getProductStart, getProductSuccess, updateProductFailure, updateProductStart, updateProductSuccess } from "./productSlice";
 import { addUserStart, addUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, getUserFailure, getUserStart, getUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "./userSlice";
+import {getCartStart, getCartFailure, getCartSuccess, addToCartStart, addToCartSuccess, addToCartFailure} from "./cartSlice"
 
 // Auth
 export const login = async (dispatch,  user ) => {
@@ -110,5 +111,27 @@ export const updateUser = async (id, user, dispatch) => {
         dispatch(updateUserSuccess(res.data))
     } catch (error) {
         dispatch(updateUserFailure())
+    }
+}
+
+// Cart
+
+export const getCartByUId = async (dispatch, currentUserId) => {
+    dispatch(getCartStart());
+    try {
+        const res = await publicRequest.get(`carts/find/${currentUserId}`)
+        dispatch(getCartSuccess(res.data))
+    } catch (error) {
+        dispatch(getCartFailure())
+    }
+}
+
+export const addToCart = async (dispatch, product) => {
+    dispatch(addToCartStart());
+    try {
+        const res = await userRequest.post(`/carts`, product)
+        dispatch(addToCartSuccess(res.data))
+    } catch (error) {
+        dispatch(addToCartFailure())
     }
 }

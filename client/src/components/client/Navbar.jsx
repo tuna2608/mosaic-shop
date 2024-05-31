@@ -98,8 +98,17 @@ const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   // const dispatch = useDispatch();
 
-  const user = useSelector(state=> state.user.currentUser);
+  const handleLogout = () => {
+    logoutDispatch(dispatch);
+    navigate("/login")
+  }
+
+  const user = useSelector(state => state.user.currentUser);
   const dispatch = useDispatch()
+
+  // Get cart from redux
+  const cart = useSelector(state => state.cart.cart) || {}
+  const totalQuantity = cart.cartItems?.reduce((acc, currentValue) => acc + currentValue.quantity, 0);
   return (
     <Container>
       <Wrapper>
@@ -126,12 +135,12 @@ const Navbar = () => {
           </Logo>
         </Center>
         <Right>
-         {!user ? <><MenuItem onClick={() => navigate('/register')}>REGISTER</MenuItem>
+          {!user ? <><MenuItem onClick={() => navigate('/register')}>REGISTER</MenuItem>
             <MenuItem onClick={() => navigate('/login')}>SIGN IN</MenuItem></>
-          :  <MenuItem onClick={() => logoutDispatch(dispatch)}>SIGN OUT</MenuItem>
-        }
+            : <MenuItem onClick={handleLogout}>SIGN OUT</MenuItem>
+          }
           <MenuItem onClick={() => navigate('/cart')}>
-            <Badge badgeContent={quantity} color="primary">
+            <Badge badgeContent={totalQuantity} color="primary">
               <ShoppingCartOutlinedIcon />
             </Badge>
           </MenuItem>

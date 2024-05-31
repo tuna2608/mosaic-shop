@@ -7,10 +7,12 @@ import { Add, Remove } from '@mui/icons-material';
 import Newsletter from '../../components/client/Newsletter';
 import { useNavigate } from 'react-router-dom';
 import { mobile } from '../../utilities/responsive';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { formatCurrency } from '../../utilities/formatCurrency';
 import StripeCheckout from 'react-stripe-checkout';
 import { userRequest } from '../../utilities/requestMethod';
+import { getCartByUId } from '../../redux/apiCalls';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -161,8 +163,25 @@ const BottomBtn = styled.button`
 `;
 
 const Cart = () => {
+
+  // Get current user
+  const currentUserId = useSelector(state => state.user.currentUser._id);
+
+  const dispatch = useDispatch();
+
+  // Dispatch to fet cart by userID
+  useEffect(() => {
+    getCartByUId(dispatch, currentUserId)
+  }, [dispatch, currentUserId])
+
+  // Get Cart from redux
+  const cart = useSelector(state => state.cart.cart) || {}
+  let totalPrice = 0;
+  cart.cartItems?.map(p => {
+    return totalPrice += (p.quantity * p.price);
+  })
+
   const navigate = useNavigate();
-  const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const onToken = (token) => {
     setStripeToken(token)
@@ -176,13 +195,13 @@ const Cart = () => {
             amount: 5000,
           }
         )
-        navigate("/success", {state : {stripeData : res.data, products: cart}});
+        navigate("/success", { state: { stripeData: res.data, products: cart.cartItems } });
       } catch (error) {
-        
+
       }
     }
     stripeToken && makeRequest();
-  },[stripeToken, cart , navigate])
+  }, [stripeToken, cart.cartItems, navigate])
   return (
     <Container>
       <Navbar />
@@ -199,34 +218,35 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            {cart.products.map((product) => (
+            {cart.cartItems?.map((product) => (
               <>
-                <Product key={product._id}>
+                <Product key={product.productId._id}>
                   <ProductDetail>
-                    <Image src={product.img} />
+                    <Image src={product.productId.img} />
                     <Details>
                       <ProductID>
                         <b>ID: </b>
-                        {product._id}
+                        {product.productId._id}
                       </ProductID>
                       <ProductName>
                         <b>Product: </b>
-                        {product.title}
+                        {product.productId.title}
                       </ProductName>
                       <ProductDesc>
                         <b>Desc: </b>Flower Gift Description
                       </ProductDesc>
                       <ProductMaterials>
                         <b>This set included: </b>
-                        {product.materials.toString()}
+                        {product.productId.materials?.toString()}
                       </ProductMaterials>
                     </Details>
                   </ProductDetail>
                   <PriceDetail>
                     <AmountContainer>
-                      <Remove />
+                      <Remove style={{ cursor: "pointer" }} />
                       <Amount>{product.quantity}</Amount>
-                      <Add />
+                      <Add style={{ cursor: "pointer" }} />
+                      <DeleteIcon style={{ cursor: "pointer" }} />
                     </AmountContainer>
                     <Price>
                       {formatCurrency(product.price * product.quantity)}
@@ -241,7 +261,7 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryDetails>
               <SummaryText>Subtotal</SummaryText>
-              <SummaryPrice>{formatCurrency(cart.totalPrice)}</SummaryPrice>
+              <SummaryPrice>{formatCurrency(totalPrice)}</SummaryPrice>
             </SummaryDetails>
             <SummaryDetails>
               <SummaryText>Estimated Shipping</SummaryText>
@@ -253,19 +273,19 @@ const Cart = () => {
             </SummaryDetails>
             <SummaryDetails style={{ fontWeight: '600' }}>
               <SummaryText>Total</SummaryText>
-              <SummaryPrice>{formatCurrency(cart.totalPrice)}</SummaryPrice>
+              <SummaryPrice>{formatCurrency(totalPrice)}</SummaryPrice>
             </SummaryDetails>
             <StripeCheckout
               name="Willson Shop" image="./images/logo.png"
               billingAddress
               shippingAddress
-              description= {`Your total is ${formatCurrency(cart.totalPrice)}`}
-              amount={cart.total*100}
+              description={`Your total is ${formatCurrency(totalPrice)}`}
+              // amount={cart.total * 100}
               token={onToken}
               stripeKey={KEY}
-          >
-            <BottomBtn>CHECKOUT NOW</BottomBtn>
-          </StripeCheckout>
+            >
+              <BottomBtn>CHECKOUT NOW</BottomBtn>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>

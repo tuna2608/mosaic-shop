@@ -32,7 +32,7 @@ function App() {
     <>
       <Router>
       <Routes>
-        <Route exact path="/" element={ isAdmin ? <AdminHome /> : <Home />} />
+        <Route exact path="/" element={ isAdmin  ? <AdminHome /> : <Home />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route
           path="/register"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./newMembers.scss"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { userRequest } from '../../../utilities/requestMethod';
+import { NavLink } from 'react-router-dom';
 function NewMembers() {
 
   const [users, setUsers] = useState([])
@@ -28,7 +29,9 @@ function NewMembers() {
             <p className='member-name'>{user.username}</p>
             <p className='member-title'>{user.email}</p>
           </div>
-          <div className='display-btn'><VisibilityIcon /> Display</div>
+          <NavLink style={{ textDecoration: "none", color: "#111" }} to={"/user/" + user._id}>
+            <div className='display-btn'><VisibilityIcon /> Display</div>
+          </NavLink>
         </div>
       ))}
     </div>

@@ -101,10 +101,13 @@ const GoogleImage = styled.img`
   width: 30px;
   height: 30px;
 `;
-const Error = styled.p`
+const Error = styled.div`
+background-color: rgb(253, 0, 0);
+padding: 6px 0;
+border-radius: 4px;
+color: #fff;
+font-weight: 600;
 text-align: center;
-  color: red;
-  font-weight: 600;
 `
 
 const Register = () => {

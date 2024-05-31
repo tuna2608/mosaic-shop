@@ -6,7 +6,7 @@ import { formatCurrency } from '../../utilities/formatCurrency';
 import { Link } from 'react-router-dom';
 import { mobile } from '../../utilities/responsive';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../redux/apiCalls';
+import { addProduct } from '../../redux/cartSlice';
 
 const Info = styled.div`
   opacity: 0;
@@ -23,19 +23,18 @@ const Info = styled.div`
   cursor: pointer;
 `;
 const Container = styled.div`
-  flex: 1 0 21%;
-  ${mobile({ display: 'flex', flexFlow: 'column', alignItems: 'center' })}  
+  ${mobile({ display: 'flex', flexFlow: 'column', alignItems: 'center' })}
 `;
 
 const ImageContainer = styled.div`
+  flex: 1;
   margin: 5px;
-  min-width: 260px;
+  min-width: 300px;
   height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  /* border: 0.2px solid #ccc; */
   box-shadow: 0 2px 3px 0 rgba(0,0,0,0.3);
 
   &:hover ${Info} {
@@ -44,8 +43,7 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
-  height: 98%;
-  width: 98%;
+  height: 90%;
 `;
 
 const Icon = styled.div`
@@ -75,36 +73,30 @@ const ItemPrice = styled.p`
 `;
 
 const ProductCard = ({ product }) => {
-  // Redux
-  const dispatch = useDispatch();
-  const sentProduct = { productId: product._id, quantity: 1, price: product.price }
-  const handleAddToCart = () => {
-    addToCart(dispatch, sentProduct);
-  }
-  return (
-    <Container>
-      <ImageContainer>
-        <Image src={product.img} width={250} />
-        <Info>
-          <Icon onClick={handleAddToCart}>
-            <ShoppingCartOutlinedIcon />
-          </Icon>
-          <Link to={`/product/${product._id}`}>
-            <Icon>
-              <Search style={{ color: '#111' }} />
-            </Icon>
-          </Link>
-          <Icon>
-            <FavoriteBorderOutlined />
-          </Icon>
-        </Info>
-      </ImageContainer>
-      <ItemInfo>
-        <ItemName>{product.title}</ItemName>
-        <ItemPrice>{formatCurrency(product.price)}</ItemPrice>
-      </ItemInfo>
-    </Container>
-  );
+    return (
+        <Container>
+            <ImageContainer>
+                <Image src={product.img} width={300} />
+                <Info>
+                    <Icon>
+                        <ShoppingCartOutlinedIcon />
+                    </Icon>
+                    <Link to={`/product/${product._id}`}>
+                        <Icon>
+                            <Search style={{ color: '#111' }} />
+                        </Icon>
+                    </Link>
+                    <Icon>
+                        <FavoriteBorderOutlined />
+                    </Icon>
+                </Info>
+            </ImageContainer>
+            <ItemInfo>
+                <ItemName>{product.title}</ItemName>
+                <ItemPrice>{formatCurrency(product.price)}</ItemPrice>
+            </ItemInfo>
+        </Container>
+    );
 };
 
 export default ProductCard;

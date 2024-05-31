@@ -9,9 +9,11 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import { mobile } from '../../utilities/responsive';
 const Container = styled.div`
-  height: 30vh;
+  height: 40vh;
   display: flex;
   padding: 20px;
+  background-color: #3a7187;
+  color: #fff;
   ${mobile({ flexFlow: 'column', alignItems: 'center' })}
 `;
 // Left

@@ -100,10 +100,13 @@ const GoogleImage = styled.img`
   width: 30px;
   height: 30px;
 `;
-const Error = styled.p`
+const Error = styled.div`
+background-color: rgb(253, 0, 0);
+padding: 6px 0;
+border-radius: 4px;
+color: #fff;
+font-weight: 600;
 text-align: center;
-  color: red;
-  font-weight: 600;
 `
 
 
@@ -206,7 +209,7 @@ const Login = () => {
           </Label>
           <Input required="true" value={password} type="password" onChange={(e) => { setPassword(e.target.value) }} />
           {error && <Error>Something went wrong!</Error>}
-          <Button tone="dark" onClick={handleLogin} disabled={isFetching}>Sign in</Button>
+          <Button tone="dark" type="submit" onClick={handleLogin} disabled={isFetching}>Sign in</Button>
           <Text>
             Don't have an account?
             <NavLink to={"/register"} style={{ color: "#000" }}>

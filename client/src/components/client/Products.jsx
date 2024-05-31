@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ProductCard from './ProductCard';
+import ProductCardCate from "./ProductCardCate"
 import { mobile } from '../../utilities/responsive';
 import SoldOut from './SoldOut';
 import { publicRequest } from '../../utilities/requestMethod';
@@ -8,7 +9,10 @@ import { publicRequest } from '../../utilities/requestMethod';
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  gap: 50px;
   ${mobile({ flexDirection: 'column', justifyContent: 'flex-start' })}
 `;
 
@@ -59,7 +63,7 @@ const Products = ({ cate, filter = 'default', sort }) => {
     <Container>
       {cate ? (
         filteredProducts.length !== 0 ? (
-          filteredProducts.map((p) => <ProductCard key={p.id} product={p} />)
+          filteredProducts.map((p) => <ProductCardCate key={p.id} product={p} />)
         ) : (
           <SoldOut />
         )

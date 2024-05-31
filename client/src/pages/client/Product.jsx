@@ -10,8 +10,6 @@ import { Add, Remove } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
 import { mobile } from '../../utilities/responsive';
 import { publicRequest } from '../../utilities/requestMethod';
-import { useDispatch } from 'react-redux';
-import { addProduct } from '../../redux/cartSlice';
 
 const Container = styled.div``;
 const ItemContainer = styled.div`
@@ -26,6 +24,7 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.3);
   ${mobile({ flexFlow: 'column' })}
 `;
 const Image = styled.img`
@@ -71,7 +70,7 @@ const ItemMaterial = styled.li`
 
 const TextNote = styled.p`
   font-size: 12px;
-  color: teal;
+  color: #3a7187;
 `;
 
 const AddContainer = styled.div`
@@ -99,7 +98,7 @@ const Amount = styled.span`
 const AddToCartButton = styled.button`
   padding: 15px;
   color: white;
-  background-color: teal;
+  background-color: #3a7187;
   border: none;
   font-size: 16px;
   font-weight: 500;
@@ -148,10 +147,7 @@ const Product = () => {
   }, [productID]);
 
   // Redux
-  const dispatch = useDispatch();
-  const handleAddToCart = () => {
-    dispatch(addProduct({ ...product, quantity }));
-  };
+
   return (
     <Container>
       <Navbar />
@@ -190,7 +186,7 @@ const Product = () => {
                 onClick={() => handleQuantity('asc')}
               />
             </AmountContainer>
-            <AddToCartButton onClick={handleAddToCart}>
+            <AddToCartButton>
               ADD TO CART
             </AddToCartButton>
           </AddContainer>

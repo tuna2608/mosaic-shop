@@ -58,7 +58,7 @@ router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
 });
 
 // Get all Orders || Only admin can view all Orders
-router.get('/', verifyTokenAndAdmin, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
@@ -68,7 +68,7 @@ router.get('/', verifyTokenAndAdmin, async (req, res) => {
 });
 
 // Get monthly income
-router.get('/income', verifyTokenAndAdmin, async (req, res) => {
+router.get('/income', async (req, res) => {
   const date = new Date(); // today is September
   const lastMonth = new Date(date.setMonth(date.getMonth() - 1)); // -1 is August
   const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1)); // -1 is July
