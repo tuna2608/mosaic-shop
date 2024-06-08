@@ -1,17 +1,17 @@
-import { Search } from '@mui/icons-material';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
-import { Badge } from '@mui/material';
-import React from 'react';
-import styled from 'styled-components';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { mobile } from '../../utilities/responsive';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutDispatch } from '../../redux/apiCalls';
+import { Search } from "@mui/icons-material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
+import { Badge } from "@mui/material";
+import React from "react";
+import styled from "styled-components";
+import { NavLink, useNavigate } from "react-router-dom";
+import { mobile } from "../../utilities/responsive";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutDispatch } from "../../redux/apiCalls";
 
 const Container = styled.div`
   height: 60px;
-  ${mobile({ height: '50px' })}
+  ${mobile({ height: "50px" })}
 `;
 
 const Wrapper = styled.div`
@@ -35,13 +35,13 @@ const Language = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${mobile({ display: 'none' })}
+  ${mobile({ display: "none" })}
 `;
 const SearchContainer = styled.div`
   border: 0.5px solid lightgray;
   display: flex;
   align-items: center;
-  padding:0 4px;
+  padding: 0 4px;
 
   margin-left: 25px;
   /* padding: 10px; */
@@ -50,7 +50,7 @@ const SearchContainer = styled.div`
 
 const Input = styled.input`
   border: none;
-  ${mobile({ width: '50px' })}
+  ${mobile({ width: "50px" })}
 `;
 
 // Left side components
@@ -66,7 +66,7 @@ const Center = styled.div`
 const Logo = styled.h1`
   font-weight: bold;
   font-size: 50px;
-  ${mobile({ fontSize: '24px' })}
+  ${mobile({ fontSize: "24px" })}
 `;
 
 // Center side components
@@ -79,14 +79,21 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  ${mobile({ flex: '2', justifyContent: 'flex-start' })}
+  ${mobile({ flex: "2", justifyContent: "flex-start" })}
 `;
 
 const MenuItem = styled.div`
   font-size: 18px;
   cursor: pointer;
   margin-left: 25px;
-  ${mobile({ fontSize: '12px', marginLeft: '10px' })}
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+`;
+
+const Avatar = styled.img`
+  object-fit: cover;
+  border-radius: 50%;
+  width: 35px;
+  height: 35 px;
 `;
 
 // Right side components
@@ -95,20 +102,22 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   // Get redux state
-  const quantity = useSelector((state) => state.cart.quantity);
   // const dispatch = useDispatch();
 
   const handleLogout = () => {
     logoutDispatch(dispatch);
-    navigate("/login")
-  }
+    navigate("/login");
+  };
 
-  const user = useSelector(state => state.user.currentUser);
-  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
 
   // Get cart from redux
-  const cart = useSelector(state => state.cart.cart) || {}
-  const totalQuantity = cart.cartItems?.reduce((acc, currentValue) => acc + currentValue.quantity, 0);
+  const cart = useSelector((state) => state.cart.cart) || {};
+  const totalQuantity = cart.cartItems?.reduce(
+    (acc, currentValue) => acc + currentValue.quantity,
+    0
+  );
   return (
     <Container>
       <Wrapper>
@@ -119,31 +128,48 @@ const Navbar = () => {
           <SearchContainer>
             <Input
               placeholder="Search"
-              style={{ padding: '6px 0', outline: 'none' }}
+              style={{ padding: "6px 0", outline: "none" }}
             />
-            <Search style={{ color: 'gray', fontSize: '20px' }} />
+            <Search style={{ color: "gray", fontSize: "20px" }} />
           </SearchContainer>
         </Left>
         <Center>
           <Logo>
             <NavLink
-              to={'/home'}
-              style={{ textDecoration: 'none', color: '#000' }}
+              to={"/home"}
+              style={{ textDecoration: "none", color: "#000" }}
             >
               A'More.
             </NavLink>
           </Logo>
         </Center>
         <Right>
-          {!user ? <><MenuItem onClick={() => navigate('/register')}>REGISTER</MenuItem>
-            <MenuItem onClick={() => navigate('/login')}>SIGN IN</MenuItem></>
-            : <MenuItem onClick={handleLogout}>SIGN OUT</MenuItem>
-          }
-          <MenuItem onClick={() => navigate('/cart')}>
-            <Badge badgeContent={totalQuantity} color="primary">
-              <ShoppingCartOutlinedIcon />
-            </Badge>
-          </MenuItem>
+          {!user ? (
+            <>
+              <MenuItem onClick={() => navigate("/register")}>
+                REGISTER
+              </MenuItem>
+              <MenuItem onClick={() => navigate("/login")}>SIGN IN</MenuItem>
+              <MenuItem onClick={() => navigate("/cart")}>
+                <Badge badgeContent={totalQuantity} color="primary">
+                  <ShoppingCartOutlinedIcon style={{ fontSize: "30px" }} />
+                </Badge>
+              </MenuItem>
+            </>
+          ) : (
+            <>
+              <MenuItem onClick={() => navigate("/cart")}>
+                <Badge badgeContent={totalQuantity} color="primary">
+                  <ShoppingCartOutlinedIcon style={{ fontSize: "30px" }} />
+                </Badge>
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                <Avatar
+                  src={user.img ? user.img : "/images/utils/noavatar.png"}
+                />
+              </MenuItem>
+            </>
+          )}
         </Right>
       </Wrapper>
     </Container>

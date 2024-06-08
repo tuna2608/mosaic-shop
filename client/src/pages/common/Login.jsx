@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../../utilities/responsive";
-import { login } from "../../redux/apiCalls";
-import { useDispatch, useSelector } from "react-redux"
-import { Bounce, toast } from 'react-toastify';
+import { getCartByUId, login } from "../../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
+import { Bounce, toast } from "react-toastify";
 
 const Container = styled.div`
   display: flex;
@@ -16,8 +16,8 @@ const Container = styled.div`
 const AnimationContainer = styled.div`
   flex: 3;
   ${mobile({
-  display: "none",
-})}
+    display: "none",
+  })}
 `;
 
 const LoginContainer = styled.div`
@@ -25,12 +25,12 @@ const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   ${mobile({
-  width: "100%",
-  display: "flex",
-  flexFlow: "column",
-  alignItems: "center",
-  padding: "30px",
-})}
+    width: "100%",
+    display: "flex",
+    flexFlow: "column",
+    alignItems: "center",
+    padding: "30px",
+  })}
 `;
 
 const LoginForm = styled.form`
@@ -42,12 +42,12 @@ const LoginForm = styled.form`
   flex-flow: column;
   gap: 10px;
   ${mobile({
-  margin: "0",
-  padding: "30px",
-  // alignItems: "center",
-  justifyContent: "center",
-  height: "100%",
-})}
+    margin: "0",
+    padding: "30px",
+    // alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+  })}
 `;
 
 const Title = styled.h2`
@@ -71,7 +71,7 @@ const Button = styled.button`
   &:hover {
     cursor: pointer;
   }
-  &:disabled{
+  &:disabled {
     cursor: not-allowed;
     opacity: 0.7;
   }
@@ -100,36 +100,31 @@ const GoogleImage = styled.img`
   width: 30px;
   height: 30px;
 `;
-const Error = styled.div`
-background-color: rgb(253, 0, 0);
-padding: 6px 0;
-border-radius: 4px;
-color: #fff;
-font-weight: 600;
-text-align: center;
-`
-
 
 const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isFetching, error } = useSelector(state => state.user);
-  const location = useLocation()
+  const { isFetching, error } = useSelector((state) => state.user);
+  const location = useLocation();
+  // Get User & Cart
+  const user = useSelector((state) => state.user.currentUser);
+  const cart = useSelector((state) => state.cart.cart);
+  console.log(cart);
 
   // Toast
-  const succeed = () => toast.success('Registered Successfully!', {
-    position: "top-right",
-    autoClose: 1000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-    transition: Bounce,
-  });
-  ;
+  const succeed = () =>
+    toast.success("Registered Successfully!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   // End toast
 
   // Validation
@@ -150,26 +145,32 @@ const Login = () => {
     e.preventDefault();
     // Validation checks
     if (!isValidEmail(email)) {
-      toast.error("Please enter a valid email address.", {
-      });
+      toast.error("Please enter a valid email address.", {});
       return;
     }
 
     if (!isValidPassword(password)) {
-      toast.error("Password must be at least 6 characters long.", {
-      });
+      toast.error("Password must be at least 6 characters long.", {});
       return;
     }
     // If all validations pass, proceed with login
     login(dispatch, { email, password });
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      getCartByUId(dispatch, user._id);
+      navigate("/");
+    }
+  }, [user]);
+
   useEffect(() => {
     if (location.state === "registered") {
       if (!error) {
-        succeed()
+        succeed();
       }
     }
-  }, [location.state, error])
+  }, [location.state, error]);
 
   // End handle Login
   return (
@@ -198,18 +199,42 @@ const Login = () => {
           </Button>
           <Text>or Sign in with email</Text>
           <Label>Email</Label>
-          <Input required="true" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+          <Input
+            required="true"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
           <Label>
             Password
             <div
-              style={{ color: "#000", fontWeight: "500", fontSize: "14px", textDecoration: "underline" }}
+              style={{
+                color: "#000",
+                fontWeight: "500",
+                fontSize: "14px",
+                textDecoration: "underline",
+              }}
             >
               Forgot?
             </div>
           </Label>
-          <Input required="true" value={password} type="password" onChange={(e) => { setPassword(e.target.value) }} />
-          {error && <Error>Something went wrong!</Error>}
-          <Button tone="dark" type="submit" onClick={handleLogin} disabled={isFetching}>Sign in</Button>
+          <Input
+            required="true"
+            value={password}
+            type="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <Button
+            tone="dark"
+            type="submit"
+            onClick={handleLogin}
+            disabled={isFetching}
+          >
+            Sign in
+          </Button>
           <Text>
             Don't have an account?
             <NavLink to={"/register"} style={{ color: "#000" }}>

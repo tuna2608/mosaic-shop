@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { mobile } from '../../utilities/responsive';
-import { useDispatch, useSelector } from 'react-redux';
-import { signup } from '../../redux/apiCalls';
-import { toast } from 'react-toastify';
-
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { mobile } from "../../utilities/responsive";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../../redux/apiCalls";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
-  display: flex; 
+  display: flex;
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -17,8 +16,8 @@ const Container = styled.div`
 const AnimationContainer = styled.div`
   flex: 3;
   ${mobile({
-  display: 'none',
-})}
+    display: "none",
+  })}
 `;
 
 const RegisterContainer = styled.div`
@@ -26,12 +25,12 @@ const RegisterContainer = styled.div`
   display: flex;
   align-items: center;
   ${mobile({
-  width: '100%',
-  display: 'flex',
-  flexFlow: 'column',
-  alignItems: 'center',
-  padding: '30px',
-})}
+    width: "100%",
+    display: "flex",
+    flexFlow: "column",
+    alignItems: "center",
+    padding: "30px",
+  })}
 `;
 
 const RegisterForm = styled.form`
@@ -43,12 +42,12 @@ const RegisterForm = styled.form`
   flex-flow: column;
   gap: 1px;
   ${mobile({
-  margin: '0',
-  padding: '30px',
-  // alignItems: "center",
-  justifyContent: 'center',
-  height: '100%',
-})}
+    margin: "0",
+    padding: "30px",
+    // alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+  })}
 `;
 
 const Title = styled.h2`
@@ -67,12 +66,12 @@ const Button = styled.button`
   font-weight: 600;
   font-size: 16px;
   background-color: ${(props) =>
-    props.tone === 'dark' ? '#000' : 'transparent'};
-  color: ${(props) => (props.tone === 'dark' ? '#fff' : '#000')};
+    props.tone === "dark" ? "#000" : "transparent"};
+  color: ${(props) => (props.tone === "dark" ? "#fff" : "#000")};
   &:hover {
     cursor: pointer;
   }
-  &:disabled{
+  &:disabled {
     cursor: not-allowed;
     opacity: 0.7;
   }
@@ -101,14 +100,6 @@ const GoogleImage = styled.img`
   width: 30px;
   height: 30px;
 `;
-const Error = styled.div`
-background-color: rgb(253, 0, 0);
-padding: 6px 0;
-border-radius: 4px;
-color: #fff;
-font-weight: 600;
-text-align: center;
-`
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -116,9 +107,8 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { isFetching, error } = useSelector(state => state.user);
+  const { isFetching } = useSelector((state) => state.user);
   const navigate = useNavigate();
-
 
   // Validation
   const isValidEmail = (value) => {
@@ -137,25 +127,22 @@ const Register = () => {
     e.preventDefault();
     // Validation checks
     if (!isValidEmail(email)) {
-      toast.error("Please enter a valid email address.", {
-      });
+      toast.error("Please enter a valid email address.", {});
       return;
     }
 
     if (!isValidPassword(password)) {
-      toast.error("Password must be at least 6 characters long.", {
-      });
+      toast.error("Password must be at least 6 characters long.", {});
       return;
     }
 
     if (password !== confirmPassword) {
-      toast.error("Password are not matched.", {
-      });
+      toast.error("Password are not matched.", {});
       return;
     }
 
-    signup(dispatch, { username, email, password, confirmPassword })
-    navigate("/login", { state: "registered" })
+    signup(dispatch, { username, email, password, confirmPassword });
+    navigate("/login", { state: "registered" });
   };
 
   return (
@@ -168,10 +155,10 @@ const Register = () => {
           loop
           muted
           style={{
-            height: '100%',
-            width: '100%',
-            objectFit: 'cover',
-            overflowClipMargin: 'content-box',
+            height: "100%",
+            width: "100%",
+            objectFit: "cover",
+            overflowClipMargin: "content-box",
           }}
         ></video>
       </AnimationContainer>
@@ -184,18 +171,38 @@ const Register = () => {
           </Button>
           <Text>or</Text>
           <Label>Username</Label>
-          <Input required value={username} onChange={(e) => setUserName(e.target.value)} />
+          <Input
+            required
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
+          />
           <Label> Email</Label>
-          <Input required value={email} type='email' onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            required
+            value={email}
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <Label>Password</Label>
-          <Input required value={password} type='password' onChange={(e) => setPassword(e.target.value)} />
+          <Input
+            required
+            value={password}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <Label>Confirm Password</Label>
-          <Input required value={confirmPassword} type='password' onChange={(e) => setConfirmPassword(e.target.value)} />
-          {error && <Error>Something went wrong!</Error>}
-          <Button tone="dark" onClick={handleRegister} disabled={isFetching}>Sign up</Button>
+          <Input
+            required
+            value={confirmPassword}
+            type="password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <Button tone="dark" onClick={handleRegister} disabled={isFetching}>
+            Sign up
+          </Button>
           <Text>
             Already have an account?
-            <NavLink to={'/login'} style={{ color: '#000' }}>
+            <NavLink to={"/login"} style={{ color: "#000" }}>
               Sign in
             </NavLink>
           </Text>

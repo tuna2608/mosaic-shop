@@ -2,15 +2,15 @@ const {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
-} = require('../middlewares/verifyToken');
-const User = require('../models/User');
+} = require("../middlewares/verifyToken");
+const User = require("../models/User");
 
-const router = require('express').Router();
+const router = require("express").Router();
 
-const CryptoJS = require('crypto-js');
+const CryptoJS = require("crypto-js");
 
 // Update User
-router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
+router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   // Check whether client enter new password to update to encrypt new password
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(
@@ -33,17 +33,17 @@ router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
 });
 
 // Delete User
-router.delete('/:id', verifyTokenAndAuthorization, async (req, res) => {
+router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
-    res.status(200).json('User has been deleted!');
+    res.status(200).json("User has been deleted!");
   } catch (error) {
     return res.status(500).json(error);
   }
 });
 
 // Get User
-router.get('/find/:id', verifyTokenAndAdmin, async (req, res) => {
+router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
@@ -54,10 +54,12 @@ router.get('/find/:id', verifyTokenAndAdmin, async (req, res) => {
 });
 
 // Get all Users
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const query = req.query.new;
   try {
-    const users = query ? await User.find().sort({_id: -1}).limit(5) :await User.find();
+    const users = query
+      ? await User.find().sort({ _id: -1 }).limit(5)
+      : await User.find();
     res.status(200).json(users);
   } catch (error) {
     return res.status(500).json(error);
@@ -74,20 +76,20 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
       { $match: { createdAt: { $gte: lastYear } } },
       {
         $project: {
-          month: {$month : "$createdAt"},
+          month: { $month: "$createdAt" },
         },
       },
       {
         $group: {
           _id: "$month",
-          total:{ $sum : 1}
-        }
-      }
-    ])
-    res.status(200).json(data)
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+    res.status(200).json(data);
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-})
+});
 
 module.exports = router;

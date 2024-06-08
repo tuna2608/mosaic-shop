@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import Navbar from '../../components/client/Navbar';
-import Announcement from '../../components/client/Announcement';
-import Footer from '../../components/client/Footer';
-import { Add, Remove } from '@mui/icons-material';
-import Newsletter from '../../components/client/Newsletter';
-import { useNavigate } from 'react-router-dom';
-import { mobile } from '../../utilities/responsive';
-import { useDispatch, useSelector } from 'react-redux';
-import { formatCurrency } from '../../utilities/formatCurrency';
-import StripeCheckout from 'react-stripe-checkout';
-import { userRequest } from '../../utilities/requestMethod';
-import { getCartByUId } from '../../redux/apiCalls';
-import DeleteIcon from '@mui/icons-material/Delete';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Navbar from "../../components/client/Navbar";
+import Announcement from "../../components/client/Announcement";
+import Footer from "../../components/client/Footer";
+import { Add, Remove } from "@mui/icons-material";
+import Newsletter from "../../components/client/Newsletter";
+import { useNavigate } from "react-router-dom";
+import { mobile } from "../../utilities/responsive";
+import { useDispatch, useSelector } from "react-redux";
+import { formatCurrency } from "../../utilities/formatCurrency";
+import StripeCheckout from "react-stripe-checkout";
+import { userRequest } from "../../utilities/requestMethod";
+import { getCartByUId } from "../../redux/apiCalls";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -29,7 +29,7 @@ const Top = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  ${mobile({ padding: '0' })}
+  ${mobile({ padding: "0" })}
 `;
 
 const TopBtn = styled.button`
@@ -37,26 +37,26 @@ const TopBtn = styled.button`
   font-weight: 600;
   cursor: pointer;
   background-color: ${(props) =>
-    props.tone === 'dark' ? '#000' : 'transparent'};
-  color: ${(props) => (props.tone === 'dark' ? '#fff' : '#000')};
+    props.tone === "dark" ? "#000" : "transparent"};
+  color: ${(props) => (props.tone === "dark" ? "#fff" : "#000")};
 `;
 
 const TopTexts = styled.div`
   display: flex;
   gap: 20px;
-  ${mobile({ display: 'none' })}
+  ${mobile({ display: "none" })}
 `;
 
 const TopText = styled.p`
   text-decoration: underline;
   cursor: pointer;
-  ${mobile({ fontSize: '12px' })}
+  ${mobile({ fontSize: "12px" })}
 `;
 
 const Bottom = styled.div`
   display: flex;
   padding: 20px;
-  ${mobile({ flexFlow: 'column' })}
+  ${mobile({ flexFlow: "column" })}
 `;
 
 const Info = styled.div`
@@ -65,7 +65,7 @@ const Info = styled.div`
 
 const Product = styled.div`
   display: flex;
-  ${mobile({ flexFlow: 'column', alignItems: 'center', gap: '10px' })}
+  ${mobile({ flexFlow: "column", alignItems: "center", gap: "10px" })}
 `;
 const ProductDetail = styled.div`
   flex: 4;
@@ -77,7 +77,7 @@ const Image = styled.img`
   width: 200px;
   height: 200px;
   object-fit: cover;
-  ${mobile({ width: '120px', height: '150px' })}
+  ${mobile({ width: "120px", height: "150px" })}
 `;
 const Details = styled.div`
   display: flex;
@@ -85,14 +85,14 @@ const Details = styled.div`
   flex-flow: column;
   justify-content: center;
   gap: 30px;
-  ${mobile({ gap: '10px' })}
+  ${mobile({ gap: "10px" })}
 `;
 const ProductName = styled.p``;
 const ProductDesc = styled.p`
-  ${mobile({ display: 'none' })}
+  ${mobile({ display: "none" })}
 `;
 const ProductID = styled.p`
-  ${mobile({ display: 'none' })}
+  ${mobile({ display: "none" })}
 `;
 const ProductMaterials = styled.p``;
 
@@ -163,45 +163,43 @@ const BottomBtn = styled.button`
 `;
 
 const Cart = () => {
-
   // Get current user
-  const currentUserId = useSelector(state => state.user.currentUser._id);
+  const currentUserId = useSelector((state) => state.user.currentUser._id);
 
   const dispatch = useDispatch();
 
   // Dispatch to fet cart by userID
   useEffect(() => {
-    getCartByUId(dispatch, currentUserId)
-  }, [dispatch, currentUserId])
+    getCartByUId(dispatch, currentUserId);
+  }, [dispatch, currentUserId]);
 
   // Get Cart from redux
-  const cart = useSelector(state => state.cart.cart) || {}
+  const cart = useSelector((state) => state.cart.cart) || {};
+
   let totalPrice = 0;
-  cart.cartItems?.map(p => {
-    return totalPrice += (p.quantity * p.price);
-  })
+  cart.cartItems.map((item) => {
+    return (totalPrice += item.quantity * item.productId.price);
+  });
 
   const navigate = useNavigate();
   const [stripeToken, setStripeToken] = useState(null);
   const onToken = (token) => {
-    setStripeToken(token)
-  }
+    setStripeToken(token);
+  };
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post("/checkout/payment",
-          {
-            tokenId: stripeToken.id,
-            amount: 5000,
-          }
-        )
-        navigate("/success", { state: { stripeData: res.data, products: cart.cartItems } });
-      } catch (error) {
-
-      }
-    }
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: 5000,
+        });
+        navigate("/success", {
+          state: { stripeData: res.data, products: cart.cartItems },
+        });
+      } catch (error) {}
+    };
     stripeToken && makeRequest();
-  }, [stripeToken, cart.cartItems, navigate])
+  }, [stripeToken, cart.cartItems, navigate]);
   return (
     <Container>
       <Navbar />
@@ -209,7 +207,7 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopBtn onClick={() => navigate('/shop')}>CONTINUE SHOPPING</TopBtn>
+          <TopBtn onClick={() => navigate("/shop")}>CONTINUE SHOPPING</TopBtn>
           <TopTexts>
             <TopText>Shopping bag (2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
@@ -218,38 +216,38 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            {cart.cartItems?.map((product) => (
+            {cart.cartItems?.map((item) => (
               <>
-                <Product key={product.productId._id}>
+                <Product key={item.productId._id}>
                   <ProductDetail>
-                    <Image src={product.productId.img} />
+                    <Image src={item.productId.img} />
                     <Details>
                       <ProductID>
                         <b>ID: </b>
-                        {product.productId._id}
+                        {item.productId._id}
                       </ProductID>
                       <ProductName>
                         <b>Product: </b>
-                        {product.productId.title}
+                        {item.productId.title}
                       </ProductName>
                       <ProductDesc>
                         <b>Desc: </b>Flower Gift Description
                       </ProductDesc>
                       <ProductMaterials>
                         <b>This set included: </b>
-                        {product.productId.materials?.toString()}
+                        {item.productId.materials?.toString()}
                       </ProductMaterials>
                     </Details>
                   </ProductDetail>
                   <PriceDetail>
                     <AmountContainer>
                       <Remove style={{ cursor: "pointer" }} />
-                      <Amount>{product.quantity}</Amount>
+                      <Amount>{item.quantity}</Amount>
                       <Add style={{ cursor: "pointer" }} />
                       <DeleteIcon style={{ cursor: "pointer" }} />
                     </AmountContainer>
                     <Price>
-                      {formatCurrency(product.price * product.quantity)}
+                      {formatCurrency(item.productId.price * item.quantity)}
                     </Price>
                   </PriceDetail>
                 </Product>
@@ -271,12 +269,13 @@ const Cart = () => {
               <SummaryText>Shipping Discount</SummaryText>
               <SummaryPrice>{formatCurrency(20000)}</SummaryPrice>
             </SummaryDetails>
-            <SummaryDetails style={{ fontWeight: '600' }}>
+            <SummaryDetails style={{ fontWeight: "600" }}>
               <SummaryText>Total</SummaryText>
               <SummaryPrice>{formatCurrency(totalPrice)}</SummaryPrice>
             </SummaryDetails>
             <StripeCheckout
-              name="Willson Shop" image="./images/logo.png"
+              name="Willson Shop"
+              image="./images/logo.png"
               billingAddress
               shippingAddress
               description={`Your total is ${formatCurrency(totalPrice)}`}

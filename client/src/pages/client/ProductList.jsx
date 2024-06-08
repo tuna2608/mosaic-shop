@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Navbar from '../../components/client/Navbar';
-import Products from '../../components/client/Products';
-import Newsletter from '../../components/client/Newsletter';
-import Footer from '../../components/client/Footer';
-import { formatCurrency } from '../../utilities/formatCurrency';
-import Menu from '../../components/client/Menu';
-import { mobile } from '../../utilities/responsive';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Navbar from "../../components/client/Navbar";
+import Products from "../../components/client/Products";
+import Newsletter from "../../components/client/Newsletter";
+import Footer from "../../components/client/Footer";
+import { formatCurrency } from "../../utilities/formatCurrency";
+import Menu from "../../components/client/Menu";
+import { mobile } from "../../utilities/responsive";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div``;
-const Title = styled.h1`
-  margin: 20px;
-  ${mobile({ textAlign: 'center' })}
+
+const Title = styled.p`
+  font-size: 32px;
+  color: rgb(253, 0, 0);
+  font-weight: 600;
+  margin: 20px 20px 0 20px;
+  ${mobile({ textAlign: "center" })}
 `;
+const Image = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+
 const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({ flexFlow: 'column', justifyContent: 'center' })}
+  ${mobile({ flexFlow: "column", justifyContent: "center" })}
 `;
 const Filter = styled.div`
   margin: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  ${mobile({ margin: '10px' })}
+  ${mobile({ margin: "10px" })}
 `;
 
 const FilterText = styled.span`
@@ -44,16 +53,19 @@ const Option = styled.option``;
 const ProductList = () => {
   window.scrollTo(0, 0);
   const location = useLocation();
-  const cate = location.pathname.split('/')[2];
+  const cate = location.pathname.split("/")[2];
 
-  const [filter, setFilter] = useState('default');
-  const [sort, setSort] = useState('');
+  const [filter, setFilter] = useState("default");
+  const [sort, setSort] = useState("");
 
   return (
     <Container>
       <Navbar />
       <Menu />
-      <Title>Latest Products</Title>
+      <Title>
+        <Image src="/images/utils/new.jpg" />
+        Latest Products
+      </Title>
       <FilterContainer>
         <Filter>
           <FilterText>Sort By:</FilterText>
@@ -86,7 +98,7 @@ const ProductList = () => {
           </Select>
         </Filter>
       </FilterContainer>
-      <Products cate={cate} filter={filter.split('-')} sort={sort} />
+      <Products cate={cate} filter={filter.split("-")} sort={sort} />
       <Newsletter />
       <Footer />
     </Container>

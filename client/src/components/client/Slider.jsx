@@ -96,12 +96,6 @@ const Slider = () => {
     }
   };
 
-  useEffect(() => {
-    setInterval(() => {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
-    }, 3000);
-  }, [slideIndex]);
-
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("/shop");
