@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
@@ -38,7 +38,7 @@ const Arrow = styled.div`
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
-  transition: all 1.5s ease;
+  transition: all 2s ease;
   transform: translateX(${(props) => props.index * -100}vw);
 `;
 
@@ -95,6 +95,12 @@ const Slider = () => {
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   };
+
+  useEffect(() => {
+    setInterval(() => {
+      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+    }, 3000);
+  }, [slideIndex]);
 
   const navigate = useNavigate();
   const handleNavigate = () => {

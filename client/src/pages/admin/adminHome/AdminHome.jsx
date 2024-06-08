@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import AdminNavBar from "../../../components/admin/adminNavbar/AdminNavBar"
-import AdminLeftBar from "../../../components/admin/adminLeftBar/AdminLeftBar"
-import "./adminHome.scss"
-import NewMembers from '../../../components/admin/newMembers/NewMembers'
-import LatestTransactions from '../../../components/admin/latestTransactions/LatestTransactions'
-import FeaturedItem from '../../../components/admin/featuredItems/FeaturedItem'
-import Chart from '../../../components/admin/chart/Chart'
-import { userRequest } from '../../../utilities/requestMethod'
+import React, { useEffect, useState, useMemo } from "react";
+import AdminNavBar from "../../../components/admin/adminNavbar/AdminNavBar";
+import AdminLeftBar from "../../../components/admin/adminLeftBar/AdminLeftBar";
+import "./adminHome.scss";
+import NewMembers from "../../../components/admin/newMembers/NewMembers";
+import LatestTransactions from "../../../components/admin/latestTransactions/LatestTransactions";
+import FeaturedItem from "../../../components/admin/featuredItems/FeaturedItem";
+import Chart from "../../../components/admin/chart/Chart";
+import { userRequest } from "../../../utilities/requestMethod";
 
-export function AdminHome() {
+function AdminHome() {
   const [userStats, setUserStats] = useState([]);
 
   const MONTHS = useMemo(
@@ -24,7 +24,7 @@ export function AdminHome() {
       "Sep",
       "Oct",
       "Nov",
-      "Dec"
+      "Dec",
     ],
     []
   );
@@ -32,35 +32,39 @@ export function AdminHome() {
   useEffect(() => {
     const getStats = async () => {
       try {
-        const res = await userRequest.get("/users/stats")
-        res.data.map(item =>
-          setUserStats(prev => [
+        const res = await userRequest.get("/users/stats");
+        res.data.map((item) =>
+          setUserStats((prev) => [
             ...prev,
-            { name: MONTHS[item._id - 1], "New User": item.total }
+            { name: MONTHS[item._id - 1], "New User": item.total },
           ])
-        )
-      } catch (error) {
-
-      }
-    }
+        );
+      } catch (error) {}
+    };
     getStats();
-  }, [MONTHS])
+  }, [MONTHS]);
 
   return (
-    <div className='admin-home-container'>
+    <div className="admin-home-container">
       <AdminNavBar />
-      <div className='bottom'>
+      <div className="bottom">
         <AdminLeftBar />
-        <div className='bottom-right'>
+        <div className="bottom-right">
           <FeaturedItem />
-          <Chart data={userStats} title="User Analytics" grid dataKey="New User" />
-          <div className='data'>
+          <Chart
+            data={userStats}
+            title="User Analytics"
+            grid
+            dataKey="New User"
+          />
+          <div className="data">
             <NewMembers />
             <LatestTransactions />
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
+export default AdminHome;
