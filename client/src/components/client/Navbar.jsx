@@ -2,13 +2,15 @@ import { Search } from "@mui/icons-material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import { Badge } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import { mobile } from "../../utilities/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutDispatch } from "../../redux/apiCalls";
-
+import LogoutIcon from "@mui/icons-material/Logout";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import KeyIcon from "@mui/icons-material/Key";
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -86,6 +88,7 @@ const MenuItem = styled.div`
   font-size: 18px;
   cursor: pointer;
   margin-left: 25px;
+  position: relative;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
@@ -94,6 +97,36 @@ const Avatar = styled.img`
   border-radius: 50%;
   width: 35px;
   height: 35 px;
+`;
+const PopUpBox = styled.div`
+  position: absolute;
+  right: -10px;
+  background-color: #fff;
+  box-shadow: rgba(112, 112, 120, 0.2) 0px 7px 29px 0px;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 2px;
+  border-radius: 10px;
+  z-index: 999;
+`;
+const Button = styled.button`
+  border: none;
+  width: 100%;
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  background-color: transparent;
+  font-size: 10px;
+  border-radius: 10px;
+  &:hover {
+    cursor: pointer;
+    background-color: #ccc;
+  }
 `;
 
 // Right side components
@@ -118,6 +151,7 @@ const Navbar = () => {
     (acc, currentValue) => acc + currentValue.quantity,
     0
   );
+  const [isPopup, setIsPopup] = useState(false);
   return (
     <Container>
       <Wrapper>
@@ -163,10 +197,26 @@ const Navbar = () => {
                   <ShoppingCartOutlinedIcon style={{ fontSize: "30px" }} />
                 </Badge>
               </MenuItem>
-              <MenuItem onClick={handleLogout}>
+              <MenuItem onClick={() => setIsPopup(!isPopup)}>
                 <Avatar
                   src={user.img ? user.img : "/images/utils/noavatar.png"}
                 />
+                {isPopup && (
+                  <PopUpBox>
+                    <Button>
+                      <ModeEditOutlineIcon /> Edit Profile
+                    </Button>
+                    <Button>
+                      <KeyIcon /> Change Password
+                    </Button>
+                    <Button
+                      style={{ paddingRight: "10px" }}
+                      onClick={handleLogout}
+                    >
+                      <LogoutIcon /> Log Out
+                    </Button>
+                  </PopUpBox>
+                )}
               </MenuItem>
             </>
           )}

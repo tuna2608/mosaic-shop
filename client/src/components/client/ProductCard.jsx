@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { FavoriteBorderOutlined, Search } from '@mui/icons-material';
-import { formatCurrency } from '../../utilities/formatCurrency';
-import { Link } from 'react-router-dom';
-import { mobile } from '../../utilities/responsive';
-import { useDispatch } from 'react-redux';
-import { addToCart } from '../../redux/apiCalls';
+import React from "react";
+import styled from "styled-components";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { FavoriteBorderOutlined, Search } from "@mui/icons-material";
+import { formatCurrency } from "../../utilities/formatCurrency";
+import { Link } from "react-router-dom";
+import { mobile } from "../../utilities/responsive";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/apiCalls";
 
 const Info = styled.div`
   opacity: 0;
@@ -24,19 +24,19 @@ const Info = styled.div`
 `;
 const Container = styled.div`
   flex: 1 0 21%;
-  ${mobile({ display: 'flex', flexFlow: 'column', alignItems: 'center' })}  
+  ${mobile({ display: "flex", flexFlow: "column", alignItems: "center" })}
 `;
 
 const ImageContainer = styled.div`
   margin: 5px;
   min-width: 260px;
-  height: 350px;
+  height: 450px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   /* border: 0.2px solid #ccc; */
-  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
 
   &:hover ${Info} {
     opacity: 1;
@@ -77,10 +77,14 @@ const ItemPrice = styled.p`
 const ProductCard = ({ product }) => {
   // Redux
   const dispatch = useDispatch();
-  const sentProduct = { productId: product._id, quantity: 1, price: product.price }
+  const sentProduct = {
+    productId: product._id,
+    quantity: 1,
+    price: product.price,
+  };
   const handleAddToCart = () => {
     addToCart(dispatch, sentProduct);
-  }
+  };
   return (
     <Container>
       <ImageContainer>
@@ -91,7 +95,7 @@ const ProductCard = ({ product }) => {
           </Icon>
           <Link to={`/product/${product._id}`}>
             <Icon>
-              <Search style={{ color: '#111' }} />
+              <Search style={{ color: "#111" }} />
             </Icon>
           </Link>
           <Icon>
