@@ -147,6 +147,7 @@ const Navbar = () => {
 
   // Get cart from redux
   const cart = useSelector((state) => state.cart.cart) || {};
+  console.log(cart);
   const totalQuantity = cart.cartItems?.reduce(
     (acc, currentValue) => acc + currentValue.quantity,
     0

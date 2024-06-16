@@ -175,10 +175,11 @@ const Cart = () => {
 
   // Get Cart from redux
   const cart = useSelector((state) => state.cart.cart) || {};
+  console.log(cart);
 
   let totalPrice = 0;
-  cart.cartItems.map((item) => {
-    return (totalPrice += item.quantity * item.productId.price);
+  cart.cartItems?.map((item) => {
+    return (totalPrice += item.quantity * item.productId?.price);
   });
 
   const navigate = useNavigate();
