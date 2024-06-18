@@ -13,7 +13,6 @@ import Cart from "./pages/client/Cart";
 import Error from "./pages/client/Error";
 import Success from "./components/client/Success";
 import { useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserList from "./pages/admin/userlist/UserList";
 import DetailUser from "./pages/admin/detailuser/DetailUser";
@@ -74,7 +73,6 @@ function App() {
           <Route path="/success" element={<Success />} />
         </Routes>
       </Router>
-      <ToastContainer />
     </>
   );
 }

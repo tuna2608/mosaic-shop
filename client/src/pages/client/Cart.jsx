@@ -11,7 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatCurrency } from "../../utilities/formatCurrency";
 import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../../utilities/requestMethod";
-import { getCartByUId } from "../../redux/apiCalls";
+import {
+  addToCart,
+  decreaseCartQuantity,
+  getCartByUId,
+} from "../../redux/apiCalls";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const KEY = process.env.REACT_APP_STRIPE;
@@ -165,7 +169,7 @@ const BottomBtn = styled.button`
 const Cart = () => {
   // Get current user
   const currentUserId = useSelector((state) => state.user.currentUser._id);
-
+  const cart = useSelector((state) => state.cart.cart) || {};
   const dispatch = useDispatch();
 
   // Dispatch to fet cart by userID
@@ -174,8 +178,6 @@ const Cart = () => {
   }, [dispatch, currentUserId]);
 
   // Get Cart from redux
-  const cart = useSelector((state) => state.cart.cart) || {};
-  console.log(cart);
 
   let totalPrice = 0;
   cart.cartItems?.map((item) => {
@@ -201,6 +203,14 @@ const Cart = () => {
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.cartItems, navigate]);
+
+  const handleAddToCart = (productID) => {
+    addToCart(dispatch, { productId: productID, quantity: 1 });
+  };
+
+  const handleDecreaseQuantity = ({ cartItemID, quantity }) => {
+    decreaseCartQuantity(dispatch, { cartItemID, quantity });
+  };
   return (
     <Container>
       <Navbar />
@@ -242,9 +252,20 @@ const Cart = () => {
                   </ProductDetail>
                   <PriceDetail>
                     <AmountContainer>
-                      <Remove style={{ cursor: "pointer" }} />
+                      <Remove
+                        onClick={() =>
+                          handleDecreaseQuantity({
+                            cartItemID: item._id,
+                            quantity: item.quantity - 1,
+                          })
+                        }
+                        style={{ cursor: "pointer" }}
+                      />
                       <Amount>{item.quantity}</Amount>
-                      <Add style={{ cursor: "pointer" }} />
+                      <Add
+                        onClick={() => handleAddToCart(item.productId._id)}
+                        style={{ cursor: "pointer" }}
+                      />
                       <DeleteIcon style={{ cursor: "pointer" }} />
                     </AmountContainer>
                     <Price>
