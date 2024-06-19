@@ -315,7 +315,7 @@ const Cart = () => {
               image="./images/logo.png"
               billingAddress
               shippingAddress
-              description={`Your total is ${formatCurrency(totalPrice)}`}
+              description={`Đơn hàng của bạn có giá ${formatCurrency(totalPrice)}`}
               // amount={cart.total * 100}
               token={onToken}
               stripeKey={KEY}

@@ -21,6 +21,8 @@ import AdminProductList from "./pages/admin/adminproductlist/AdminProductList";
 import AdminProductDetail from "./pages/admin/adminproductdetail/AdminProductDetail";
 import NewProduct from "./pages/admin/newproduct/NewProduct";
 import AdminHome from "./pages/admin/adminHome/AdminHome";
+import OrderList from "./pages/client/orders/OrderList";
+import Profile from "./pages/client/profile/Profile";
 
 function App() {
   // Testing
@@ -41,6 +43,9 @@ function App() {
           <Route path="/product/:id" element={<Product />} />
           <Route path="/shop/:category?" element={<ProductList />} />
           <Route path="/cart" element={user ? <Cart /> : <Login />} />
+          <Route path="/orders" element={user ? <OrderList /> : <Login />} />
+          <Route path="/profile" element={user ? <Profile /> : <Login />} />
+
 
           {/* Admin Routes */}
 

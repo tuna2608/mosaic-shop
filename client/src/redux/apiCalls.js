@@ -47,6 +47,7 @@ import {
   deleteCartItemSuccess,
 } from "./cartSlice";
 import { toast } from "react-toastify";
+import { getOrderFailure, getOrderStart, getOrderSuccess } from "./orderSlice";
 
 // Auth
 export const login = async (dispatch, user) => {
@@ -212,4 +213,16 @@ export const decreaseCartQuantity = async (
       toast.warning("Quantity must be greater than 0!", {});
     }
   } catch (error) { }
+};
+
+// Order
+
+export const getOrderByUId = async (dispatch, currentUserId) => {
+  dispatch(getOrderStart());
+  try {
+    // const res = await publicRequest.get(`orders/find/${currentUserId}`);
+    // dispatch(getOrderSuccess(res.data));
+  } catch (error) {
+    dispatch(getOrderFailure());
+  }
 };

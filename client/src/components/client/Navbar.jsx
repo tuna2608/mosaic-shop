@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutDispatch, resetCart } from "../../redux/apiCalls";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import KeyIcon from "@mui/icons-material/Key";
 const Container = styled.div`
   height: 60px;
@@ -104,12 +105,11 @@ const PopUpBox = styled.div`
   background-color: #fff;
   box-shadow: rgba(112, 112, 120, 0.2) 0px 7px 29px 0px;
   width: 140px;
-  height: 140px;
+  height: 138px;
   display: flex;
   flex-flow: column;
   align-items: center;
   gap: 2px;
-  border-radius: 10px;
   z-index: 999;
 `;
 const Button = styled.button`
@@ -122,10 +122,9 @@ const Button = styled.button`
   gap: 10px;
   background-color: transparent;
   font-size: 10px;
-  border-radius: 10px;
   &:hover {
     cursor: pointer;
-    background-color: #ccc;
+    background-color: #f5eeee;
   }
 `;
 
@@ -142,6 +141,14 @@ const Navbar = () => {
     resetCart(dispatch);
     navigate("/login");
   };
+
+  const handleViewOrders = () => {
+    navigate("/orders")
+  }
+
+  const handleViewProfile = () => {
+    navigate(`/profile`)
+  }
 
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
@@ -204,17 +211,17 @@ const Navbar = () => {
                 />
                 {isPopup && (
                   <PopUpBox>
-                    <Button>
-                      <ModeEditOutlineIcon /> Edit Profile
+                    <Button onClick={() => handleViewProfile(user._id)}>
+                      <ModeEditOutlineIcon /> Thông Tin Cá Nhân
                     </Button>
-                    <Button>
-                      <KeyIcon /> Change Password
+                    <Button onClick={handleViewOrders}>
+                      <ManageSearchIcon />Đơn Hàng
                     </Button>
                     <Button
                       style={{ paddingRight: "10px" }}
                       onClick={handleLogout}
                     >
-                      <LogoutIcon /> Log Out
+                      <LogoutIcon /> Đăng Xuất
                     </Button>
                   </PopUpBox>
                 )}
