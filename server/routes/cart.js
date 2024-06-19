@@ -71,6 +71,17 @@ router.delete("/:itemId", verifyToken, async (req, res) => {
   }
 });
 
+// Delete Cart
+router.delete("/", verifyToken, async (req, res) => {
+  try {
+    let cart = await Cart.findOne({ userId: req.user.id });
+    await cart.deleteOne({ userId: req.user.id });
+    res.status(200).json({ message: "Cart deleted Successfully" })
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
 // Get User Cart
 router.get("/find/:userId", async (req, res) => {
   try {

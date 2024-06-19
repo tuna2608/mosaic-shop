@@ -45,9 +45,10 @@ import {
   resetCartSuccess,
   decreaseCartQuantitySuccess,
   deleteCartItemSuccess,
+  deleteCartSuccess,
 } from "./cartSlice";
 import { toast } from "react-toastify";
-import { getOrderFailure, getOrderStart, getOrderSuccess } from "./orderSlice";
+import { createOrderFailure, createOrderSuccess, getOrdersFailure, getOrdersStart, getOrdersSuccess, resetOrdersSuccess } from "./orderSlice";
 
 // Auth
 export const login = async (dispatch, user) => {
@@ -196,6 +197,15 @@ export const deleteCartItem = async (dispatch, cartItemID) => {
 
   }
 }
+export const deleteCart = async (dispatch, cartID) => {
+  try {
+    const res = await userRequest.delete(`/carts`)
+    dispatch(deleteCartSuccess(res.data))
+    toast.success("Your order is placed!", {});
+  } catch (error) {
+
+  }
+}
 
 export const decreaseCartQuantity = async (
   dispatch,
@@ -217,12 +227,28 @@ export const decreaseCartQuantity = async (
 
 // Order
 
-export const getOrderByUId = async (dispatch, currentUserId) => {
-  dispatch(getOrderStart());
+export const getOrdersByUId = async (dispatch, userId) => {
+  dispatch(getOrdersStart());
   try {
-    // const res = await publicRequest.get(`orders/find/${currentUserId}`);
-    // dispatch(getOrderSuccess(res.data));
+    const res = await publicRequest.get(`orders/find/${userId}`);
+    dispatch(getOrdersSuccess(res.data));
   } catch (error) {
-    dispatch(getOrderFailure());
+    dispatch(getOrdersFailure());
   }
+};
+
+export const createOrder = async (dispatch, order) => {
+  dispatch(createOrderFailure());
+  try {
+    const res = await publicRequest.post(`/orders`, order);
+    dispatch(createOrderSuccess(res.data));
+  } catch (error) {
+    dispatch(createOrderFailure());
+  }
+};
+
+export const resetOrders = async (dispatch) => {
+  try {
+    dispatch(resetOrdersSuccess());
+  } catch (error) { }
 };

@@ -13,9 +13,12 @@ import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../../utilities/requestMethod";
 import {
   addToCart,
+  createOrder,
   decreaseCartQuantity,
+  deleteCart,
   deleteCartItem,
   getCartByUId,
+  resetCart,
 } from "../../redux/apiCalls";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -175,6 +178,7 @@ const CartNotification = styled.h3`
 const Cart = () => {
   // Get current user
   const currentUserId = useSelector((state) => state.user.currentUser._id);
+  const user = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart.cart) || {};
   const dispatch = useDispatch();
 
@@ -202,13 +206,26 @@ const Cart = () => {
           tokenId: stripeToken.id,
           amount: 5000,
         });
-        navigate("/success", {
+        createOrder(
+          dispatch,
+          {
+            userId: user._id,
+            products: cart.cartItems,
+            amount: totalPrice,
+            address: user.address,
+            phone: user.phone,
+            status: "Pending"
+          }
+        )
+        deleteCart(dispatch)
+        resetCart(dispatch);
+        navigate("/cart", {
           state: { stripeData: res.data, products: cart.cartItems },
         });
       } catch (error) { }
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart.cartItems, navigate]);
+  }, [stripeToken, cart.cartItems, navigate, dispatch]);
 
   const handleAddToCart = (productID) => {
     addToCart(dispatch, { productId: productID, quantity: 1 });

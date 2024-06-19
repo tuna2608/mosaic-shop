@@ -11,7 +11,7 @@ const CryptoJS = require('crypto-js');
 
 // Add Order
 
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', async (req, res) => {
   const newOrder = new Order(req.body);
   try {
     const savedOrder = await newOrder.save();
@@ -48,9 +48,9 @@ router.delete('/:id', verifyTokenAndAdmin, async (req, res) => {
 });
 
 // Get User Orders || 1 user may have more orders
-router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
+router.get('/find/:userId', async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.params.userId });
+    const orders = await Order.find({ userId: req.params.userId }).populate("products.productId");
     res.status(200).json(orders);
   } catch (error) {
     return res.status(500).json(error);

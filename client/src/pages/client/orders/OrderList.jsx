@@ -3,7 +3,6 @@ import Navbar from '../../../components/client/Navbar'
 import Announcement from '../../../components/client/Announcement'
 import Footer from '../../../components/client/Footer'
 import { DataGrid } from '@mui/x-data-grid'
-import { orders } from "./mockdata"
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -15,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { formatCurrency } from "../../../utilities/formatCurrency"
 import "./orderlist.scss"
+import { useSelector } from 'react-redux'
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -27,6 +27,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const OrderList = () => {
+    const orders = useSelector(state => state.order.order);
+    console.log(orders);
     const columns = [
         { field: '_id', headerName: 'ID', width: 60 },
         {
@@ -146,9 +148,9 @@ const OrderList = () => {
                         {detailProducts?.map(p => (
                             <>
                                 <div className='detail-product-card'>
-                                    <img className='detail-product-card-img' src={p._id.img} alt={p._id.img} />
-                                    <p className='detail-product-card-title'>{p._id.title}</p>
-                                    <p className='detail-product-card-price'>{formatCurrency(p._id.price)}</p>
+                                    <img className='detail-product-card-img' src={p.productId.img} alt={p.productId.img} />
+                                    <p className='detail-product-card-title'>{p.productId.title}</p>
+                                    <p className='detail-product-card-price'>{formatCurrency(p.productId.price)}</p>
                                 </div>
                             </>
                         ))}

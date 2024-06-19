@@ -53,6 +53,10 @@ export const cartSlice = createSlice({
     deleteCartItemSuccess: (state, action) => {
       state.cart = action.payload;
     },
+    // delete cart item
+    deleteCartSuccess: (state, action) => {
+      state.cart = action.payload;
+    },
   },
 });
 
@@ -66,7 +70,9 @@ export const {
   addToCartFailure,
   resetCartSuccess,
   decreaseCartQuantitySuccess,
-  deleteCartItemSuccess
+  deleteCartItemSuccess,
+  deleteCartSuccess
+
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

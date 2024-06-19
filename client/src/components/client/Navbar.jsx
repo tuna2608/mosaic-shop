@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import { mobile } from "../../utilities/responsive";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutDispatch, resetCart } from "../../redux/apiCalls";
+import { getOrdersByUId, logoutDispatch, resetCart, resetOrders } from "../../redux/apiCalls";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
@@ -88,7 +88,7 @@ const Right = styled.div`
 const MenuItem = styled.div`
   font-size: 18px;
   cursor: pointer;
-  margin-left: 25px;
+  margin-left: 10px;
   position: relative;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
@@ -97,7 +97,7 @@ const Avatar = styled.img`
   object-fit: cover;
   border-radius: 50%;
   width: 35px;
-  height: 35 px;
+  height: 35px;
 `;
 const PopUpBox = styled.div`
   position: absolute;
@@ -139,10 +139,12 @@ const Navbar = () => {
   const handleLogout = () => {
     logoutDispatch(dispatch);
     resetCart(dispatch);
+    resetOrders(dispatch);
     navigate("/login");
   };
 
-  const handleViewOrders = () => {
+  const handleViewOrders = (userId) => {
+    getOrdersByUId(dispatch, userId)
     navigate("/orders")
   }
 
@@ -211,10 +213,10 @@ const Navbar = () => {
                 />
                 {isPopup && (
                   <PopUpBox>
-                    <Button onClick={() => handleViewProfile(user._id)}>
+                    <Button onClick={handleViewProfile}>
                       <ModeEditOutlineIcon /> Thông Tin Cá Nhân
                     </Button>
-                    <Button onClick={handleViewOrders}>
+                    <Button onClick={() => handleViewOrders(user._id)}>
                       <ManageSearchIcon />Đơn Hàng
                     </Button>
                     <Button
