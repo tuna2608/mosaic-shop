@@ -27,30 +27,45 @@ router.post("/", verifyToken, async (req, res) => {
     cart.cartItems.push(req.body);
   }
   await cart.save();
+  await cart.populate("cartItems.productId");
   res.status(200).json(cart);
 });
 
 // Update Cart
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.put("/decreaseQuantity", verifyToken, async (req, res) => {
   try {
-    const updatedCart = await Cart.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedCart);
+    let cart = await Cart.findOne({ userId: req.user.id });
+
+    const { cartItemID, quantity } = req.body;
+    const item = cart.cartItems.find((item) => item._id.equals(cartItemID));
+    if (quantity === 0) {
+      item.quantity = 1;
+    } else {
+      item.quantity = quantity;
+    }
+
+    await cart.save();
+    await cart.populate("cartItems.productId");
+    res.status(200).json(cart);
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
 // Delete Cart
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    await Cart.findByIdAndDelete(req.params.id);
-    res.status(200).json("Cart has been deleted!");
+    // await Cart.findByIdAndDelete(req.params.id);
+    // res.status(200).json("Cart has been deleted!");
+    let cart = await Cart.findOne({ userId: req.user.id });
+    if (cart) {
+      const remainingCartItems = cart.cartItems.filter(
+        (item) => item._id.toString() !== req.params.id
+      );
+      cart.cartItems = remainingCartItems;
+      await Cart.save();
+      res.status(200).json(cart);
+    }
   } catch (error) {
     return res.status(500).json(error);
   }

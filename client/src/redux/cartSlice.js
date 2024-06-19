@@ -10,6 +10,13 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    // Reset Cart
+    resetCartSuccess: (state) => {
+      state.cart = {};
+      state.isFetching = false;
+      state.error = true;
+    },
+
     // Get cart
     getCartStart: (state) => {
       state.isFetching = true;
@@ -37,6 +44,11 @@ export const cartSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+
+    // Update cart
+    decreaseCartQuantitySuccess: (state, action) => {
+      state.cart = action.payload;
+    },
   },
 });
 
@@ -48,6 +60,8 @@ export const {
   addToCartStart,
   addToCartSuccess,
   addToCartFailure,
+  resetCartSuccess,
+  decreaseCartQuantitySuccess,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
