@@ -48,7 +48,15 @@ import {
   deleteCartSuccess,
 } from "./cartSlice";
 import { toast } from "react-toastify";
-import { createOrderFailure, createOrderSuccess, getOrdersFailure, getOrdersStart, getOrdersSuccess, resetOrdersSuccess } from "./orderSlice";
+import {
+  createOrderFailure,
+  createOrderSuccess,
+  getOrdersFailure,
+  getOrdersStart,
+  getOrdersSuccess,
+  resetOrdersSuccess,
+  updateOrderStatusSuccess,
+} from "./orderSlice";
 
 // Auth
 export const login = async (dispatch, user) => {
@@ -185,27 +193,23 @@ export const addToCart = async (dispatch, product) => {
 export const resetCart = async (dispatch) => {
   try {
     dispatch(resetCartSuccess());
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const deleteCartItem = async (dispatch, cartItemID) => {
   try {
-    const res = await userRequest.delete(`/carts/${cartItemID}`)
-    dispatch(deleteCartItemSuccess(res.data))
+    const res = await userRequest.delete(`/carts/${cartItemID}`);
+    dispatch(deleteCartItemSuccess(res.data));
     toast.success("Item deleted from cart!", {});
-  } catch (error) {
-
-  }
-}
+  } catch (error) {}
+};
 export const deleteCart = async (dispatch, cartID) => {
   try {
-    const res = await userRequest.delete(`/carts`)
-    dispatch(deleteCartSuccess(res.data))
+    const res = await userRequest.delete(`/carts`);
+    dispatch(deleteCartSuccess(res.data));
     toast.success("Your order is placed!", {});
-  } catch (error) {
-
-  }
-}
+  } catch (error) {}
+};
 
 export const decreaseCartQuantity = async (
   dispatch,
@@ -222,7 +226,7 @@ export const decreaseCartQuantity = async (
     } else {
       toast.warning("Quantity must be greater than 0!", {});
     }
-  } catch (error) { }
+  } catch (error) {}
 };
 
 // Order
@@ -250,5 +254,12 @@ export const createOrder = async (dispatch, order) => {
 export const resetOrders = async (dispatch) => {
   try {
     dispatch(resetOrdersSuccess());
-  } catch (error) { }
+  } catch (error) {}
+};
+
+export const updateOrderStatus = async (dispatch, orderId, status) => {
+  try {
+    const res = userRequest.put(`/orders/${orderId}`, { status: status });
+    dispatch(updateOrderStatusSuccess(res.data));
+  } catch (error) {}
 };
