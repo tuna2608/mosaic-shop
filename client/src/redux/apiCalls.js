@@ -44,6 +44,7 @@ import {
   addToCartFailure,
   resetCartSuccess,
   decreaseCartQuantitySuccess,
+  deleteCartItemSuccess,
 } from "./cartSlice";
 import { toast } from "react-toastify";
 
@@ -182,8 +183,18 @@ export const addToCart = async (dispatch, product) => {
 export const resetCart = async (dispatch) => {
   try {
     dispatch(resetCartSuccess());
-  } catch (error) {}
+  } catch (error) { }
 };
+
+export const deleteCartItem = async (dispatch, cartItemID) => {
+  try {
+    const res = await userRequest.delete(`/carts/${cartItemID}`)
+    dispatch(deleteCartItemSuccess(res.data))
+    toast.success("Item deleted from cart!", {});
+  } catch (error) {
+
+  }
+}
 
 export const decreaseCartQuantity = async (
   dispatch,
@@ -200,5 +211,5 @@ export const decreaseCartQuantity = async (
     } else {
       toast.warning("Quantity must be greater than 0!", {});
     }
-  } catch (error) {}
+  } catch (error) { }
 };

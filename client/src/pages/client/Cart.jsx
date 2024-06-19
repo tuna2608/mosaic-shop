@@ -14,6 +14,7 @@ import { userRequest } from "../../utilities/requestMethod";
 import {
   addToCart,
   decreaseCartQuantity,
+  deleteCartItem,
   getCartByUId,
 } from "../../redux/apiCalls";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -166,6 +167,11 @@ const BottomBtn = styled.button`
   font-weight: bold;
 `;
 
+const CartNotification = styled.h3`
+  color: #3a7187;
+  text-align: center;
+`
+
 const Cart = () => {
   // Get current user
   const currentUserId = useSelector((state) => state.user.currentUser._id);
@@ -199,7 +205,7 @@ const Cart = () => {
         navigate("/success", {
           state: { stripeData: res.data, products: cart.cartItems },
         });
-      } catch (error) {}
+      } catch (error) { }
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.cartItems, navigate]);
@@ -211,6 +217,11 @@ const Cart = () => {
   const handleDecreaseQuantity = ({ cartItemID, quantity }) => {
     decreaseCartQuantity(dispatch, { cartItemID, quantity });
   };
+
+  const handleDeleteCartItem = (cartItemID) => {
+    deleteCartItem(dispatch, cartItemID);
+  }
+
   return (
     <Container>
       <Navbar />
@@ -227,55 +238,59 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            {cart.cartItems?.map((item) => (
-              <>
-                <Product key={item.productId._id}>
-                  <ProductDetail>
-                    <Image src={item.productId.img} />
-                    <Details>
-                      <ProductID>
-                        <b>ID: </b>
-                        {item.productId._id}
-                      </ProductID>
-                      <ProductName>
-                        <b>Product: </b>
-                        {item.productId.title}
-                      </ProductName>
-                      <ProductDesc>
-                        <b>Desc: </b>Flower Gift Description
-                      </ProductDesc>
-                      <ProductMaterials>
-                        <b>This set included: </b>
-                        {item.productId.materials?.toString()}
-                      </ProductMaterials>
-                    </Details>
-                  </ProductDetail>
-                  <PriceDetail>
-                    <AmountContainer>
-                      <Remove
-                        onClick={() =>
-                          handleDecreaseQuantity({
-                            cartItemID: item._id,
-                            quantity: item.quantity - 1,
-                          })
-                        }
-                        style={{ cursor: "pointer" }}
-                      />
-                      <Amount>{item.quantity}</Amount>
-                      <Add
-                        onClick={() => handleAddToCart(item.productId._id)}
-                        style={{ cursor: "pointer" }}
-                      />
-                      <DeleteIcon style={{ cursor: "pointer" }} />
-                    </AmountContainer>
-                    <Price>
-                      {formatCurrency(item.productId.price * item.quantity)}
-                    </Price>
-                  </PriceDetail>
-                </Product>
-                <Hr />
-              </>
-            ))}
+            {
+              cart.cartItems?.length > 0 ?
+                (cart.cartItems?.map((item) => (
+                  <>
+                    <Product key={item.productId._id}>
+                      <ProductDetail>
+                        <Image src={item.productId.img} />
+                        <Details>
+                          <ProductID>
+                            <b>ID: </b>
+                            {item.productId._id}
+                          </ProductID>
+                          <ProductName>
+                            <b>Product: </b>
+                            {item.productId.title}
+                          </ProductName>
+                          <ProductDesc>
+                            <b>Desc: </b>Flower Gift Description
+                          </ProductDesc>
+                          <ProductMaterials>
+                            <b>This set included: </b>
+                            {item.productId.materials?.toString()}
+                          </ProductMaterials>
+                        </Details>
+                      </ProductDetail>
+                      <PriceDetail>
+                        <AmountContainer>
+                          <Remove
+                            onClick={() =>
+                              handleDecreaseQuantity({
+                                cartItemID: item._id,
+                                quantity: item.quantity - 1,
+                              })
+                            }
+                            style={{ cursor: "pointer" }}
+                          />
+                          <Amount>{item.quantity}</Amount>
+                          <Add
+                            onClick={() => handleAddToCart(item.productId._id)}
+                            style={{ cursor: "pointer" }}
+                          />
+                          <DeleteIcon onClick={() => handleDeleteCartItem(item._id)} style={{ cursor: "pointer" }} />
+                        </AmountContainer>
+                        <Price>
+                          {formatCurrency(item.productId.price * item.quantity)}
+                        </Price>
+                      </PriceDetail>
+                    </Product>
+                    <Hr />
+                  </>
+                )))
+                : <CartNotification>Your cart is empty, Let's go shopping now!</CartNotification>
+            }
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
@@ -296,7 +311,7 @@ const Cart = () => {
               <SummaryPrice>{formatCurrency(totalPrice)}</SummaryPrice>
             </SummaryDetails>
             <StripeCheckout
-              name="Willson Shop"
+              name="A'More Shop"
               image="./images/logo.png"
               billingAddress
               shippingAddress

@@ -52,18 +52,18 @@ router.put("/decreaseQuantity", verifyToken, async (req, res) => {
   }
 });
 
-// Delete Cart
-router.delete("/:id", verifyToken, async (req, res) => {
+// Delete CartItem
+router.delete("/:itemId", verifyToken, async (req, res) => {
   try {
-    // await Cart.findByIdAndDelete(req.params.id);
-    // res.status(200).json("Cart has been deleted!");
     let cart = await Cart.findOne({ userId: req.user.id });
-    if (cart) {
-      const remainingCartItems = cart.cartItems.filter(
-        (item) => item._id.toString() !== req.params.id
-      );
-      cart.cartItems = remainingCartItems;
-      await Cart.save();
+    const remainItems = cart.cartItems.filter((item) => !(item._id.equals(req.params.itemId)));
+    cart.cartItems = remainItems;
+    if (cart.cartItems.length === 0) {
+      await cart.deleteOne({ userId: req.user.id });
+      return res.status(200).json({ message: "Cart deleted Successfully" })
+    } else {
+      await cart.save();
+      await cart.populate("cartItems.productId")
       res.status(200).json(cart);
     }
   } catch (error) {
