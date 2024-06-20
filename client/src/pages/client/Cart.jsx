@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatCurrency } from "../../utilities/formatCurrency";
 import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../../utilities/requestMethod";
-import {
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'; import {
   addToCart,
   createOrder,
   decreaseCartQuantity,
@@ -43,6 +44,8 @@ const Top = styled.div`
 const TopBtn = styled.button`
   padding: 10px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   background-color: ${(props) =>
     props.tone === "dark" ? "#000" : "transparent"};
@@ -238,20 +241,21 @@ const Cart = () => {
   const handleDeleteCartItem = (cartItemID) => {
     deleteCartItem(dispatch, cartItemID);
   }
+  const [shippingfee] = useState(20000);
 
   return (
     <Container>
       <Navbar />
       <Announcement />
       <Wrapper>
-        <Title>YOUR BAG</Title>
+        <Title>Giỏ Hàng Của Bạn</Title>
         <Top>
-          <TopBtn onClick={() => navigate("/shop")}>CONTINUE SHOPPING</TopBtn>
+          <TopBtn onClick={() => navigate("/shop")}><KeyboardBackspaceIcon /><span>Tiếp Tục Mua Sắm</span></TopBtn>
           <TopTexts>
-            <TopText>Shopping bag (2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
+            <TopText>Giỏ hàng ({cart.cartItems.length})</TopText>
+            <TopText>Mục yêu thích (0)</TopText>
           </TopTexts>
-          <TopBtn tone="dark">CHECKOUT NOW</TopBtn>
+          <TopBtn onClick={() => navigate("/orders")} tone="dark">Lịch sử mua hàng</TopBtn>
         </Top>
         <Bottom>
           <Info>
@@ -264,18 +268,18 @@ const Cart = () => {
                         <Image src={item.productId.img} />
                         <Details>
                           <ProductID>
-                            <b>ID: </b>
+                            <b>Mã: </b>
                             {item.productId._id}
                           </ProductID>
                           <ProductName>
-                            <b>Product: </b>
+                            <b>Tên sản Phẩm: </b>
                             {item.productId.title}
                           </ProductName>
                           <ProductDesc>
-                            <b>Desc: </b>Flower Gift Description
+                            <b>Mô tả: </b>Flower Gift Description
                           </ProductDesc>
                           <ProductMaterials>
-                            <b>This set included: </b>
+                            <b>Nguyên liệu chính: </b>
                             {item.productId.materials?.toString()}
                           </ProductMaterials>
                         </Details>
@@ -306,26 +310,26 @@ const Cart = () => {
                     <Hr />
                   </>
                 )))
-                : <CartNotification>Your cart is empty, Let's go shopping now!</CartNotification>
+                : <CartNotification>Giỏ hàng trống, đi mua sắm thôi!</CartNotification>
             }
           </Info>
           <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+            <SummaryTitle>Đơn Hàng</SummaryTitle>
             <SummaryDetails>
-              <SummaryText>Subtotal</SummaryText>
+              <SummaryText>Giá tiền</SummaryText>
               <SummaryPrice>{formatCurrency(totalPrice)}</SummaryPrice>
             </SummaryDetails>
             <SummaryDetails>
-              <SummaryText>Estimated Shipping</SummaryText>
+              <SummaryText>Phí giao hàng</SummaryText>
               <SummaryPrice>{formatCurrency(20000)}</SummaryPrice>
             </SummaryDetails>
             <SummaryDetails>
-              <SummaryText>Shipping Discount</SummaryText>
-              <SummaryPrice>{formatCurrency(20000)}</SummaryPrice>
+              <SummaryText>Giảm giá</SummaryText>
+              <SummaryPrice>{formatCurrency(totalPrice >= 400000 ? shippingfee : 0)}</SummaryPrice>
             </SummaryDetails>
             <SummaryDetails style={{ fontWeight: "600" }}>
-              <SummaryText>Total</SummaryText>
-              <SummaryPrice>{formatCurrency(totalPrice)}</SummaryPrice>
+              <SummaryText>Tổng tiền</SummaryText>
+              <SummaryPrice>{formatCurrency((totalPrice >= 400000) ? totalPrice + 0 : totalPrice + shippingfee)}</SummaryPrice>
             </SummaryDetails>
             <StripeCheckout
               name="A'More Shop"
@@ -337,14 +341,26 @@ const Cart = () => {
               token={onToken}
               stripeKey={KEY}
             >
-              <BottomBtn>CHECKOUT NOW</BottomBtn>
+              <BottomBtn>THANH TOÁN</BottomBtn>
             </StripeCheckout>
+            <div style={{
+              fontSize: "10px",
+              textAlign: "center",
+              padding: "0px 4px",
+              border: "1px solid teal",
+              backgroundColor: "#3a7187",
+              gap: "6px",
+              display: "flex",
+              alignItems: "center",
+              color: "#fff"
+            }}><LocalShippingIcon /><span>Miễn phí giao hàng cho đơn hàng từ </span>{formatCurrency(400000)}
+            </div>
           </Summary>
         </Bottom>
       </Wrapper>
       <Newsletter />
       <Footer />
-    </Container>
+    </Container >
   );
 };
 export default Cart;

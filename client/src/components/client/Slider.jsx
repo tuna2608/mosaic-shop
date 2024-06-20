@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { sliderItems } from "../../data/sliderItems";
 import { useNavigate } from "react-router-dom";
 import { mobile } from "../../utilities/responsive";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 // General
 const Container = styled.div`
   margin-top: 30px;
@@ -67,6 +68,8 @@ const InfoContainer = styled.div`
 
 const Title = styled.h1`
   font-size: 70px;
+  /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 `;
 const Desc = styled.p`
   margin: 70px 0;
@@ -115,7 +118,7 @@ const Slider = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button onClick={handleNavigate}>SHOP NOW</Button>
+              <Button onClick={handleNavigate}><span><ArrowForwardIcon /></span>Đến Cửa Hàng</Button>
             </InfoContainer>
           </Slide>
         ))}

@@ -38,14 +38,13 @@ const AdminNavBar = () => {
         <GridViewOutlinedIcon />
         <div className="search">
           <SearchOutlinedIcon />
-          <input type="text" placeholder="Search" />
+          <input type="text" placeholder="Tìm kiếm..." />
         </div>
       </div>
       <div className="right">
-        <NotificationsOutlinedIcon />
         <div className="info" onClick={popup}>
+          <NotificationsOutlinedIcon />
           <img src="/images/admin/avatar.jpg" alt="admin_img" />
-          <span>{user.username}</span>
         </div>
         {isPopuped && <div className="popupBox">
           <button className="edit-btn"> <ModeEditOutlineIcon /> Edit Profile</button>

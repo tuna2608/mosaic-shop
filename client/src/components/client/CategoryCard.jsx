@@ -37,7 +37,7 @@ const Title = styled.h1`
   color: #fff;
   margin-bottom: 20px;
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 1000;
 `;
 const Button = styled.button`
   border: none;
@@ -49,18 +49,39 @@ const Button = styled.button`
 `;
 
 const CategoryCard = ({ item }) => {
+  let cateParam = "";
+  console.log(item.title);
+  switch (item.title) {
+    case "Sinh Nhật":
+      cateParam = "birthday";
+      break;
+    case "Tình Yêu":
+      cateParam = "love";
+      break;
+    case "Tốt Nghiệp":
+      cateParam = "graduation";
+      break;
+    case "Trẻ Em":
+      cateParam = "baby";
+      break;
+    case "Cảm Ơn":
+      cateParam = "thanks";
+      break;
+    default:
+      return ""
+  }
   return (
     <Container>
-      <Link to={`/shop/${item.title.toLowerCase()}`}>
+      <Link to={`/shop/${cateParam}`}>
         <Image src={item.img} />
         <Info>
           <Title>{item.title}</Title>
           <Button>
             <Link
-              to={`/shop/${item.title.toLowerCase()}`}
+              to={`/shop/${cateParam}`}
               style={{ textDecoration: 'none', color: '#000' }}
             >
-              SHOP NOW
+              Mua Ngay
             </Link>
           </Button>
         </Info>

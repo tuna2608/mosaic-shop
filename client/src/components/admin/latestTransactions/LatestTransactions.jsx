@@ -46,13 +46,13 @@ function LatestTransactions() {
 
   return (
     <div className="latest-transactions-container">
-      <h3>Latest transactions</h3>
+      <h3>Đơn Hàng Gần Đây</h3>
       <table>
         <tr className="rows">
-          <th>Customer ID</th>
-          <th>Created Date</th>
-          <th>Amount</th>
-          <th>Status</th>
+          <th>Mã Khách Hàng</th>
+          <th>Ngày Đặt Hàng</th>
+          <th>Giá</th>
+          <th>Trạng Thái</th>
         </tr>
         {orders && orders?.slice(0, 6).map((order) => (
           <tr key={order._id}>

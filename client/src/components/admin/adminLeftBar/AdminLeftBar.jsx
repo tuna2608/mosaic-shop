@@ -21,48 +21,48 @@ const AdminLeftBar = () => {
           <NavLink className="links-style" to="/home">
             <div className="item">
               <HomeOutlinedIcon />
-              <span>Home</span>
+              <span>Trang Chủ</span>
             </div>
           </NavLink>
           <div className="item">
             <AutoGraphOutlinedIcon />
-            <span>Analytics</span>
+            <span>Phân Tich</span>
           </div>
           <div className="item">
             <MonetizationOnOutlinedIcon />
-            <span>Sales</span>
+            <span>Bán Hàng</span>
           </div>
         </div>
         <hr />
         <div className="menu">
           <div className="user">
-            <span style={{ fontWeight: "700", color: "#ccc", fontSize: "18px" }}>Management</span>
+            <span style={{ fontWeight: "700", color: "#ccc", fontSize: "18px" }}>Quản Lí</span>
           </div>
           <NavLink className="links-style" to="/userList">
             <div className="item">
               <PeopleAltOutlinedIcon />
-              <span>Users</span>
+              <span>Người Dùng</span>
             </div>
           </NavLink>
           <NavLink className="links-style" to="/adminProductList">
             <div className="item">
               <Inventory2OutlinedIcon />
-              <span>Products</span>
+              <span>Sản Phẩm</span>
             </div>
           </NavLink>
           <NavLink className="links-style" to="/admin-order-list">
             <div className="item">
               <PeopleAltOutlinedIcon />
-              <span>Orders</span>
+              <span>Đơn Hàng</span>
             </div>
           </NavLink>
           <div className="item">
             <ReceiptLongOutlinedIcon />
-            <span>Transaction</span>
+            <span>Giao Dịch</span>
           </div>
           <div className="item">
             <FlagCircleOutlinedIcon />
-            <span>Reports</span>
+            <span>Báo Cáo</span>
           </div>
         </div>
         <hr />
@@ -75,11 +75,11 @@ const AdminLeftBar = () => {
           </div>
           <div className="item">
             <AddCommentOutlinedIcon />
-            <span>Feedback</span>
+            <span>Phản Hồi</span>
           </div>
           <div className="item">
             <MessageOutlinedIcon />
-            <span>Messages</span>
+            <span>Tin Nhắn</span>
           </div>
         </div>
         <hr />

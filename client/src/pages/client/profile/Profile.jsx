@@ -87,12 +87,12 @@ const Profile = () => {
                             </div>
                         </div>
                         <div className="user-show-bottom">
-                            <span className="account-details-title">Account Details</span>
+                            <span className="account-details-title">Thông Tin Tài Khoản</span>
                             <div className="account-details">
                                 <span className="detail"><PersonOutlineIcon />{user.username}</span>
                                 <span className="detail"><DateRangeIcon />{user.dOB || "mm/dd/yyyy"}</span>
                             </div>
-                            <span className="account-details-title">Contact details</span>
+                            <span className="account-details-title">Thông Tin Liên Lạc</span>
                             <div className="account-details">
                                 <span className="detail"><PhoneIcon />{user.phone || "Undefined Phone number"}</span>
                                 <span className="detail"><EmailIcon />{user.email}</span>
@@ -102,11 +102,11 @@ const Profile = () => {
 
                     </div>
                     <div className="user-update">
-                        <div className="user-update-title">Edit</div>
+                        <div className="user-update-title">Chỉnh Sửa Thông Tin</div>
                         <form className="user-update-form">
                             <div className="user-update-left">
                                 <div className="user-update-item">
-                                    <label>Username</label>
+                                    <label>Tên người dùng</label>
                                     <input
                                         name="username"
                                         type="text"
@@ -115,7 +115,7 @@ const Profile = () => {
                                         onChange={handleInputChange}
                                     />
                                     <div className="user-update-item">
-                                        <label>Birthday</label>
+                                        <label>Ngày sinh</label>
                                         <input
                                             name="dOB"
                                             type="date"
@@ -126,7 +126,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                                 <div className="user-update-item">
-                                    <label>Phone number</label>
+                                    <label>Số điện thoại</label>
                                     <input
                                         name="phone"
                                         type="text"
@@ -136,7 +136,7 @@ const Profile = () => {
                                     />
                                 </div>
                                 <div className="user-update-item">
-                                    <label>Job Title</label>
+                                    <label>Công Việc</label>
                                     <input
                                         name="title"
                                         type="text"
@@ -156,7 +156,7 @@ const Profile = () => {
                                     />
                                 </div>
                                 <div className="user-update-item">
-                                    <label>Address</label>
+                                    <label>Địa chỉ</label>
                                     <input
                                         name="address"
                                         type="text"
@@ -178,7 +178,7 @@ const Profile = () => {
                                         id="file"
                                         style={{ display: "none" }} />
                                 </div>
-                                <button onClick={handleUpdateUser} className="user-update-btn">Update</button>
+                                <button onClick={handleUpdateUser} className="user-update-btn">Cập Nhập</button>
                             </div>
                         </form>
                     </div>

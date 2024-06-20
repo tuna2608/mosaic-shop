@@ -32,7 +32,7 @@ const Left = styled.div`
   display: flex;
   align-items: center;
 `;
-const Language = styled.span`
+const Language = styled.div`
   font-size: 18px;
   cursor: pointer;
   display: flex;
@@ -69,6 +69,7 @@ const Center = styled.div`
 const Logo = styled.h1`
   font-weight: bold;
   font-size: 50px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
   ${mobile({ fontSize: "24px" })}
 `;
 
@@ -167,11 +168,11 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           <Language>
-            EN <ArrowDropDownOutlinedIcon />
+            <span>VI</span> <img src="images/utils/VIE.png" style={{ objectFit: "contain" }} width={20} height={20} alt="VietNam_Flag" /> <ArrowDropDownOutlinedIcon />
           </Language>
           <SearchContainer>
             <Input
-              placeholder="Search"
+              placeholder="Tìm kiếm"
               style={{ padding: "6px 0", outline: "none" }}
             />
             <Search style={{ color: "gray", fontSize: "20px" }} />
@@ -214,7 +215,7 @@ const Navbar = () => {
                 {isPopup && (
                   <PopUpBox>
                     <Button onClick={handleViewProfile}>
-                      <ModeEditOutlineIcon /> Thông Tin Cá Nhân
+                      <ModeEditOutlineIcon /> Thông Tin
                     </Button>
                     <Button onClick={() => handleViewOrders(user._id)}>
                       <ManageSearchIcon />Đơn Hàng

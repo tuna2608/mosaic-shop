@@ -72,7 +72,7 @@ const List = styled.ul`
 const ListItem = styled.li`
   width: 50%;
   margin-bottom: 15px;
-  font-size: 18px;
+  font-size: 14px;
 
   &:hover {
     cursor: pointer;
@@ -91,7 +91,7 @@ const ContactItem = styled.div`
   text-align: center;
   gap: 10px;
   margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 14px;
 `;
 const Image = styled.img`
   width: 50px;
@@ -127,25 +127,25 @@ const Footer = () => {
         </Socials>
       </Left>
       <Center>
-        <Title>Useful Links</Title>
+        <Title>Dịch vụ</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
+          <ListItem>Trang Chủ</ListItem>
+          <ListItem>Theo Dõi Đơn Hàng</ListItem>
+          <ListItem>Mục Yêu Thích</ListItem>
           <ListItem>Terms</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Wishlist</ListItem>
+          <ListItem>Giỏ hàng</ListItem>
+          <ListItem>Tài Khoản</ListItem>
+          <ListItem>Mục Yêu Thích</ListItem>
           <ListItem>Terms</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>My Account</ListItem>
+          <ListItem>Giỏ Hàng</ListItem>
+          <ListItem>Tài Khoản</ListItem>
         </List>
       </Center>
       <Right>
-        <Title>Contact</Title>
+        <Title>Liên Hệ</Title>
         <ContactItem>
           <HomeIcon />
-          110 Ngu Hanh Son, Da Nang
+          110 Ngũ Hành Sơn, Da Nang
         </ContactItem>
         <ContactItem>
           <PhoneIcon />

@@ -21,7 +21,7 @@ function NewMembers() {
 
   return (
     <div className='new-members-container'>
-      <h3>New Join Members</h3>
+      <h3>Thành Viên Mới</h3>
       {users.map(user => (
         <div key={user._id} className='member-card'>
           <img src={user.img || "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"} alt="" />

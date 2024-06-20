@@ -15,6 +15,19 @@ const Container = styled.div`
   gap: 50px;
   ${mobile({ flexDirection: 'column', justifyContent: 'flex-start' })}
 `;
+const Title = styled.p`
+  font-size: 32px;
+  color: rgb(253, 0, 0);
+  font-weight: 600;
+  margin: 20px 20px 0 20px;
+  display: flex;
+  align-items: center;
+  ${mobile({ textAlign: "center" })}
+`;
+const Image = styled.img`
+  width: 40px;
+  height: 40px;
+`
 
 const Products = ({ cate, filter = 'default', sort }) => {
   const [products, setProducts] = useState([]);
@@ -60,17 +73,20 @@ const Products = ({ cate, filter = 'default', sort }) => {
     }
   }, [sort]);
   return (
-    <Container>
-      {cate ? (
-        filteredProducts.length !== 0 ? (
-          filteredProducts.map((p) => <ProductCardCate key={p.id} product={p} />)
+    <>
+      <Title><Image src="/images/utils/new.jpg" /><span>Sản Phẩm Mới Nhất</span></Title>
+      <Container>
+        {cate ? (
+          filteredProducts.length !== 0 ? (
+            filteredProducts.map((p) => <ProductCardCate key={p.id} product={p} />)
+          ) : (
+            <SoldOut />
+          )
         ) : (
-          <SoldOut />
-        )
-      ) : (
-        products.slice(0, 8).map((p) => <ProductCard key={p.id} product={p} />)
-      )}
-    </Container>
+          products.slice(0, 8).map((p) => <ProductCard key={p.id} product={p} />)
+        )}
+      </Container>
+    </>
   );
 };
 

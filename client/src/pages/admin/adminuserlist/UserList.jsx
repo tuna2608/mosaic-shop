@@ -8,6 +8,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, getUsers } from '../../../redux/apiCalls';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Bounce, toast } from 'react-toastify';
 
 function UserList() {
@@ -155,18 +156,21 @@ function UserList() {
                 <AdminLeftBar />
                 <div className='bottom-right'>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} className="user-title-container">
-                        <h1>User Management</h1>
+                        <h1>Quản Lí Người Dùng</h1>
                         <NavLink to="/newUser">
                             <button style={{
-                                width: "80px",
+                                width: "100px",
                                 color: "#fff",
                                 borderRadius: "5px",
                                 backgroundColor: "teal",
                                 cursor: "pointer",
                                 padding: "10px",
                                 fontSize: "16px",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "10px",
                                 border: "none"
-                            }} className="user-add-btn">Create</button>
+                            }} className="user-add-btn"><AddCircleOutlineIcon /><span>Thêm</span></button>
                         </NavLink>
                     </div>
                     <div style={{ height: '70vh', width: '100%' }}>

@@ -2,26 +2,26 @@ export const categories = [
   {
     id: 1,
     img: './images/categories/birthday.png',
-    title: 'Birthday',
+    title: 'Sinh Nhật',
   },
   {
     id: 2,
     img: './images/categories/love.png',
-    title: 'Love',
+    title: 'Tình Yêu',
   },
   {
     id: 3,
     img: './images/categories/grats.png',
-    title: 'Graduation',
+    title: 'Tốt Nghiệp',
   },
   {
     id: 4,
     img: './images/categories/newbabe.png',
-    title: 'Baby',
+    title: 'Trẻ Em',
   },
   {
     id: 5,
-    img: './images/categories/thankyou2.png',
-    title: 'Thanks',
+    img: './images/categories/thankyou3.png',
+    title: 'Cảm Ơn',
   },
 ];

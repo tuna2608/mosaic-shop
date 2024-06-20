@@ -24,7 +24,7 @@ function FeaturedItem() {
     return (
         <div className='featured-container'>
             <div className='featured-item'>
-                <p className='featured-title'>Revenue</p>
+                <p className='featured-title'>Doanh Thu</p>
                 <div className='featured-money-container'>
                     <span className='featured-money'>{formatCurrency(income[1]?.total)}</span>
                     <span className='featured-money-rate'>
@@ -36,23 +36,23 @@ function FeaturedItem() {
                         )}
                     </span>
                 </div>
-                <p className='featured-sub'>Compared to last month</p>
+                <p className='featured-sub'>So với tháng trước</p>
             </div>
             <div className='featured-item'>
-                <p className='featured-title'>Sales</p>
+                <p className='featured-title'>Bán Hàng</p>
                 <div className='featured-money-container'>
                     <span className='featured-money'>{formatCurrency(2220000)}</span>
                     <span className='featured-money-rate'>-12.4 <ArrowDownwardIcon className='arrow-icons' /></span>
                 </div>
-                <p className='featured-sub'>Compared to last month</p>
+                <p className='featured-sub'>So với tháng trước</p>
             </div>
             <div className='featured-item'>
-                <p className='featured-title'>Cost</p>
+                <p className='featured-title'>Chi Phí</p>
                 <div className='featured-money-container'>
                     <span className='featured-money'>{formatCurrency(220000)}</span>
                     <span className='featured-money-rate'>+2.6 <ArrowUpwardIcon className='arrow-icons' /></span>
                 </div>
-                <p className='featured-sub'>Compared to last month</p>
+                <p className='featured-sub'>So với tháng trước</p>
             </div>
         </div>
     )

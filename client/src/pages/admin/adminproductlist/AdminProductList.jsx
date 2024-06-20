@@ -140,7 +140,7 @@ function AdminProductList() {
                                     color: "#fff",
                                     cursor: "pointer"
                                 }}>
-                                Edit
+                                Chỉnh sửa
                             </button>
                         </NavLink>
                         <DeleteOutlineIcon
@@ -159,7 +159,7 @@ function AdminProductList() {
                 <AdminLeftBar />
                 <div className='bottom-right'>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} className="user-title-container">
-                        <h1>Product Management</h1>
+                        <h1>Quản Lí Sản Phẩm</h1>
                         <NavLink to="/newProduct">
                             <button style={{
                                 width: "80px",
@@ -170,7 +170,7 @@ function AdminProductList() {
                                 padding: "10px",
                                 fontSize: "16px",
                                 border: "none"
-                            }} className="user-add-btn">Create</button>
+                            }} className="user-add-btn">Thêm</button>
                         </NavLink>
                     </div>
                     <div style={{ height: '70vh', width: '100%' }}>

@@ -62,10 +62,6 @@ const ProductList = () => {
     <Container>
       <Navbar />
       <Menu />
-      <Title>
-        <Image src="/images/utils/new.jpg" />
-        Latest Products
-      </Title>
       <FilterContainer>
         <Filter>
           <FilterText>Sort By:</FilterText>

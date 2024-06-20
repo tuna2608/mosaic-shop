@@ -5,8 +5,6 @@ import { FavoriteBorderOutlined, Search } from '@mui/icons-material';
 import { formatCurrency } from '../../utilities/formatCurrency';
 import { Link } from 'react-router-dom';
 import { mobile } from '../../utilities/responsive';
-import { useDispatch } from 'react-redux';
-import { addProduct } from '../../redux/cartSlice';
 
 const Info = styled.div`
   opacity: 0;
@@ -73,30 +71,30 @@ const ItemPrice = styled.p`
 `;
 
 const ProductCard = ({ product }) => {
-    return (
-        <Container>
-            <ImageContainer>
-                <Image src={product.img} width={300} />
-                <Info>
-                    <Icon>
-                        <ShoppingCartOutlinedIcon />
-                    </Icon>
-                    <Link to={`/product/${product._id}`}>
-                        <Icon>
-                            <Search style={{ color: '#111' }} />
-                        </Icon>
-                    </Link>
-                    <Icon>
-                        <FavoriteBorderOutlined />
-                    </Icon>
-                </Info>
-            </ImageContainer>
-            <ItemInfo>
-                <ItemName>{product.title}</ItemName>
-                <ItemPrice>{formatCurrency(product.price)}</ItemPrice>
-            </ItemInfo>
-        </Container>
-    );
+  return (
+    <Container>
+      <ImageContainer>
+        <Image src={product.img} width={300} />
+        <Info>
+          <Icon>
+            <ShoppingCartOutlinedIcon />
+          </Icon>
+          <Link to={`/product/${product._id}`}>
+            <Icon>
+              <Search style={{ color: '#111' }} />
+            </Icon>
+          </Link>
+          <Icon>
+            <FavoriteBorderOutlined />
+          </Icon>
+        </Info>
+      </ImageContainer>
+      <ItemInfo>
+        <ItemName>{product.title}</ItemName>
+        <ItemPrice>{formatCurrency(product.price)}</ItemPrice>
+      </ItemInfo>
+    </Container>
+  );
 };
 
 export default ProductCard;
