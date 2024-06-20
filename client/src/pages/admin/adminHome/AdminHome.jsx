@@ -39,7 +39,7 @@ function AdminHome() {
             { name: MONTHS[item._id - 1], "New User": item.total },
           ])
         );
-      } catch (error) {}
+      } catch (error) { }
     };
     getStats();
   }, [MONTHS]);

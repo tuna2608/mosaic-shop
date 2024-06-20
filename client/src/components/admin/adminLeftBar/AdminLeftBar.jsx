@@ -50,6 +50,12 @@ const AdminLeftBar = () => {
               <span>Products</span>
             </div>
           </NavLink>
+          <NavLink className="links-style" to="/admin-order-list">
+            <div className="item">
+              <PeopleAltOutlinedIcon />
+              <span>Orders</span>
+            </div>
+          </NavLink>
           <div className="item">
             <ReceiptLongOutlinedIcon />
             <span>Transaction</span>

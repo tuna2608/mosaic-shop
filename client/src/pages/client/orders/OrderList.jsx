@@ -94,7 +94,6 @@ const OrderList = () => {
   const [detailProducts, setDetailProducts] = useState([]);
   const handleDisplayProducts = (order) => {
     const products = order.products;
-    console.log(products);
     setDetailProducts(products);
     setIsPopup(!isPopup);
   };

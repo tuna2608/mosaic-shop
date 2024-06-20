@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./latestTransactions.scss";
-import { userRequest } from "../../../utilities/requestMethod";
+// import { userRequest } from "../../../utilities/requestMethod";
 import { format } from "timeago.js";
-import { updateOrderStatus } from "../../../redux/apiCalls";
+import { getAllOrders, updateOrderStatus } from "../../../redux/apiCalls";
+import { formatCurrency } from "../../../utilities/formatCurrency";
 function LatestTransactions() {
-  const [orders, setOrders] = useState([]);
   const dispatch = useDispatch();
+  getAllOrders(dispatch);
+  const ordersState = useSelector(state => state.order.order)
+  const [orders, setOrders] = useState(ordersState);
   const handleUpdateOrderStatus = (orderId, type) => {
-    type = type === "Accept" ? "Delivering" : "Cancelled";
+    switch (type) {
+      case "Accept":
+        type = "Delivering";
+        break;
+      case "Cancel":
+        type = "Declined";
+        break;
+      case "Delivering":
+        type = "Delivered";
+        break;
+      default:
+        return "Pending"
+    }
     updateOrderStatus(dispatch, orderId, type);
     setOrders((prevOrders) =>
-      prevOrders.map((order) =>
+      prevOrders?.map((order) =>
         order._id === orderId ? { ...order, status: type } : order
       )
     );
@@ -20,7 +35,7 @@ function LatestTransactions() {
     return (
       <button
         onClick={() => handleUpdateOrderStatus(orderId, type)}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", marginRight: "3px" }}
         className={"status " + type}
       >
         {type}
@@ -28,18 +43,6 @@ function LatestTransactions() {
     );
   };
 
-  // get orders
-  useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const res = await userRequest.get("orders");
-        setOrders(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getOrders();
-  }, []);
 
   return (
     <div className="latest-transactions-container">
@@ -51,13 +54,13 @@ function LatestTransactions() {
           <th>Amount</th>
           <th>Status</th>
         </tr>
-        {orders.map((order) => (
+        {orders && orders?.slice(0, 6).map((order) => (
           <tr key={order._id}>
             <td className="first-td">
               <h5 style={{ paddingTop: "6px" }}>#{order.userId}</h5>
             </td>
             <td>{format(order.createdAt)}</td>
-            <td>{order.amount}</td>
+            <td>{formatCurrency(order.amount)}</td>
             <td>
               {order.status === "Pending" ? (
                 <>

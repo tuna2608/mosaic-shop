@@ -57,10 +57,11 @@ router.get("/find/:userId", async (req, res) => {
   }
 });
 
-// Get all Orders || Only admin can view all Orders
+
+// gET all orders
 router.get("/", async (req, res) => {
   try {
-    const orders = await Order.find();
+    let orders = await Order.find().sort({ createdAt: -1 }).populate("products.productId");
     res.status(200).json(orders);
   } catch (error) {
     return res.status(500).json(error);

@@ -14,13 +14,15 @@ import Error from "./pages/client/Error";
 import Success from "./components/client/Success";
 import { useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import UserList from "./pages/admin/userlist/UserList";
-import DetailUser from "./pages/admin/detailuser/DetailUser";
-import NewUser from "./pages/admin/newuser/NewUser";
+import UserList from "./pages/admin/adminuserlist/UserList";
+import DetailUser from "./pages/admin/adminuserdetail/DetailUser";
+import NewUser from "./pages/admin/adminusernew/NewUser";
 import AdminProductList from "./pages/admin/adminproductlist/AdminProductList";
 import AdminProductDetail from "./pages/admin/adminproductdetail/AdminProductDetail";
-import NewProduct from "./pages/admin/newproduct/NewProduct";
+import NewProduct from "./pages/admin/adminproductnew/NewProduct";
 import AdminHome from "./pages/admin/adminHome/AdminHome";
+import AdminOrderList from "./pages/admin/adminorderlist/AdminOrderList";
+
 import OrderList from "./pages/client/orders/OrderList";
 import Profile from "./pages/client/profile/Profile";
 
@@ -71,7 +73,10 @@ function App() {
             path="/newProduct"
             element={isAdmin ? <NewProduct /> : <Login />}
           />
-
+          <Route
+            path="/admin-order-list"
+            element={isAdmin ? <AdminOrderList /> : <Login />}
+          />
           {/* End Admin Routes */}
 
           <Route path="*" element={<Error />} />

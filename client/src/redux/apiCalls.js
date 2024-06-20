@@ -51,6 +51,9 @@ import { toast } from "react-toastify";
 import {
   createOrderFailure,
   createOrderSuccess,
+  getAllOrdersFailure,
+  getAllOrdersStart,
+  getAllOrdersSuccess,
   getOrdersFailure,
   getOrdersStart,
   getOrdersSuccess,
@@ -193,7 +196,7 @@ export const addToCart = async (dispatch, product) => {
 export const resetCart = async (dispatch) => {
   try {
     dispatch(resetCartSuccess());
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const deleteCartItem = async (dispatch, cartItemID) => {
@@ -201,14 +204,14 @@ export const deleteCartItem = async (dispatch, cartItemID) => {
     const res = await userRequest.delete(`/carts/${cartItemID}`);
     dispatch(deleteCartItemSuccess(res.data));
     toast.success("Item deleted from cart!", {});
-  } catch (error) {}
+  } catch (error) { }
 };
 export const deleteCart = async (dispatch, cartID) => {
   try {
     const res = await userRequest.delete(`/carts`);
     dispatch(deleteCartSuccess(res.data));
-    toast.success("Your order is placed!", {});
-  } catch (error) {}
+    toast.success("Thanks for purchasing, your order is placed!", {});
+  } catch (error) { }
 };
 
 export const decreaseCartQuantity = async (
@@ -226,7 +229,7 @@ export const decreaseCartQuantity = async (
     } else {
       toast.warning("Quantity must be greater than 0!", {});
     }
-  } catch (error) {}
+  } catch (error) { }
 };
 
 // Order
@@ -241,6 +244,16 @@ export const getOrdersByUId = async (dispatch, userId) => {
   }
 };
 
+export const getAllOrders = async (dispatch) => {
+  dispatch(getAllOrdersStart());
+  try {
+    const res = await publicRequest.get(`/orders`);
+    dispatch(getAllOrdersSuccess(res.data));
+  } catch (error) {
+    dispatch(getAllOrdersFailure());
+  }
+}
+
 export const createOrder = async (dispatch, order) => {
   dispatch(createOrderFailure());
   try {
@@ -254,12 +267,12 @@ export const createOrder = async (dispatch, order) => {
 export const resetOrders = async (dispatch) => {
   try {
     dispatch(resetOrdersSuccess());
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const updateOrderStatus = async (dispatch, orderId, status) => {
   try {
     const res = userRequest.put(`/orders/${orderId}`, { status: status });
     dispatch(updateOrderStatusSuccess(res.data));
-  } catch (error) {}
+  } catch (error) { }
 };
