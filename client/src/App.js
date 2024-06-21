@@ -46,7 +46,7 @@ function App() {
           <Route path="/shop/:category?" element={<ProductList />} />
           <Route path="/cart" element={user ? <Cart /> : <Login />} />
           <Route path="/orders" element={user ? <OrderList /> : <Login />} />
-          <Route path="/profile" element={user ? <Profile /> : <Login />} />
+          <Route path="/profile/:id" element={user ? <Profile /> : <Login />} />
 
 
           {/* Admin Routes */}

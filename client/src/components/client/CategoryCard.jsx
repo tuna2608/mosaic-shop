@@ -50,7 +50,6 @@ const Button = styled.button`
 
 const CategoryCard = ({ item }) => {
   let cateParam = "";
-  console.log(item.title);
   switch (item.title) {
     case "Sinh Nhật":
       cateParam = "birthday";

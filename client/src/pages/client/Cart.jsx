@@ -252,7 +252,7 @@ const Cart = () => {
         <Top>
           <TopBtn onClick={() => navigate("/shop")}><KeyboardBackspaceIcon /><span>Tiếp Tục Mua Sắm</span></TopBtn>
           <TopTexts>
-            <TopText>Giỏ hàng ({cart.cartItems.length})</TopText>
+            <TopText>Giỏ hàng</TopText>
             <TopText>Mục yêu thích (0)</TopText>
           </TopTexts>
           <TopBtn onClick={() => navigate("/orders")} tone="dark">Lịch sử mua hàng</TopBtn>
@@ -260,7 +260,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {
-              cart.cartItems?.length > 0 ?
+              cart.cartItems ?
                 (cart.cartItems?.map((item) => (
                   <>
                     <Product key={item.productId._id}>
