@@ -14,6 +14,7 @@ import app from "../../../utilities/firebase";
 
 import "./profile.scss"
 import { updateUser } from '../../../redux/apiCalls';
+import HeaderComponent from '../../../components/client/HeaderComponent/HeaderComponent';
 
 const Profile = () => {
 
@@ -74,7 +75,8 @@ const Profile = () => {
     }
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
+            <HeaderComponent/>
             <Announcement />
             <div className='profile-container'>
                 <div className="user-container">

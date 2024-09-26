@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   height: 30px;
-  background-color: #3a7187;
+  background-color: var(--orange);
   color: #fff;
   display: flex;
   align-items: center;
@@ -12,7 +12,7 @@ const Container = styled.div`
 `;
 
 const Announcement = () => {
-  return <Container>In joy or sadness, flowers are our constant friends.</Container>;
+  return <Container></Container>;
 };
 
 export default Announcement;

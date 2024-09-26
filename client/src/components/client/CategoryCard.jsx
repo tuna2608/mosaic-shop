@@ -51,18 +51,18 @@ const Button = styled.button`
 const CategoryCard = ({ item }) => {
   let cateParam = "";
   switch (item.title) {
-    case "Sinh Nhật":
-      cateParam = "birthday";
-      break;
+    // case "Sinh Nhật":
+    //   cateParam = "birthday";
+    //   break;
     case "Tình Yêu":
       cateParam = "love";
       break;
     case "Tốt Nghiệp":
       cateParam = "graduation";
       break;
-    case "Trẻ Em":
-      cateParam = "baby";
-      break;
+    // case "Trẻ Em":
+    //   cateParam = "baby";
+    //   break;
     case "Cảm Ơn":
       cateParam = "thanks";
       break;

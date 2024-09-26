@@ -129,7 +129,7 @@ function AdminProductDetail() {
                                 <input onChange={handleChange} name='desc' type="text" placeholder={product.desc} />
                                 <label> Price </label>
                                 <input onChange={handleChange} name="price" type="number" placeholder={formatCurrency(product.price)} />
-                                <label> In Stock </label>
+                                <label> DIY </label>
                                 <select onChange={handleChange} name="inStock" id="inStock">
                                     <option value="true">True</option>
                                     <option value="false">False</option>
@@ -137,15 +137,15 @@ function AdminProductDetail() {
                                 <label style={{ marginBottom: "10px" }}>Materials</label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }} className="new-product-materials">
                                     <input type="checkbox" name='materials' id="love" value="love" onChange={handleCheckboxChange} />
-                                    <label for="love">Love</label>
+                                    <label for="love">Mosaic Picture</label>
                                     <input type="checkbox" name='materials' id="thanks" value="thanks" onChange={handleCheckboxChange} />
-                                    <label for="thanks">Thanks</label>
+                                    <label for="thanks">Lót ly</label>
                                     <input type="checkbox" name='materials' id="graduation" value="graduation" onChange={handleCheckboxChange} />
-                                    <label for="graduation">Graduation</label>
-                                    <input type="checkbox" name='materials' id="baby" value="baby" onChange={handleCheckboxChange} />
+                                    <label for="graduation">Mosaics</label>
+                                    {/* <input type="checkbox" name='materials' id="baby" value="baby" onChange={handleCheckboxChange} />
                                     <label for="baby">Baby</label>
                                     <input type="checkbox" name='materials' id="birthday" value="birthday" onChange={handleCheckboxChange} />
-                                    <label for="birthday">Birthday</label>
+                                    <label for="birthday">Birthday</label> */}
                                 </div>
                             </div>
                             <div className="product-form-right">

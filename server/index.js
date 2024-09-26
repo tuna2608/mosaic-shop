@@ -13,7 +13,11 @@ const stripeRoute = require("./routes/stripe");
 const cartRoute = require("./routes/cart");
 
 const cors = require("cors");
-
+const corsOptions ={
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
@@ -23,7 +27,7 @@ mongoose
     console.log(err);
   });
 // config
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
@@ -57,6 +61,6 @@ app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
 app.use("/api/carts", cartRoute);
 
-app.listen(process.env.PORT_NUMBER || 5000, () => {
+app.listen(process.env.PORT_NUMBER || 4000, () => {
   console.log("Server is running");
 });

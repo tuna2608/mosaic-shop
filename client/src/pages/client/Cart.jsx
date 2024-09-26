@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/client/Navbar";
+import HeaderComponent from "../../components/client/HeaderComponent/HeaderComponent"
 import Announcement from "../../components/client/Announcement";
 import Footer from "../../components/client/Footer";
 import { Add, Remove } from "@mui/icons-material";
@@ -22,6 +23,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping'; import {
   resetCart,
 } from "../../redux/apiCalls";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FooterComponent from "../../components/client/FooterComponent/FooterComponent";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -245,7 +247,8 @@ const Cart = () => {
 
   return (
     <Container>
-      <Navbar />
+      {/* <Navbar /> */}
+      <HeaderComponent/>
       <Announcement />
       <Wrapper>
         <Title>Giỏ Hàng Của Bạn</Title>
@@ -276,7 +279,7 @@ const Cart = () => {
                             {item.productId.title}
                           </ProductName>
                           <ProductDesc>
-                            <b>Mô tả: </b>Flower Gift Description
+                            <b>Mô tả: </b>{item.productId.description}
                           </ProductDesc>
                           <ProductMaterials>
                             <b>Nguyên liệu chính: </b>
@@ -332,8 +335,8 @@ const Cart = () => {
               <SummaryPrice>{formatCurrency((totalPrice >= 400000) ? totalPrice + 0 : totalPrice + shippingfee)}</SummaryPrice>
             </SummaryDetails>
             <StripeCheckout
-              name="A'More Shop"
-              image="./images/logo.png"
+              name="Mosaics shop"
+              image="../../assets/images/logo1.png"
               billingAddress
               shippingAddress
               description={`Đơn hàng của bạn có giá ${formatCurrency(totalPrice)}`}
@@ -348,18 +351,19 @@ const Cart = () => {
               textAlign: "center",
               padding: "0px 4px",
               border: "1px solid teal",
-              backgroundColor: "#3a7187",
+              backgroundColor: "var(--orange)",
               gap: "6px",
               display: "flex",
               alignItems: "center",
               color: "#fff"
-            }}><LocalShippingIcon /><span>Miễn phí giao hàng cho đơn hàng từ </span>{formatCurrency(400000)}
+            }}>
+              <LocalShippingIcon /><span>Miễn phí giao hàng cho đơn hàng từ </span>{formatCurrency(400000)}
             </div>
           </Summary>
         </Bottom>
       </Wrapper>
       <Newsletter />
-      <Footer />
+      <FooterComponent/>
     </Container >
   );
 };

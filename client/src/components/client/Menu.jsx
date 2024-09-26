@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   margin-top: 10px;
+  padding: 0px 135px;
   height: 60px;
-  background-color: teal;
-  color: #fff;
+  background-color: var(--orange);
   font-weight: 500;
   font-size: 16px;
   ${mobile({ height: '40px', fontSize: '12px' })}
@@ -32,53 +32,56 @@ const MenuItem = styled.li`
 
   &:hover {
     cursor: pointer;
-    background-color: #1a9696;
+    // color: var(--orange);
+    background-color: rgb(255,211,145);
   }
 `;
+
+const LinkItem = styled(Link)`
+  text-decoration: none;
+  color: white;
+`
 
 const Menu = () => {
   return (
     <Container>
       <MenuList>
-        <MenuItem>
+        {/* <MenuItem>
           <Link
             style={{ color: '#fff', textDecoration: 'none' }}
             to={`/shop/birthday`}
           >
-            Birthday
+            Birthda
           </Link>
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem>
-          <Link
-            style={{ color: '#fff', textDecoration: 'none' }}
+          <LinkItem
             to={`/shop/love`}
           >
-            Love & Romance
-          </Link>
+            Mosaic Pictures
+          </LinkItem>
         </MenuItem>
         <MenuItem>
-          <Link
-            style={{ color: '#fff', textDecoration: 'none' }}
+          <LinkItem
             to={`/shop/graduation`}
           >
-            Graduation
-          </Link>
+            Mosaics
+          </LinkItem>
         </MenuItem>
-        <MenuItem>
+        {/* <MenuItem>
           <Link
             style={{ color: '#fff', textDecoration: 'none' }}
             to={`/shop/baby`}
           >
             New Baby
           </Link>
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem>
-          <Link
-            style={{ color: '#fff', textDecoration: 'none' }}
+          <LinkItem
             to={`/shop/thanks`}
           >
-            Thank You
-          </Link>
+            Lót ly
+          </LinkItem>
         </MenuItem>
       </MenuList>
     </Container>

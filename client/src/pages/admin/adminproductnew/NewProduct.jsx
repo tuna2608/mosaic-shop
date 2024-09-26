@@ -95,7 +95,7 @@ function Newproduct() {
                                 <input name="title" type="text" placeholder='Simple Lily Rose' onChange={handleChange} />
                             </div>
                             <div className="new-product-item">
-                                <label>Stock</label>
+                                <label>DIY</label>
                                 <select name="inStock" onChange={handleChange}>
                                     <option value="true">True</option>
                                     <option value="false">False</option>
@@ -117,15 +117,15 @@ function Newproduct() {
                                 <label style={{ marginBottom: "10px" }}>Materials</label>
                                 <div style={{ display: "flex", alignItems: "center" }} className="new-product-materials">
                                     <input type="checkbox" name='materials' id="love" value="love" onChange={handleCheckboxChange} />
-                                    <label for="love">Love</label>
+                                    <label for="love">Mosaic Picture</label>
                                     <input type="checkbox" name='materials' id="thanks" value="thanks" onChange={handleCheckboxChange} />
-                                    <label for="thanks">Thanks</label>
+                                    <label for="thanks">Lót ly</label>
                                     <input type="checkbox" name='materials' id="graduation" value="graduation" onChange={handleCheckboxChange} />
-                                    <label for="graduation">Graduation</label>
-                                    <input type="checkbox" name='materials' id="baby" value="baby" onChange={handleCheckboxChange} />
+                                    <label for="graduation">Mosaics</label>
+                                    {/* <input type="checkbox" name='materials' id="baby" value="baby" onChange={handleCheckboxChange} />
                                     <label for="baby">Baby</label>
                                     <input type="checkbox" name='materials' id="birthday" value="birthday" onChange={handleCheckboxChange} />
-                                    <label for="birthday">Birthday</label>
+                                    <label for="birthday">Birthday</label> */}
                                 </div>
                             </div>
                         </div>

@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { formatCurrency } from "../../../utilities/formatCurrency";
 import "./orderlist.scss";
 import { useSelector } from "react-redux";
+import HeaderComponent from "../../../components/client/HeaderComponent/HeaderComponent";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -102,7 +103,8 @@ const OrderList = () => {
   };
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
+      <HeaderComponent/>
       <Announcement />
       <div className="orders-container">
         <h1 className="orders-title">Theo Dõi Đơn Hàng</h1>

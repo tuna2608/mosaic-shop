@@ -12,6 +12,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import KeyIcon from "@mui/icons-material/Key";
+
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -149,8 +150,9 @@ const Navbar = () => {
     navigate("/orders")
   }
 
-  const handleViewProfile = () => {
-    navigate(`/profile`)
+  const handleViewProfile = (id) => {
+    console.log(id);
+    navigate(`/profile/id`)
   }
 
   const user = useSelector((state) => state.user.currentUser);
@@ -167,8 +169,8 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Language>
-            <span>VI</span> <img src="images/utils/VIE.png" style={{ objectFit: "contain" }} width={20} height={20} alt="VietNam_Flag" /> <ArrowDropDownOutlinedIcon />
+          {/* <Language>
+            <span>VI</span><img src="images/utils/VIE.png" style={{ objectFit: "contain" }} width={20} height={20} alt="VietNam_Flag" /> <ArrowDropDownOutlinedIcon />
           </Language>
           <SearchContainer>
             <Input
@@ -176,7 +178,7 @@ const Navbar = () => {
               style={{ padding: "6px 0", outline: "none" }}
             />
             <Search style={{ color: "gray", fontSize: "20px" }} />
-          </SearchContainer>
+          </SearchContainer> */}
         </Left>
         <Center>
           <Logo>
@@ -214,7 +216,7 @@ const Navbar = () => {
                 />
                 {isPopup && (
                   <PopUpBox>
-                    <Button onClick={handleViewProfile}>
+                    <Button onClick={()=> {handleViewProfile(user._id)}}>
                       <ModeEditOutlineIcon /> Thông Tin
                     </Button>
                     <Button onClick={() => handleViewOrders(user._id)}>

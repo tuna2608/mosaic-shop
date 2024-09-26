@@ -1,6 +1,7 @@
 import Home from "./pages/client/Home";
+import HomePage from "./pages/client/HomePage/HomePage";
 import Login from "./pages/common/Login";
-import Product from "./pages/client/Product";
+import Product from "./pages/client/ProductPage/Product";
 import ProductList from "./pages/client/ProductList";
 import {
   BrowserRouter as Router,
@@ -36,7 +37,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route exact path="/" element={isAdmin ? <AdminHome /> : <Home />} />
+          <Route exact path="/" element={isAdmin ? <AdminHome /> : <HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/register"
@@ -47,11 +48,10 @@ function App() {
           <Route path="/cart" element={user ? <Cart /> : <Login />} />
           <Route path="/orders" element={user ? <OrderList /> : <Login />} />
           <Route path="/profile/:id" element={user ? <Profile /> : <Login />} />
-
+          <Route path="/productList" element={user ? <ProductList /> : <Login />} />
 
           {/* Admin Routes */}
-
-          <Route path="/home" element={isAdmin ? <AdminHome /> : <Home />} />
+          <Route path="/home" element={isAdmin ? <AdminHome /> : <HomePage />} />
           <Route
             path="/userList"
             element={isAdmin ? <UserList /> : <Login />}

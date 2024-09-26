@@ -12,7 +12,7 @@ import { mobile } from "../../utilities/responsive";
 const Home = () => {
   return (
     <div>
-      <Announcement />
+      {/* <Announcement /> */}
       <Navbar />
       <Slider />
       <Categories />

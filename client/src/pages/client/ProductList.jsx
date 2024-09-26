@@ -8,6 +8,8 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 import Menu from "../../components/client/Menu";
 import { mobile } from "../../utilities/responsive";
 import { useLocation } from "react-router-dom";
+import HeaderComponent from "../../components/client/HeaderComponent/HeaderComponent";
+import FooterComponent from "../../components/client/FooterComponent/FooterComponent";
 
 const Container = styled.div``;
 
@@ -60,7 +62,8 @@ const ProductList = () => {
 
   return (
     <Container>
-      <Navbar />
+      {/* <Navbar /> */}
+      <HeaderComponent/>
       <Menu />
       <FilterContainer>
         <Filter>
@@ -95,8 +98,8 @@ const ProductList = () => {
         </Filter>
       </FilterContainer>
       <Products cate={cate} filter={filter.split("-")} sort={sort} />
-      <Newsletter />
-      <Footer />
+      {/* <Newsletter /> */}
+      <FooterComponent/>
     </Container>
   );
 };

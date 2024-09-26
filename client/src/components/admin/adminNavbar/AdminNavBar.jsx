@@ -31,7 +31,7 @@ const AdminNavBar = () => {
     <div className="navbar">
       <div className="left">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">A'More</span>
+          <span className="logo">Mosaic</span>
         </Link>
         <HomeOutlinedIcon />
         <CastIcon />
