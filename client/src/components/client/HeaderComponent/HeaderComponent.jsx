@@ -6,12 +6,14 @@ import {
   HeaderContent,
   LinkHeader,
   LinkNavbar,
+  LinkPopover,
   Menu,
   MenuItem,
   NavBar,
   PopUpBox,
+  PopUpBoxProduct,
 } from "./style";
-import { Image } from "antd";
+import { Image, Popover } from "antd";
 import logo1 from "../../../assets/images/logo1.png";
 import {
   UserOutlined,
@@ -34,6 +36,14 @@ import { Badge } from "@mui/material";
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
+  const content = (
+    <div>
+      <Button onClick={() => navigate("/shop/love")}>Tranh mosaics</Button>
+      <Button onClick={() => navigate("/shop/thanks")}>Lót ly</Button>
+      <Button onClick={() => navigate("/shop/graduation")}>Mosaics</Button>
+    </div>
+  );
+
   const handleLogout = () => {
     logoutDispatch(dispatch);
     resetCart(dispatch);
@@ -49,6 +59,11 @@ const HeaderComponent = () => {
   const handleViewProfile = (id) => {
     console.log(id);
     navigate(`/profile/id`);
+  };
+
+  const handleViewTranhMosaic = (id) => {
+    console.log(id);
+    navigate(`/shop/love`);
   };
 
   const user = useSelector((state) => state.user.currentUser);
@@ -72,9 +87,9 @@ const HeaderComponent = () => {
             <LinkHeader onClick={() => navigate("/")}>
               <MenuItem>Trang chủ</MenuItem>
             </LinkHeader>
-            <LinkHeader onClick={() => navigate("/product")}>
+            <LinkPopover content={content}>
               <MenuItem>Sản phẩm</MenuItem>
-            </LinkHeader>
+            </LinkPopover>
             <LinkHeader href="/contact">
               <MenuItem>Liên hệ</MenuItem>
             </LinkHeader>

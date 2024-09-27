@@ -1,5 +1,6 @@
 import { styled } from 'styled-components'
 import { mobile } from '../../../utilities/responsive'
+import { Popover } from 'antd'
 // import { mobile } from "../../utilities/responsive"
 
 export const Header = styled.div`
@@ -35,7 +36,18 @@ export const LinkHeader = styled.div`
     padding: 0 20px;
     display: flex;
     align-items: center;
+    &:hover{
+        color: white;
+        background-color: black;
+    }
+`
 
+export const LinkPopover = styled(Popover)`
+    color: black;
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
     &:hover{
         color: white;
         background-color: black;
@@ -44,7 +56,7 @@ export const LinkHeader = styled.div`
 export const MenuItem = styled.div`
     font-size: 18px;
     cursor: pointer;
-    margin-left: 10px;
+    // margin-left: 10px;
     position: relative;
     ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `
@@ -61,7 +73,6 @@ export const LinkNavbar = styled.div`
     align-items: center;
     color: black;
     position: relative;
-
     &:hover{
         color: white;
         background-color: black;
@@ -88,6 +99,21 @@ export const PopUpBox = styled.div`
   z-index: 999;
 `
 
+export const PopUpBoxProduct = styled.div`
+  position: absolute;
+  right: -20px;
+  top: 50px;
+  background-color: #fff;
+  box-shadow: rgba(112, 112, 120, 0.2) 0px 7px 29px 0px;
+  width: 145px;
+  height: 138px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 2px;
+  z-index: 999;
+`
+
 export const Avatar = styled.img`
   object-fit: cover;
   border-radius: 50%;
@@ -104,7 +130,7 @@ export const Button = styled.button`
   justify-content: flex-start;
   gap: 10px;
   background-color: transparent;
-  font-size: 10px;
+  font-size: 16px;
   &:hover {
     cursor: pointer;
     background-color: #f5eeee;

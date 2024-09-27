@@ -40,6 +40,7 @@ const Filter = styled.div`
 
 const FilterText = styled.span`
   font-size: 20px;
+  padding: 0 10px;
   font-weight: 600;
   color: #898c8d;
 `;
@@ -64,10 +65,10 @@ const ProductList = () => {
     <Container>
       {/* <Navbar /> */}
       <HeaderComponent/>
-      <Menu />
+      {/* <Menu /> */}
       <FilterContainer>
         <Filter>
-          <FilterText>Sort By:</FilterText>
+          <FilterText>Sort By: </FilterText>
           <Select onChange={(e) => setSort(e.target.value)}>
             <Option value="default">Default</Option>
             <Option value="newest">Newest</Option>

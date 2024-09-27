@@ -1,10 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { FavoriteBorderOutlined, Search } from '@mui/icons-material';
-import { formatCurrency } from '../../utilities/formatCurrency';
-import { Link } from 'react-router-dom';
-import { mobile } from '../../utilities/responsive';
+import React from "react";
+import styled from "styled-components";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { FavoriteBorderOutlined, Search } from "@mui/icons-material";
+import { formatCurrency } from "../../utilities/formatCurrency";
+import { Link } from "react-router-dom";
+import { mobile } from "../../utilities/responsive";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 
 const Info = styled.div`
   opacity: 0;
@@ -21,7 +22,14 @@ const Info = styled.div`
   cursor: pointer;
 `;
 const Container = styled.div`
-  ${mobile({ display: 'flex', flexFlow: 'column', alignItems: 'center' })}
+  width: 275px;
+  height: auto;
+  background-color: var(--brown);
+  border-radius: 20px;
+  color: white;
+  // padding-bottom: 20px;
+
+  ${mobile({ display: "flex", flexFlow: "column", alignItems: "center" })}
 `;
 
 const ImageContainer = styled.div`
@@ -33,7 +41,7 @@ const ImageContainer = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
 
   &:hover ${Info} {
     opacity: 1;
@@ -70,10 +78,90 @@ const ItemPrice = styled.p`
   font-weight: 300;
 `;
 
+const CardImage = styled.img`
+  border-radius: 20px;
+  width: 100%;
+  height: 205px;
+`;
+const CardCategorie = styled.div`
+  font-weight: bold;
+  color: var(--light-grey);
+`;
+const CardInfo = styled.div`
+  padding: 10px 20px 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+const CardName = styled.div`
+  font-weight: bold;
+  font-size: 24px;
+`;
+const CardPrice = styled.div`
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: var(--light-grey);
+`;
+
+const CardBtnNow = styled.button`
+  margin-left: -10px;
+  padding: 10px 35px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+  border: 1px solid white;
+  background-color: var(--brown);
+  &:hover {
+    cursor: pointer;
+    background-color: white;
+    color: var(--brown);
+  }
+`;
+
+const CardBtnAdd = styled.div`
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-item: center;
+  background-color: white;
+  color: var(--brown);
+  border-radius: 10px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+  }
+`;
+
+const CardBtnContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const ProductCard = ({ product }) => {
   return (
     <Container>
-      <ImageContainer>
+      <CardImage src={product.img} />
+      <CardInfo>
+        <CardCategorie>Mosaic kits</CardCategorie>
+        <CardName>{product.title}</CardName>
+        <CardPrice>{formatCurrency(product.price)}</CardPrice>
+        <CardBtnContainer>
+          <CardBtnNow>Mua ngay</CardBtnNow>
+          <CardBtnAdd>
+            <ShoppingCartOutlined />
+          </CardBtnAdd>
+        </CardBtnContainer>
+      </CardInfo>
+
+      {/* <Image src={product.img}/> */}
+      {/* <ImageContainer>
         <Image src={product.img} width={300} />
         <Info>
           <Icon>
@@ -92,7 +180,7 @@ const ProductCard = ({ product }) => {
       <ItemInfo>
         <ItemName>{product.title}</ItemName>
         <ItemPrice>{formatCurrency(product.price)}</ItemPrice>
-      </ItemInfo>
+      </ItemInfo> */}
     </Container>
   );
 };
