@@ -6,6 +6,8 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 import { Link } from "react-router-dom";
 import { mobile } from "../../utilities/responsive";
 import { ShoppingCartOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/apiCalls";
 
 const Info = styled.div`
   opacity: 0;
@@ -145,23 +147,31 @@ const CardBtnContainer = styled.div`
 `;
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+  // Redux
+  const handleAddToCart = () => {
+    addToCart(dispatch, { productId: product.id, quantity: 1 });
+  };
   return (
-    <Container>
-      <CardImage src={product.img} />
-      <CardInfo>
-        <CardCategorie>Mosaic kits</CardCategorie>
-        <CardName>{product.title}</CardName>
-        <CardPrice>{formatCurrency(product.price)}</CardPrice>
-        <CardBtnContainer>
-          <CardBtnNow>Mua ngay</CardBtnNow>
-          <CardBtnAdd>
-            <ShoppingCartOutlined />
-          </CardBtnAdd>
-        </CardBtnContainer>
-      </CardInfo>
+    <Link to={`/product/${product._id}`}>
+      <Container>
+        <CardImage src={product.img} />
+        <CardInfo>
+          <CardCategorie>Mosaic kits</CardCategorie>
+          <CardName>{product.title}</CardName>
+          <CardPrice>{formatCurrency(product.price)}</CardPrice>
+          <CardBtnContainer>
+            <CardBtnNow>Mua ngay</CardBtnNow>
+            <CardBtnAdd 
+            // onClick={handleAddToCart}
+            >
+              <ShoppingCartOutlined />
+            </CardBtnAdd>
+          </CardBtnContainer>
+        </CardInfo>
 
-      {/* <Image src={product.img}/> */}
-      {/* <ImageContainer>
+        {/* <Image src={product.img}/> */}
+        {/* <ImageContainer>
         <Image src={product.img} width={300} />
         <Info>
           <Icon>
@@ -181,7 +191,8 @@ const ProductCard = ({ product }) => {
         <ItemName>{product.title}</ItemName>
         <ItemPrice>{formatCurrency(product.price)}</ItemPrice>
       </ItemInfo> */}
-    </Container>
+      </Container>
+    </Link>
   );
 };
 
