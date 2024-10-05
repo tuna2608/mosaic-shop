@@ -94,7 +94,7 @@ const HeaderComponent = () => {
             <LinkHeader href="/contact">
               <MenuItem>Liên hệ</MenuItem>
             </LinkHeader>
-            <LinkHeader href="/infor">
+            <LinkHeader onClick={() => navigate("/introduction")}>
               <MenuItem>Giới thiệu</MenuItem>
             </LinkHeader>
           </Menu>

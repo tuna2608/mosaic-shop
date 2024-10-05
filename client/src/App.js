@@ -28,6 +28,7 @@ import OrderList from "./pages/client/orders/OrderList";
 import Profile from "./pages/client/profile/Profile";
 import UploadPicture from "./pages/client/UploadPicture/UploadPicture";
 import Payment from "./pages/client/Payment/Payment";
+import Introduction from "./pages/client/Introduction/Introduction";
 
 function App() {
   // Testing
@@ -53,6 +54,7 @@ function App() {
           <Route path="/profile/:id" element={user ? <Profile /> : <Login />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/productList" element={user ? <ProductList /> : <Login />} />
+          <Route path="/introduction" element={user ? <Introduction /> : <Login />} />
 
           {/* Admin Routes */}
           <Route path="/home" element={isAdmin ? <AdminHome /> : <HomePage />} />
