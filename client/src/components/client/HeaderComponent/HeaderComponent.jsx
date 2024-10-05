@@ -41,6 +41,7 @@ const HeaderComponent = () => {
       <Button onClick={() => navigate("/shop/love")}>Tranh mosaics</Button>
       <Button onClick={() => navigate("/shop/thanks")}>Lót ly</Button>
       <Button onClick={() => navigate("/shop/graduation")}>Mosaics</Button>
+      <Button onClick={() => navigate("/uploadPicture")}>Upload picture</Button>
     </div>
   );
 

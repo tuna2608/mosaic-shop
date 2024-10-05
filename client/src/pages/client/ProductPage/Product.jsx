@@ -221,7 +221,7 @@ const Product = () => {
             </ImageContainer>
             <InfoContainer>
               <ProductName>{product.title}</ProductName>
-              <ItemDesc>{product.desc}</ItemDesc>
+              <ItemDesc>Tranh mosaics</ItemDesc>
               <Star>
                 <StarRateIcon style={{ color: "#f3cd04" }} />
                 <StarRateIcon style={{ color: "#f3cd04" }} />
@@ -265,7 +265,9 @@ const Product = () => {
       <Description>
         <Title>Mô tả sản phẩm</Title>
         <Content>
-          <p>
+        {product.desc}
+        
+          {/* <p>
             Tranh trang trí Mosaic Art phong cách cổ điển họa tiết hoa hướng
             dương <br />
           </p>
@@ -290,7 +292,7 @@ const Product = () => {
             lạ đâu nè! Kỹ thuật ghép mảnh trên các vật liệu Gốm, kính, trai,
             trứng được các nghệ nhân bấm bẻ từng miếng nhỏ tạo thành các hình
             họa tiết trên sản phẩm. Các mảng màu phong phú đa dạng <br />
-          </p>
+          </p> */}
         </Content>
       </Description>
 

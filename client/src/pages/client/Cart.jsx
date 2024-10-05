@@ -204,33 +204,33 @@ const Cart = () => {
   const onToken = (token) => {
     setStripeToken(token);
   };
-  useEffect(() => {
-    const makeRequest = async () => {
-      try {
-        const res = await userRequest.post("/checkout/payment", {
-          tokenId: stripeToken.id,
-          amount: 5000,
-        });
-        createOrder(
-          dispatch,
-          {
-            userId: user._id,
-            products: cart.cartItems,
-            amount: totalPrice,
-            address: user.address,
-            phone: user.phone,
-            status: "Pending"
-          }
-        )
-        deleteCart(dispatch)
-        resetCart(dispatch);
-        navigate("/cart", {
-          state: { stripeData: res.data, products: cart.cartItems },
-        });
-      } catch (error) { }
-    };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart.cartItems, navigate, dispatch]);
+  // useEffect(() => {
+    // const makeRequest = async () => {
+    //   try {
+    //     const res = await userRequest.post("/checkout/payment", {
+    //       tokenId: stripeToken.id,
+    //       amount: 5000,
+    //     });
+    //     createOrder(
+    //       dispatch,
+    //       {
+    //         userId: user._id,
+    //         products: cart.cartItems,
+    //         amount: totalPrice,
+    //         address: user.address,
+    //         phone: user.phone,
+    //         status: "Pending"
+    //       }
+    //     )
+    //     deleteCart(dispatch)
+    //     resetCart(dispatch);
+    //     navigate("/cart", {
+    //       state: { stripeData: res.data, products: cart.cartItems },
+    //     });
+    //   } catch (error) { }
+    // };
+  //   stripeToken && makeRequest();
+  // }, [stripeToken, cart.cartItems, navigate, dispatch]);
 
   const handleAddToCart = (productID) => {
     addToCart(dispatch, { productId: productID, quantity: 1 });
@@ -242,6 +242,10 @@ const Cart = () => {
 
   const handleDeleteCartItem = (cartItemID) => {
     deleteCartItem(dispatch, cartItemID);
+  }
+  const handlePayment  = () => {
+    localStorage.setItem("cart", cart || [])
+    navigate(`/payment?amount=${totalPrice}`);
   }
   const [shippingfee] = useState(20000);
 
@@ -334,7 +338,10 @@ const Cart = () => {
               <SummaryText>Tổng tiền</SummaryText>
               <SummaryPrice>{formatCurrency((totalPrice >= 400000) ? totalPrice + 0 : totalPrice + shippingfee)}</SummaryPrice>
             </SummaryDetails>
-            <StripeCheckout
+            <BottomBtn
+               onClick={handlePayment}
+               >THANH TOÁN</BottomBtn>
+            {/* <StripeCheckout
               name="Mosaics shop"
               image="../../assets/images/logo1.png"
               billingAddress
@@ -344,8 +351,10 @@ const Cart = () => {
               token={onToken}
               stripeKey={KEY}
             >
-              <BottomBtn>THANH TOÁN</BottomBtn>
-            </StripeCheckout>
+              <BottomBtn
+               onClick={handlePayment}
+               >THANH TOÁN</BottomBtn>
+            </StripeCheckout> */}
             <div style={{
               fontSize: "10px",
               textAlign: "center",

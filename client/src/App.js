@@ -26,6 +26,8 @@ import AdminOrderList from "./pages/admin/adminorderlist/AdminOrderList";
 
 import OrderList from "./pages/client/orders/OrderList";
 import Profile from "./pages/client/profile/Profile";
+import UploadPicture from "./pages/client/UploadPicture/UploadPicture";
+import Payment from "./pages/client/Payment/Payment";
 
 function App() {
   // Testing
@@ -43,11 +45,13 @@ function App() {
             path="/register"
             element={user ? <Navigate to="/login" /> : <Register />}
           />
+          <Route path="/uploadPicture" element={user ? <UploadPicture /> : <Login />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/shop/:category?" element={<ProductList />} />
           <Route path="/cart" element={user ? <Cart /> : <Login />} />
           <Route path="/orders" element={user ? <OrderList /> : <Login />} />
           <Route path="/profile/:id" element={user ? <Profile /> : <Login />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/productList" element={user ? <ProductList /> : <Login />} />
 
           {/* Admin Routes */}

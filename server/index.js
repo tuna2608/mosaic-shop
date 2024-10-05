@@ -13,6 +13,7 @@ const stripeRoute = require("./routes/stripe");
 const cartRoute = require("./routes/cart");
 
 const cors = require("cors");
+const Order = require("./models/Order");
 const corsOptions ={
   origin:'http://localhost:3000', 
   credentials:true,            //access-control-allow-credentials:true
@@ -59,6 +60,17 @@ app.use("/api/auth", authRoute);
 app.use("/api/products", productRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
+app.use("/api/checkout/payment/vietQR", async(req, res) => {
+  const newOrder = new Order(req.body);
+  try {
+    const savedOrder = await newOrder.save();
+    return res.status(200).json(savedOrder);
+  } catch (error) {
+    console.log(error);
+    
+    return res.status(500).json(error);
+  }
+});
 app.use("/api/carts", cartRoute);
 
 app.listen(process.env.PORT_NUMBER || 4000, () => {

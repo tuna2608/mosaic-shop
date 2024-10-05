@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from '../../../components/client/Navbar'
 import Announcement from '../../../components/client/Announcement'
-import Footer from '../../../components/client/Footer'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -15,6 +14,7 @@ import app from "../../../utilities/firebase";
 import "./profile.scss"
 import { updateUser } from '../../../redux/apiCalls';
 import HeaderComponent from '../../../components/client/HeaderComponent/HeaderComponent';
+import FooterComponent from '../../../components/client/FooterComponent/FooterComponent';
 
 const Profile = () => {
 
@@ -187,7 +187,7 @@ const Profile = () => {
 
                 </div>
             </div>
-            <Footer />
+            <FooterComponent/>
         </div>
     )
 }

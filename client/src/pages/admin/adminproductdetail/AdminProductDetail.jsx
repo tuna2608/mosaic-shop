@@ -114,7 +114,7 @@ function AdminProductDetail() {
                                     <div className="product-info-value">{formatCurrency(product.price)}</div>
                                 </div>
                                 <div className="product-info-item">
-                                    <div className="product-info-key">in stock:</div>
+                                    <div className="product-info-key">DIY:</div>
                                     <div className="product-info-value">{product.inStock + ""}</div>
                                 </div>
                             </div>
